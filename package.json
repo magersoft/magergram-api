@@ -9,7 +9,7 @@
     "dev": "nodemon --exec babel-node src/server.js",
     "generate": "prisma generate",
     "prisma": "yarn run deploy && yarn run generate",
-    "deploy": "prisma deploy"
+    "deploy": "prisma deploy --force"
   },
   "dependencies": {
     "dotenv": "^8.2.0",
