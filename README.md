@@ -11,10 +11,10 @@ Instagram clone on Node.js, GraphQL, Prisma, React and React Native
 - [x] Comment on a photo
 - [x] Search by user
 - [x] Search by location
-- [ ] Follow / Unfollow user
-- [ ] See user profile
-- [ ] See the full photo
-- [ ] Edit my profile
+- [x] Follow / Unfollow user
+- [x] See user profile
+- [x] See the full photo
+- [x] Edit my profile
 - [ ] Upload a photo
 - [ ] Edit the photo (Delete)
 - [ ] See the feed
