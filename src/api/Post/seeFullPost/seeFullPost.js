@@ -6,15 +6,10 @@ export default {
       const {id} = args;
       const post = await prisma.post({id});
       const comments = await prisma.post({id}).comments;
-      const likeCount = await prisma.likesConnection({
-        where: {
-          post: { id }
-        }
-      })
-      .aggregate()
-      .count();
+      const files = await prisma.post({ id }).files;
+      const user = await prisma.post({ id }).user();
       return {
-        post, comments, likeCount
+        post, comments, files, user
       }
     }
   }

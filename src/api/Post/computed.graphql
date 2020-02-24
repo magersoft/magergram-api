@@ -1,0 +1,4 @@
+type Post {
+  isLiked: Boolean!
+  likeCount: Int!
+}
