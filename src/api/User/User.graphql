@@ -1,5 +1,8 @@
 type User {
   fullName: String
+  postsCount: Int!
+  followingCount: Int!
+  followersCount: Int!
   isFollowing: Boolean!
   isSelf: Boolean!
 }
