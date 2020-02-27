@@ -17,7 +17,7 @@ Instagram clone on Node.js, GraphQL, Prisma, React and React Native
 - [x] Edit my profile
 - [x] Upload a photo
 - [x] Edit the photo (Delete)
-- [ ] See the feed
-- [ ] See Room
-- [ ] Send private Direct Message
-- [ ] Receive Direct Message
+- [x] See the feed
+- [x] See Room
+- [x] Send private Direct Message
+- [x] Receive Direct Message
