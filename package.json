@@ -12,6 +12,7 @@
     "deploy": "prisma deploy --force"
   },
   "dependencies": {
+    "bcrypt": "^4.0.1",
     "dotenv": "^8.2.0",
     "graphql-yoga": "^1.18.3",
     "jsonwebtoken": "^8.5.1",
