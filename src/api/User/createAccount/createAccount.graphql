@@ -1,3 +1,17 @@
+type CreateAccountResponse {
+  ok: Boolean!
+  error: String
+}
+
 type Mutation {
-  createAccount(username: String!, email: String!, password: String!, firstName: String, lastName: String): User!
+  createAccount(username: String!, email: String, phone: String, password: String!, firstName: String, lastName: String): CreateAccountResponse!
+}
+
+type checkExistUsernameResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  checkExistUsername(username: String!): checkExistUsernameResponse!
 }

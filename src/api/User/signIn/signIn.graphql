@@ -4,5 +4,5 @@ type SignInResponse {
 }
 
 type Mutation {
-  signIn(email: String!, password: String!): SignInResponse!
+  signIn(email: String, phone: String, password: String!): SignInResponse!
 }

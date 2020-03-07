@@ -2,7 +2,8 @@ type User {
   id: ID! @id
   avatar: String
   username: String! @unique
-  email: String! @unique
+  email: String @unique
+  phone: String @unique
   password: String!
   firstName: String
   lastName: String

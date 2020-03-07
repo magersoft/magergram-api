@@ -1,6 +1,8 @@
-import { generateToken } from '../../../utils';
+import { generateToken } from '../../../utils/createJWT';
 import { prisma } from '../../../../generated/prisma-client';
 import bcrypt from 'bcrypt';
+import is from 'is_js';
+import { isValidPhone } from '../../../utils/sendSMS';
 
 const comparePassword = async (password, hash) => {
   return await bcrypt.compare(password, hash);
@@ -9,9 +11,23 @@ const comparePassword = async (password, hash) => {
 export default {
   Mutation: {
     signIn: async (_, args) => {
-      const { email, password } = args;
+      const { email, phone, password } = args;
       try {
-        const user = await prisma.user({ email });
+        const where = {};
+        if (phone) {
+          if (phone.match(isValidPhone)) {
+            where.phone = phone;
+          }
+        } else {
+          if (email) {
+            if (is.email(email)) {
+              where.email = email;
+            } else {
+              where.username = email;
+            }
+          }
+        }
+        const user = await prisma.user(where);
 
         if (!user) {
           throw new Error('User not found');

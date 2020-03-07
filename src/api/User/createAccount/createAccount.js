@@ -1,6 +1,8 @@
 import { prisma } from '../../../../generated/prisma-client';
 import bcrypt from 'bcrypt';
-import { generateSecret, sendSecretMail } from '../../../utils';
+import { generateSecret, sendSecretMail } from '../../../utils/sendEmail';
+import is from 'is_js';
+import { isValidPhone, sendVerificationSMS } from '../../../utils/sendSMS';
 
 const hashPassword = (password) => {
   return bcrypt.hash(password, 10)
@@ -9,23 +11,77 @@ const hashPassword = (password) => {
 export default {
   Mutation: {
     createAccount: async (_, args) => {
-      const { username, email, password, firstName, lastName } = args;
-      let savePassword;
-      if (password) {
-        savePassword = await hashPassword(password);
-      } else {
-        throw new Error('Password is required');
+      const { username, email, phone, password, firstName, lastName } = args;
+      try {
+        if (email) {
+          if (!is.email(email)) {
+            throw new Error('Enter a valid email address')
+          }
+        } else {
+          if (phone) {
+            if (!phone.match(isValidPhone)) {
+              throw new Error('Enter a valid phone number');
+            }
+          } else {
+            throw new Error('Email or phone required field')
+          }
+        }
+
+        if (password.length < 6) {
+          throw new Error('Password must be more 6 symbols')
+        }
+
+        let savePassword;
+        if (password) {
+          savePassword = await hashPassword(password);
+        } else {
+          throw new Error('Password is required');
+        }
+
+        await prisma.createUser({
+          username,
+          email,
+          phone,
+          password: savePassword,
+          firstName,
+          lastName
+        });
+        const loginSecret = generateSecret(phone ? 'PHONE' : 'EMAIL');
+        if (phone) {
+          console.log(loginSecret);
+          // await sendVerificationSMS(phone, loginSecret);
+        } else {
+          await sendSecretMail(email, loginSecret);
+        }
+        await prisma.updateUser({ data: { loginSecret }, where: { email, phone } });
+        return {
+          ok: true,
+          error: null
+        }
+      } catch (e) {
+        return {
+          ok: false,
+          error: e.message
+        }
       }
-      await prisma.createUser({
-        username,
-        email,
-        password: savePassword,
-        firstName,
-        lastName
-      });
-      const loginSecret = generateSecret();
-      await sendSecretMail(email, loginSecret);
-      await prisma.updateUser({ data: { loginSecret }, where: { email } });
+    },
+    checkExistUsername: async (_, args) => {
+      const { username } = args;
+      try {
+        const user = await prisma.user({ username });
+        if (user) {
+          throw new Error('Username is already in use')
+        }
+        return {
+          ok: true,
+          error: null
+        }
+      } catch (e) {
+        return {
+          ok: false,
+          error: e.message
+        }
+      }
     }
   }
 }
