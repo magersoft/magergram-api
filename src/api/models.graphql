@@ -1670,13 +1670,14 @@ type User {
   firstName: String
   lastName: String
   bio: String
+  website: String
+  loginSecret: String
   following(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   followers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
   likes(where: LikeWhereInput, orderBy: LikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Like!]
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   rooms(where: RoomWhereInput, orderBy: RoomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Room!]
-  loginSecret: String
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -1697,13 +1698,14 @@ input UserCreateInput {
   firstName: String
   lastName: String
   bio: String
+  website: String
+  loginSecret: String
   following: UserCreateManyWithoutFollowersInput
   followers: UserCreateManyWithoutFollowingInput
   posts: PostCreateManyWithoutUserInput
   likes: LikeCreateManyWithoutUserInput
   comments: CommentCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
-  loginSecret: String
 }
 
 input UserCreateManyWithoutFollowersInput {
@@ -1751,12 +1753,13 @@ input UserCreateWithoutCommentsInput {
   firstName: String
   lastName: String
   bio: String
+  website: String
+  loginSecret: String
   following: UserCreateManyWithoutFollowersInput
   followers: UserCreateManyWithoutFollowingInput
   posts: PostCreateManyWithoutUserInput
   likes: LikeCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
-  loginSecret: String
 }
 
 input UserCreateWithoutFollowersInput {
@@ -1769,12 +1772,13 @@ input UserCreateWithoutFollowersInput {
   firstName: String
   lastName: String
   bio: String
+  website: String
+  loginSecret: String
   following: UserCreateManyWithoutFollowersInput
   posts: PostCreateManyWithoutUserInput
   likes: LikeCreateManyWithoutUserInput
   comments: CommentCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
-  loginSecret: String
 }
 
 input UserCreateWithoutFollowingInput {
@@ -1787,12 +1791,13 @@ input UserCreateWithoutFollowingInput {
   firstName: String
   lastName: String
   bio: String
+  website: String
+  loginSecret: String
   followers: UserCreateManyWithoutFollowingInput
   posts: PostCreateManyWithoutUserInput
   likes: LikeCreateManyWithoutUserInput
   comments: CommentCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
-  loginSecret: String
 }
 
 input UserCreateWithoutLikesInput {
@@ -1805,12 +1810,13 @@ input UserCreateWithoutLikesInput {
   firstName: String
   lastName: String
   bio: String
+  website: String
+  loginSecret: String
   following: UserCreateManyWithoutFollowersInput
   followers: UserCreateManyWithoutFollowingInput
   posts: PostCreateManyWithoutUserInput
   comments: CommentCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
-  loginSecret: String
 }
 
 input UserCreateWithoutPostsInput {
@@ -1823,12 +1829,13 @@ input UserCreateWithoutPostsInput {
   firstName: String
   lastName: String
   bio: String
+  website: String
+  loginSecret: String
   following: UserCreateManyWithoutFollowersInput
   followers: UserCreateManyWithoutFollowingInput
   likes: LikeCreateManyWithoutUserInput
   comments: CommentCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
-  loginSecret: String
 }
 
 input UserCreateWithoutRoomsInput {
@@ -1841,12 +1848,13 @@ input UserCreateWithoutRoomsInput {
   firstName: String
   lastName: String
   bio: String
+  website: String
+  loginSecret: String
   following: UserCreateManyWithoutFollowersInput
   followers: UserCreateManyWithoutFollowingInput
   posts: PostCreateManyWithoutUserInput
   likes: LikeCreateManyWithoutUserInput
   comments: CommentCreateManyWithoutUserInput
-  loginSecret: String
 }
 
 type UserEdge {
@@ -1873,6 +1881,8 @@ enum UserOrderByInput {
   lastName_DESC
   bio_ASC
   bio_DESC
+  website_ASC
+  website_DESC
   loginSecret_ASC
   loginSecret_DESC
   createdAt_ASC
@@ -1891,6 +1901,7 @@ type UserPreviousValues {
   firstName: String
   lastName: String
   bio: String
+  website: String
   loginSecret: String
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -2023,6 +2034,20 @@ input UserScalarWhereInput {
   bio_not_starts_with: String
   bio_ends_with: String
   bio_not_ends_with: String
+  website: String
+  website_not: String
+  website_in: [String!]
+  website_not_in: [String!]
+  website_lt: String
+  website_lte: String
+  website_gt: String
+  website_gte: String
+  website_contains: String
+  website_not_contains: String
+  website_starts_with: String
+  website_not_starts_with: String
+  website_ends_with: String
+  website_not_ends_with: String
   loginSecret: String
   loginSecret_not: String
   loginSecret_in: [String!]
@@ -2085,13 +2110,14 @@ input UserUpdateDataInput {
   firstName: String
   lastName: String
   bio: String
+  website: String
+  loginSecret: String
   following: UserUpdateManyWithoutFollowersInput
   followers: UserUpdateManyWithoutFollowingInput
   posts: PostUpdateManyWithoutUserInput
   likes: LikeUpdateManyWithoutUserInput
   comments: CommentUpdateManyWithoutUserInput
   rooms: RoomUpdateManyWithoutParticipantsInput
-  loginSecret: String
 }
 
 input UserUpdateInput {
@@ -2103,13 +2129,14 @@ input UserUpdateInput {
   firstName: String
   lastName: String
   bio: String
+  website: String
+  loginSecret: String
   following: UserUpdateManyWithoutFollowersInput
   followers: UserUpdateManyWithoutFollowingInput
   posts: PostUpdateManyWithoutUserInput
   likes: LikeUpdateManyWithoutUserInput
   comments: CommentUpdateManyWithoutUserInput
   rooms: RoomUpdateManyWithoutParticipantsInput
-  loginSecret: String
 }
 
 input UserUpdateManyDataInput {
@@ -2121,6 +2148,7 @@ input UserUpdateManyDataInput {
   firstName: String
   lastName: String
   bio: String
+  website: String
   loginSecret: String
 }
 
@@ -2133,6 +2161,7 @@ input UserUpdateManyMutationInput {
   firstName: String
   lastName: String
   bio: String
+  website: String
   loginSecret: String
 }
 
@@ -2220,12 +2249,13 @@ input UserUpdateWithoutCommentsDataInput {
   firstName: String
   lastName: String
   bio: String
+  website: String
+  loginSecret: String
   following: UserUpdateManyWithoutFollowersInput
   followers: UserUpdateManyWithoutFollowingInput
   posts: PostUpdateManyWithoutUserInput
   likes: LikeUpdateManyWithoutUserInput
   rooms: RoomUpdateManyWithoutParticipantsInput
-  loginSecret: String
 }
 
 input UserUpdateWithoutFollowersDataInput {
@@ -2237,12 +2267,13 @@ input UserUpdateWithoutFollowersDataInput {
   firstName: String
   lastName: String
   bio: String
+  website: String
+  loginSecret: String
   following: UserUpdateManyWithoutFollowersInput
   posts: PostUpdateManyWithoutUserInput
   likes: LikeUpdateManyWithoutUserInput
   comments: CommentUpdateManyWithoutUserInput
   rooms: RoomUpdateManyWithoutParticipantsInput
-  loginSecret: String
 }
 
 input UserUpdateWithoutFollowingDataInput {
@@ -2254,12 +2285,13 @@ input UserUpdateWithoutFollowingDataInput {
   firstName: String
   lastName: String
   bio: String
+  website: String
+  loginSecret: String
   followers: UserUpdateManyWithoutFollowingInput
   posts: PostUpdateManyWithoutUserInput
   likes: LikeUpdateManyWithoutUserInput
   comments: CommentUpdateManyWithoutUserInput
   rooms: RoomUpdateManyWithoutParticipantsInput
-  loginSecret: String
 }
 
 input UserUpdateWithoutLikesDataInput {
@@ -2271,12 +2303,13 @@ input UserUpdateWithoutLikesDataInput {
   firstName: String
   lastName: String
   bio: String
+  website: String
+  loginSecret: String
   following: UserUpdateManyWithoutFollowersInput
   followers: UserUpdateManyWithoutFollowingInput
   posts: PostUpdateManyWithoutUserInput
   comments: CommentUpdateManyWithoutUserInput
   rooms: RoomUpdateManyWithoutParticipantsInput
-  loginSecret: String
 }
 
 input UserUpdateWithoutPostsDataInput {
@@ -2288,12 +2321,13 @@ input UserUpdateWithoutPostsDataInput {
   firstName: String
   lastName: String
   bio: String
+  website: String
+  loginSecret: String
   following: UserUpdateManyWithoutFollowersInput
   followers: UserUpdateManyWithoutFollowingInput
   likes: LikeUpdateManyWithoutUserInput
   comments: CommentUpdateManyWithoutUserInput
   rooms: RoomUpdateManyWithoutParticipantsInput
-  loginSecret: String
 }
 
 input UserUpdateWithoutRoomsDataInput {
@@ -2305,12 +2339,13 @@ input UserUpdateWithoutRoomsDataInput {
   firstName: String
   lastName: String
   bio: String
+  website: String
+  loginSecret: String
   following: UserUpdateManyWithoutFollowersInput
   followers: UserUpdateManyWithoutFollowingInput
   posts: PostUpdateManyWithoutUserInput
   likes: LikeUpdateManyWithoutUserInput
   comments: CommentUpdateManyWithoutUserInput
-  loginSecret: String
 }
 
 input UserUpdateWithWhereUniqueWithoutFollowersInput {
@@ -2493,6 +2528,34 @@ input UserWhereInput {
   bio_not_starts_with: String
   bio_ends_with: String
   bio_not_ends_with: String
+  website: String
+  website_not: String
+  website_in: [String!]
+  website_not_in: [String!]
+  website_lt: String
+  website_lte: String
+  website_gt: String
+  website_gte: String
+  website_contains: String
+  website_not_contains: String
+  website_starts_with: String
+  website_not_starts_with: String
+  website_ends_with: String
+  website_not_ends_with: String
+  loginSecret: String
+  loginSecret_not: String
+  loginSecret_in: [String!]
+  loginSecret_not_in: [String!]
+  loginSecret_lt: String
+  loginSecret_lte: String
+  loginSecret_gt: String
+  loginSecret_gte: String
+  loginSecret_contains: String
+  loginSecret_not_contains: String
+  loginSecret_starts_with: String
+  loginSecret_not_starts_with: String
+  loginSecret_ends_with: String
+  loginSecret_not_ends_with: String
   following_every: UserWhereInput
   following_some: UserWhereInput
   following_none: UserWhereInput
@@ -2511,20 +2574,6 @@ input UserWhereInput {
   rooms_every: RoomWhereInput
   rooms_some: RoomWhereInput
   rooms_none: RoomWhereInput
-  loginSecret: String
-  loginSecret_not: String
-  loginSecret_in: [String!]
-  loginSecret_not_in: [String!]
-  loginSecret_lt: String
-  loginSecret_lte: String
-  loginSecret_gt: String
-  loginSecret_gte: String
-  loginSecret_contains: String
-  loginSecret_not_contains: String
-  loginSecret_starts_with: String
-  loginSecret_not_starts_with: String
-  loginSecret_ends_with: String
-  loginSecret_not_ends_with: String
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
