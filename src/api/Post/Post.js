@@ -16,6 +16,7 @@ export default {
         post: { id }
       }
     }).aggregate().count(),
+    firstComments: ({ id }) => prisma.post({ id }).comments({ last: 3 }),
     isLiked: (parent, _, { request }) => {
       const { user } = request;
       const { id } = parent;
