@@ -1,0 +1,17 @@
+scalar Upload
+
+type FileUpload {
+  id: String!
+  path: String!
+  filename: String!
+  mimetype: String!
+  encoding: String!
+}
+
+type Query {
+  uploads: [FileUpload]
+}
+
+type Mutation {
+  singleUpload(file: Upload!): FileUpload!
+}

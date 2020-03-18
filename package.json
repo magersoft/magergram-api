@@ -30,6 +30,7 @@
     "@babel/node": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
     "graphql-tools": "^4.0.7",
+    "graphql-upload": "^10.0.0",
     "merge-graphql-schemas": "^1.7.6",
     "morgan": "^1.9.1",
     "nodemon": "^2.0.2"
