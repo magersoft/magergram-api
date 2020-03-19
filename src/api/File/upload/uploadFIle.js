@@ -1,5 +1,6 @@
 import * as mkdirp from 'mkdirp';
 import { createWriteStream } from 'fs';
+import { isAuthenticated } from '../../../middlewares';
 
 const UPLOAD_DIR = process.cwd() + '/uploads';
 const STATIC_DIR = '/static';
@@ -24,7 +25,8 @@ export default {
     uploads: () => {}
   },
   Mutation: {
-    singleUpload: async (_, { file }) => {
+    singleUpload: async (_, { file }, { request }) => {
+      isAuthenticated(request);
       const { createReadStream, filename, mimetype, encoding } = await file;
       const stream = createReadStream();
 
