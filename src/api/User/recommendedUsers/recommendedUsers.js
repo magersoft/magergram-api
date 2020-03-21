@@ -6,7 +6,16 @@ export default {
     recommendedUsers: async (_, __, { request }) => {
       isAuthenticated(request);
       const { user } = request;
-      return await prisma.users({ where: { id_not: user.id }, last: 10 });
+      const following = await prisma.user({
+        id: user.id
+      }).following();
+
+      return await prisma.users({
+        where: {
+          id_not_in: [...following.map(user => user.id), user.id]
+        },
+        last: 10
+      });
     }
   }
 }
