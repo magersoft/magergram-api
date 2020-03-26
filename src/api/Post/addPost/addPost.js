@@ -3,12 +3,12 @@ import { prisma } from '../../../../generated/prisma-client';
 
 export default {
   Mutation: {
-    upload: async (_, args, { request }) => {
+    addPost: async (_, args, { request }) => {
       isAuthenticated(request);
       const { user } = request;
-      const { caption, files } = args;
+      const { caption, location, files } = args;
       const post = await prisma.createPost({
-        caption, user: { connect: { id: user.id } }
+        caption, location, user: { connect: { id: user.id } }
       });
       files.forEach(async file => {
         await prisma.createFile({

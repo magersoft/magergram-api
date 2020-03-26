@@ -1030,7 +1030,7 @@ type PageInfo {
 type Post {
   id: ID!
   location: String
-  caption: String!
+  caption: String
   user: User
   files(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File!]
   likes(where: LikeWhereInput, orderBy: LikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Like!]
@@ -1048,7 +1048,7 @@ type PostConnection {
 input PostCreateInput {
   id: ID
   location: String
-  caption: String!
+  caption: String
   user: UserCreateOneWithoutPostsInput
   files: FileCreateManyWithoutPostInput
   likes: LikeCreateManyWithoutPostInput
@@ -1078,7 +1078,7 @@ input PostCreateOneWithoutLikesInput {
 input PostCreateWithoutCommentsInput {
   id: ID
   location: String
-  caption: String!
+  caption: String
   user: UserCreateOneWithoutPostsInput
   files: FileCreateManyWithoutPostInput
   likes: LikeCreateManyWithoutPostInput
@@ -1087,7 +1087,7 @@ input PostCreateWithoutCommentsInput {
 input PostCreateWithoutFilesInput {
   id: ID
   location: String
-  caption: String!
+  caption: String
   user: UserCreateOneWithoutPostsInput
   likes: LikeCreateManyWithoutPostInput
   comments: CommentCreateManyWithoutPostInput
@@ -1096,7 +1096,7 @@ input PostCreateWithoutFilesInput {
 input PostCreateWithoutLikesInput {
   id: ID
   location: String
-  caption: String!
+  caption: String
   user: UserCreateOneWithoutPostsInput
   files: FileCreateManyWithoutPostInput
   comments: CommentCreateManyWithoutPostInput
@@ -1105,7 +1105,7 @@ input PostCreateWithoutLikesInput {
 input PostCreateWithoutUserInput {
   id: ID
   location: String
-  caption: String!
+  caption: String
   files: FileCreateManyWithoutPostInput
   likes: LikeCreateManyWithoutPostInput
   comments: CommentCreateManyWithoutPostInput
@@ -1132,7 +1132,7 @@ enum PostOrderByInput {
 type PostPreviousValues {
   id: ID!
   location: String
-  caption: String!
+  caption: String
   createdAt: DateTime!
   updatedAt: DateTime!
 }

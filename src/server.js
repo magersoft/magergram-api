@@ -17,6 +17,11 @@ const options = {
   port: PORT
 };
 
+server.express.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 server.express.use(logger('dev'));
 server.express.use(authenticateJwt);
 server.express.use('/static', express.static(process.cwd() + '/uploads'));

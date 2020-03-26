@@ -23,7 +23,7 @@ type User {
 type Post {
   id: ID! @id
   location: String
-  caption: String!
+  caption: String
   user: User  @relation(name: "PostsOfUser")
   files: [File!]! @relation(name: "FilesOfPost", onDelete: CASCADE)
   likes: [Like!]! @relation(name: "LikesOfPost", onDelete: CASCADE)

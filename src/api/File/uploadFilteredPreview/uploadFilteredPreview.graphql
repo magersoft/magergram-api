@@ -1,0 +1,3 @@
+type Mutation {
+  uploadFilteredPreview(file: Upload!): FileUpload!
+}
