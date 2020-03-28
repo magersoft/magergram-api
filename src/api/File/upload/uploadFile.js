@@ -1,6 +1,8 @@
 import * as mkdirp from 'mkdirp';
-import { createWriteStream } from 'fs';
+import { createWriteStream, unlinkSync } from 'fs';
 import { isAuthenticated } from '../../../middlewares';
+import sharp from 'sharp';
+
 
 const UPLOAD_DIR = process.cwd() + '/uploads';
 const STATIC_DIR = '/static';
@@ -20,6 +22,18 @@ const storeUpload = async ({ stream, filename }) => {
   });
 };
 
+const processedImage = async filename => {
+  const optimizedFilename = `optimized-${filename}`;
+  try {
+    await sharp(`${UPLOAD_DIR}/${filename}`)
+      .resize(1240)
+      .toFile(`${UPLOAD_DIR}/${optimizedFilename}`);
+    return { optimizedFilename };
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 export default {
   Query: {
     uploads: () => {}
@@ -32,7 +46,10 @@ export default {
 
       try {
         const { id, generateFilename } = await storeUpload({ stream, filename });
-        const path = `${STATIC_DIR}/${generateFilename}`;
+        const { optimizedFilename } = await processedImage(generateFilename);
+        unlinkSync(`${UPLOAD_DIR}/${generateFilename}`);
+
+        const path = `${STATIC_DIR}/${optimizedFilename}`;
 
         return { id, filename, mimetype, encoding, path }
       } catch (e) {
