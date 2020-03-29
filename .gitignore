@@ -107,3 +107,4 @@ generated
 prisma.yml
 .idea
 uploads
+build
