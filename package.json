@@ -6,10 +6,11 @@
   "author": "magersoft <magervlad@yandex.ru>",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon --exec babel-node src/server.js",
+    "start": "nodemon --exec babel-node src/server.js",
     "generate": "prisma generate",
-    "prisma": "yarn run deploy && yarn run generate",
-    "deploy": "prisma deploy --force"
+    "prisma": "yarn run prisma:deploy && yarn run generate",
+    "prisma:deploy": "prisma deploy --force",
+    "deploy": "git push heroku master"
   },
   "dependencies": {
     "bcrypt": "^4.0.1",
