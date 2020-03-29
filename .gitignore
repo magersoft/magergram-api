@@ -103,8 +103,6 @@ dist
 # TernJS port file
 .tern-port
 
-generated
-prisma.yml
 .idea
 uploads
 build

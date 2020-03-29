@@ -10,6 +10,7 @@
     "generate": "prisma generate",
     "prisma": "yarn run prisma:deploy && yarn run generate",
     "prisma:deploy": "prisma deploy --force",
+    "predeploy": "yarn run generate",
     "deploy": "git push heroku master",
     "build": "babel src -d build",
     "postbuild": "cd src && copy ./api/*.graphql ../build/ && copy ./api/**/*.graphql ../build/ && copy ./api/**/**/*.graphql ../build/",
