@@ -1,3 +1,0 @@
-type Query {
-  searchPost(term: String!): [Post!]!
-}
