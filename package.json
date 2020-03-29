@@ -6,7 +6,8 @@
   "author": "magersoft <magervlad@yandex.ru>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon --exec babel-node src/server.js",
+    "dev": "nodemon --exec babel-node src/server.js",
+    "start": "cd src && node server.js",
     "generate": "prisma generate",
     "prisma": "yarn run prisma:deploy && yarn run generate",
     "prisma:deploy": "prisma deploy --force",
