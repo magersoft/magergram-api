@@ -1,7 +1,7 @@
 import * as firebase from 'firebase-admin';
+import { KEY } from './firebase_key';
 
 const uuid = require('uuid-v4');
-const privateKey = require('./firebase_key');
 
 const {
   FIREBASE_PROJECT_ID,
@@ -15,7 +15,7 @@ const serviceAccount = {
   'type': 'service_account',
   'project_id': FIREBASE_PROJECT_ID,
   'private_key_id': FIREBASE_KEY_ID,
-  'private_key': privateKey['private_key'],
+  'private_key': KEY,
   'client_email': FIREBASE_CLIENT_EMAIL,
   'client_id': FIREBASE_CLIENT_ID,
   'auth_uri': 'https://accounts.google.com/o/oauth2/auth',
