@@ -1,6 +1,17 @@
-# Magergram
+# Magergram Api (Server)
 
-Instagram clone on Node.js, GraphQL, Prisma, React and React Native
+For Instagram clone on Node.js, GraphQL, Prisma, React and React Native
+
+[Go to Magergram client repo](https://github.com/magersoft/magergram-client)
+
+#### Start server in dev mode
+`yarn dev`
+
+#### Build and compressing
+`yarn build`
+
+#### Runtime
+`yarn start`
 
 ## User Stories
 
