@@ -5,7 +5,7 @@ import { isAuthenticated } from '../../../middlewares';
 import sharp from 'sharp';
 
 const UPLOAD_DIR = process.cwd() + '/uploads';
-const STATIC_SERVER = process.env.STATIC_SERVER || 'http://localhost:4000';
+const SERVER_URI = process.env.SERVER_URI || 'http://localhost:4000';
 const STATIC_DIR = 'static';
 const RESIZE_PX = 1240;
 
@@ -90,7 +90,7 @@ export default {
 
         const path = toGoogleStorage
           ? await uploadToStorage(optimizedFilename)
-          : `${STATIC_SERVER}/${STATIC_DIR}/${optimizedFilename}`;
+          : `${SERVER_URI}/${STATIC_DIR}/${optimizedFilename}`;
 
         return { id, filename, mimetype, encoding, path }
       } catch (e) {
