@@ -102,7 +102,7 @@ dist
 
 # TernJS port file
 .tern-port
-
+src/firebase_key.json
 .idea
 uploads
 build

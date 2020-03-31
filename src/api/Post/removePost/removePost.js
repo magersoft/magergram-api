@@ -1,8 +1,8 @@
-import { unlinkSync } from "fs";
 import { isAuthenticated } from '../../../middlewares';
 import { prisma } from '../../../../generated/prisma-client';
+import { deleteFile } from '../../File/delete/deleteFile';
 
-const UPLOAD_DIR = process.cwd() + '/uploads';
+const STORAGE_BUCKET = process.env.STORAGE_BUCKET;
 
 export default {
   Mutation: {
@@ -11,15 +11,16 @@ export default {
       try {
         const files = await prisma.post({ id }).files();
         await prisma.deletePost({ id });
-        files.forEach(file => {
+
+        for (let i = 0; i < files.length; i++) {
           try {
-            const filename = file.url.replace('/static/', '');
-            unlinkSync(`${UPLOAD_DIR}/${filename}`);
+            const filename = files[i].url.replace(`https://storage.googleapis.com/${STORAGE_BUCKET}/`, '');
+            await deleteFile(filename);
           } catch (e) {
             console.error(e.message);
             return false;
           }
-        });
+        }
         return true;
       } catch (e) {
         console.error(e.message);

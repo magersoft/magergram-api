@@ -1,15 +1,25 @@
-import { unlinkSync } from 'fs';
+import { bucket } from '../../../firebase';
 import { isAuthenticated } from '../../../middlewares';
 
-const UPLOAD_DIR = process.cwd() + '/uploads';
+const STORAGE_BUCKET = process.env.STORAGE_BUCKET;
+
+export const deleteFile = async filename => {
+  try {
+    await bucket.file(filename).delete();
+    console.log(`gs://${STORAGE_BUCKET}/${filename} deleted.`);
+  } catch (e) {
+    console.error(e);
+  }
+};
 
 export default {
   Mutation: {
-    fileDelete: (_, args, { request }) => {
+    fileDelete: async (_, args, { request }) => {
       isAuthenticated(request);
-      const { filename } = args;
+      const { src } = args;
+      const filename = src.replace(`https://storage.googleapis.com/${STORAGE_BUCKET}/`, '');
       try {
-        unlinkSync(`${UPLOAD_DIR}/${filename}`);
+        await deleteFile(filename);
         return true;
       } catch (e) {
         console.error(e);
