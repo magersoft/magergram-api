@@ -105,5 +105,5 @@ dist
 
 
 .idea
-uploads/.DS_Store
+uploads
 build
