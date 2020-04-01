@@ -38,22 +38,26 @@ export default {
           throw new Error('Password is required');
         }
 
+        let preparedPhone;
+        if (phone) {
+          preparedPhone = phone.replace('+', '').replace('8', '7');
+        }
+
         await prisma.createUser({
           username,
           email,
-          phone,
+          phone: preparedPhone,
           password: savePassword,
           firstName,
           lastName
         });
         const loginSecret = generateSecret(phone ? 'PHONE' : 'EMAIL');
         if (phone) {
-          console.log(loginSecret);
-          // await sendVerificationSMS(phone, loginSecret);
+          await sendVerificationSMS(preparedPhone, loginSecret);
         } else {
           await sendSecretMail(email, loginSecret);
         }
-        await prisma.updateUser({ data: { loginSecret }, where: { email, phone } });
+        await prisma.updateUser({ data: { loginSecret }, where: { email, phone: preparedPhone } });
         return {
           ok: true,
           error: null
