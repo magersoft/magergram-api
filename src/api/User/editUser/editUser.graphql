@@ -3,8 +3,9 @@ type Mutation {
     username: String,
     email: String,
     phone: String,
-    fisrtName: String,
+    firstName: String,
     lastName: String,
+    website: String,
     bio: String
     avatar: String
   ): User!
