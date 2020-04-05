@@ -1,12 +1,8 @@
 import { prisma } from '../../../../generated/prisma-client';
-import bcrypt from 'bcrypt';
 import { generateSecret, sendSecretMail } from '../../../utils/sendEmail';
+import { hashPassword } from '../../../utils/bcryptPassword';
 import is from 'is_js';
 import { isValidPhone, sendVerificationSMS } from '../../../utils/sendSMS';
-
-const hashPassword = (password) => {
-  return bcrypt.hash(password, 10)
-};
 
 export default {
   Mutation: {
@@ -15,7 +11,7 @@ export default {
       try {
         if (email) {
           if (!is.email(email)) {
-            throw new Error('Enter a valid email address')
+            throw new Error('Enter a valid email address');
           }
         } else {
           if (phone) {
@@ -23,12 +19,12 @@ export default {
               throw new Error('Enter a valid phone number');
             }
           } else {
-            throw new Error('Email or phone required field')
+            throw new Error('Email or phone required field');
           }
         }
 
         if (password.length < 6) {
-          throw new Error('Password must be more 6 symbols')
+          throw new Error('Password must be more 6 symbols');
         }
 
         let savePassword;

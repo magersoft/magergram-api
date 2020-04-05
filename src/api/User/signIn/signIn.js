@@ -1,12 +1,8 @@
 import { generateToken } from '../../../utils/createJWT';
 import { prisma } from '../../../../generated/prisma-client';
-import bcrypt from 'bcrypt';
+import { comparePassword } from '../../../utils/bcryptPassword';
 import is from 'is_js';
 import { isValidPhone } from '../../../utils/sendSMS';
-
-const comparePassword = async (password, hash) => {
-  return await bcrypt.compare(password, hash);
-};
 
 export default {
   Mutation: {
