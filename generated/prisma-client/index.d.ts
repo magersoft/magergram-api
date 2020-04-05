@@ -350,6 +350,10 @@ export type UserOrderByInput =
   | "website_DESC"
   | "loginSecret_ASC"
   | "loginSecret_DESC"
+  | "darkMode_ASC"
+  | "darkMode_DESC"
+  | "language_ASC"
+  | "language_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -574,6 +578,22 @@ export interface UserWhereInput {
   loginSecret_not_starts_with?: Maybe<String>;
   loginSecret_ends_with?: Maybe<String>;
   loginSecret_not_ends_with?: Maybe<String>;
+  darkMode?: Maybe<Boolean>;
+  darkMode_not?: Maybe<Boolean>;
+  language?: Maybe<String>;
+  language_not?: Maybe<String>;
+  language_in?: Maybe<String[] | String>;
+  language_not_in?: Maybe<String[] | String>;
+  language_lt?: Maybe<String>;
+  language_lte?: Maybe<String>;
+  language_gt?: Maybe<String>;
+  language_gte?: Maybe<String>;
+  language_contains?: Maybe<String>;
+  language_not_contains?: Maybe<String>;
+  language_starts_with?: Maybe<String>;
+  language_not_starts_with?: Maybe<String>;
+  language_ends_with?: Maybe<String>;
+  language_not_ends_with?: Maybe<String>;
   following_every?: Maybe<UserWhereInput>;
   following_some?: Maybe<UserWhereInput>;
   following_none?: Maybe<UserWhereInput>;
@@ -974,6 +994,8 @@ export interface UserCreateWithoutCommentsInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  darkMode?: Maybe<Boolean>;
+  language?: Maybe<String>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
   followers?: Maybe<UserCreateManyWithoutFollowingInput>;
   posts?: Maybe<PostCreateManyWithoutUserInput>;
@@ -1000,6 +1022,8 @@ export interface UserCreateWithoutFollowersInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  darkMode?: Maybe<Boolean>;
+  language?: Maybe<String>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
   posts?: Maybe<PostCreateManyWithoutUserInput>;
   likes?: Maybe<LikeCreateManyWithoutUserInput>;
@@ -1058,6 +1082,8 @@ export interface UserCreateWithoutLikesInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  darkMode?: Maybe<Boolean>;
+  language?: Maybe<String>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
   followers?: Maybe<UserCreateManyWithoutFollowingInput>;
   posts?: Maybe<PostCreateManyWithoutUserInput>;
@@ -1084,6 +1110,8 @@ export interface UserCreateWithoutFollowingInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  darkMode?: Maybe<Boolean>;
+  language?: Maybe<String>;
   followers?: Maybe<UserCreateManyWithoutFollowingInput>;
   posts?: Maybe<PostCreateManyWithoutUserInput>;
   likes?: Maybe<LikeCreateManyWithoutUserInput>;
@@ -1132,6 +1160,8 @@ export interface UserCreateWithoutPostsInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  darkMode?: Maybe<Boolean>;
+  language?: Maybe<String>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
   followers?: Maybe<UserCreateManyWithoutFollowingInput>;
   likes?: Maybe<LikeCreateManyWithoutUserInput>;
@@ -1209,6 +1239,8 @@ export interface UserCreateInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  darkMode?: Maybe<Boolean>;
+  language?: Maybe<String>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
   followers?: Maybe<UserCreateManyWithoutFollowingInput>;
   posts?: Maybe<PostCreateManyWithoutUserInput>;
@@ -1256,6 +1288,8 @@ export interface UserUpdateWithoutCommentsDataInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  darkMode?: Maybe<Boolean>;
+  language?: Maybe<String>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
@@ -1301,6 +1335,8 @@ export interface UserUpdateWithoutFollowersDataInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  darkMode?: Maybe<Boolean>;
+  language?: Maybe<String>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
   likes?: Maybe<LikeUpdateManyWithoutUserInput>;
@@ -1481,6 +1517,8 @@ export interface UserUpdateWithoutLikesDataInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  darkMode?: Maybe<Boolean>;
+  language?: Maybe<String>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
@@ -1526,6 +1564,8 @@ export interface UserUpdateWithoutFollowingDataInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  darkMode?: Maybe<Boolean>;
+  language?: Maybe<String>;
   followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
   likes?: Maybe<LikeUpdateManyWithoutUserInput>;
@@ -1596,6 +1636,8 @@ export interface UserUpdateWithoutPostsDataInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  darkMode?: Maybe<Boolean>;
+  language?: Maybe<String>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
   likes?: Maybe<LikeUpdateManyWithoutUserInput>;
@@ -1803,6 +1845,8 @@ export interface UserUpdateDataInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  darkMode?: Maybe<Boolean>;
+  language?: Maybe<String>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
@@ -2175,6 +2219,22 @@ export interface UserScalarWhereInput {
   loginSecret_not_starts_with?: Maybe<String>;
   loginSecret_ends_with?: Maybe<String>;
   loginSecret_not_ends_with?: Maybe<String>;
+  darkMode?: Maybe<Boolean>;
+  darkMode_not?: Maybe<Boolean>;
+  language?: Maybe<String>;
+  language_not?: Maybe<String>;
+  language_in?: Maybe<String[] | String>;
+  language_not_in?: Maybe<String[] | String>;
+  language_lt?: Maybe<String>;
+  language_lte?: Maybe<String>;
+  language_gt?: Maybe<String>;
+  language_gte?: Maybe<String>;
+  language_contains?: Maybe<String>;
+  language_not_contains?: Maybe<String>;
+  language_starts_with?: Maybe<String>;
+  language_not_starts_with?: Maybe<String>;
+  language_ends_with?: Maybe<String>;
+  language_not_ends_with?: Maybe<String>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -2212,6 +2272,8 @@ export interface UserUpdateManyDataInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  darkMode?: Maybe<Boolean>;
+  language?: Maybe<String>;
 }
 
 export interface UserUpsertWithoutLikesInput {
@@ -2417,6 +2479,8 @@ export interface UserCreateWithoutRoomsInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  darkMode?: Maybe<Boolean>;
+  language?: Maybe<String>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
   followers?: Maybe<UserCreateManyWithoutFollowingInput>;
   posts?: Maybe<PostCreateManyWithoutUserInput>;
@@ -2478,6 +2542,8 @@ export interface UserUpdateWithoutRoomsDataInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  darkMode?: Maybe<Boolean>;
+  language?: Maybe<String>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
@@ -2546,6 +2612,8 @@ export interface UserUpdateInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  darkMode?: Maybe<Boolean>;
+  language?: Maybe<String>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
@@ -2565,6 +2633,8 @@ export interface UserUpdateManyMutationInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  darkMode?: Maybe<Boolean>;
+  language?: Maybe<String>;
 }
 
 export interface CommentSubscriptionWhereInput {
@@ -2698,6 +2768,8 @@ export interface User {
   bio?: String;
   website?: String;
   loginSecret?: String;
+  darkMode: Boolean;
+  language: String;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -2714,6 +2786,8 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   bio: () => Promise<String>;
   website: () => Promise<String>;
   loginSecret: () => Promise<String>;
+  darkMode: () => Promise<Boolean>;
+  language: () => Promise<String>;
   following: <T = FragmentableArray<User>>(args?: {
     where?: UserWhereInput;
     orderBy?: UserOrderByInput;
@@ -2786,6 +2860,8 @@ export interface UserSubscription
   bio: () => Promise<AsyncIterator<String>>;
   website: () => Promise<AsyncIterator<String>>;
   loginSecret: () => Promise<AsyncIterator<String>>;
+  darkMode: () => Promise<AsyncIterator<Boolean>>;
+  language: () => Promise<AsyncIterator<String>>;
   following: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
     where?: UserWhereInput;
     orderBy?: UserOrderByInput;
@@ -2858,6 +2934,8 @@ export interface UserNullablePromise
   bio: () => Promise<String>;
   website: () => Promise<String>;
   loginSecret: () => Promise<String>;
+  darkMode: () => Promise<Boolean>;
+  language: () => Promise<String>;
   following: <T = FragmentableArray<User>>(args?: {
     where?: UserWhereInput;
     orderBy?: UserOrderByInput;
@@ -3979,6 +4057,8 @@ export interface UserPreviousValues {
   bio?: String;
   website?: String;
   loginSecret?: String;
+  darkMode: Boolean;
+  language: String;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -3997,6 +4077,8 @@ export interface UserPreviousValuesPromise
   bio: () => Promise<String>;
   website: () => Promise<String>;
   loginSecret: () => Promise<String>;
+  darkMode: () => Promise<Boolean>;
+  language: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -4015,6 +4097,8 @@ export interface UserPreviousValuesSubscription
   bio: () => Promise<AsyncIterator<String>>;
   website: () => Promise<AsyncIterator<String>>;
   loginSecret: () => Promise<AsyncIterator<String>>;
+  darkMode: () => Promise<AsyncIterator<Boolean>>;
+  language: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -4031,6 +4115,11 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 export type String = string;
 
 /*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
+
+/*
 DateTime scalar input type, allowing Date
 */
 export type DateTimeInput = Date | string;
@@ -4044,11 +4133,6 @@ export type DateTimeOutput = string;
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
 export type Int = number;
-
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
 
 export type Long = string;
 

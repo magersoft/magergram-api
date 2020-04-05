@@ -10,6 +10,8 @@ type User {
   bio: String
   website: String
   loginSecret: String
+  darkMode: Boolean! @default(value: false)
+  language: String! @default(value: "ru")
   following: [User!]! @relation(name: "FollowRelation")
   followers: [User!]! @relation(name: "FollowRelation")
   posts: [Post!]! @relation(name: "PostsOfUser", onDelete: CASCADE)
