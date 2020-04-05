@@ -5,10 +5,10 @@ type User {
   email: String @unique
   phone: String @unique
   password: String!
-  firstName: String
-  lastName: String
-  bio: String
-  website: String
+  firstName: String @default(value: "")
+  lastName: String @default(value: "")
+  bio: String @default(value: "")
+  website: String @default(value: "")
   loginSecret: String
   darkMode: Boolean! @default(value: false)
   language: String! @default(value: "ru")
