@@ -8,7 +8,12 @@ export default {
   Mutation: {
     removePost: async (_, { id }, { request }) => {
       isAuthenticated(request);
+      const { user: currentUser } = request;
       try {
+        const user = await prisma.post({ id }).user();
+        if (user.id !== currentUser.id) {
+          throw new Error('Permission denied');
+        }
         const files = await prisma.post({ id }).files();
         await prisma.deletePost({ id });
 

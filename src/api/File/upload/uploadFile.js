@@ -1,6 +1,7 @@
+import path from 'path';
 import { bucket, uuid } from '../../../firebase';
 import * as mkdirp from 'mkdirp';
-import { createWriteStream, unlinkSync } from 'fs';
+import { createWriteStream, unlinkSync, readdir, unlink } from 'fs';
 import { isAuthenticated } from '../../../middlewares';
 import sharp from 'sharp';
 
@@ -10,6 +11,21 @@ const STATIC_DIR = 'static';
 const RESIZE_PX = 1240;
 
 mkdirp.sync(UPLOAD_DIR);
+
+const clearDirectory = dir => {
+  readdir(dir, (err, files) => {
+    if (err) throw err;
+    for (const file of files) {
+      if (file !== 'filters') {
+        unlink(path.join(dir, file), err => {
+          if (err) throw err;
+        })
+      }
+    }
+  })
+};
+
+clearDirectory(UPLOAD_DIR);
 
 const storeUpload = async ({ stream, filename }) => {
   const id = Math.random().toString(36).substr(2);
@@ -64,6 +80,7 @@ const uploadToStorage = async filename => {
 
     await bucket.file(destination).makePublic();
 
+    console.log(`${UPLOAD_DIR}/${filename}`);
     unlinkSync(`${UPLOAD_DIR}/${filename}`);
 
     console.log('Uploaded for Google Cloud:', url);
