@@ -1068,6 +1068,8 @@ type Notification {
   comment: Comment
   subscriber: User
   requesting: Boolean
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type NotificationConnection {
@@ -1112,12 +1114,18 @@ enum NotificationOrderByInput {
   type_DESC
   requesting_ASC
   requesting_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type NotificationPreviousValues {
   id: ID!
   type: NotificationType!
   requesting: Boolean
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input NotificationScalarWhereInput {
@@ -1141,6 +1149,22 @@ input NotificationScalarWhereInput {
   type_not_in: [NotificationType!]
   requesting: Boolean
   requesting_not: Boolean
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [NotificationScalarWhereInput!]
   OR: [NotificationScalarWhereInput!]
   NOT: [NotificationScalarWhereInput!]
@@ -1168,6 +1192,7 @@ enum NotificationType {
   LIKE
   COMMENT
   SUBSCRIPTION
+  CONFIRM
 }
 
 input NotificationUpdateInput {
@@ -1250,6 +1275,22 @@ input NotificationWhereInput {
   subscriber: UserWhereInput
   requesting: Boolean
   requesting_not: Boolean
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [NotificationWhereInput!]
   OR: [NotificationWhereInput!]
   NOT: [NotificationWhereInput!]

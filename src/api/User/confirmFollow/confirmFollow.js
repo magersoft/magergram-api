@@ -3,44 +3,42 @@ import { prisma } from '../../../../generated/prisma-client';
 
 export default {
   Mutation: {
-    requestFollow: async (_, { subscriberId }, { request }) => {
+    confirmFollow: async (_, { notificationId, requestUserId }, { request }) => {
       isAuthenticated(request);
       const { user } = request;
       try {
-        const notifications = await prisma.user({ id: user.id }).notifications({
+        await prisma.updateUser({
           where: {
-            AND: {
-              type: 'SUBSCRIPTION',
-              subscriber: { id: user.id },
-              requesting: true
+            id: requestUserId
+          },
+          data: {
+            following: {
+              connect: {
+                id: user.id
+              }
             }
           }
         });
 
-        if (notifications.length) {
-          return false;
-        }
-
         await prisma.createNotification({
-          type: 'SUBSCRIPTION',
+          type: 'CONFIRM',
           user: {
             connect: {
-              id: subscriberId
+              id: requestUserId
             }
           },
           subscriber: {
             connect: {
               id: user.id
             }
-          },
-          requesting: true
+          }
         });
-        return true;
+
+        return await prisma.deleteNotification({ id: notificationId });
       } catch (e) {
         console.error(e);
-        return false;
+        return null;
       }
-
     }
   }
 }

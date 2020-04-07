@@ -8,6 +8,7 @@ export default {
     likes: ({ id }) => prisma.user({ id }).likes(),
     comments: ({ id }) => prisma.user({ id }).comments(),
     rooms: ({ id }) => prisma.user({ id }).rooms(),
+    notifications: ({ id }) => prisma.user({ id }).notifications,
     postsCount: ({ id }) => prisma.postsConnection({
       where: {
         user: { id }
@@ -53,8 +54,8 @@ export default {
           AND: [
             { type: 'SUBSCRIPTION' },
             { requesting: true },
-            { user: { id: user.id } },
-            { subscriber: { id: parentId } }
+            { user: { id: parentId } },
+            { subscriber: { id: user.id } }
           ]
         });
       } catch (e) {
