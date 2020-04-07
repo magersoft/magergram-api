@@ -5,4 +5,5 @@ type User {
   followersCount: Int!
   isFollowing: Boolean!
   isSelf: Boolean!
+  isRequestingSubscription: Boolean!
 }

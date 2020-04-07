@@ -20,6 +20,7 @@ export interface Exists {
   file: (where?: FileWhereInput) => Promise<boolean>;
   like: (where?: LikeWhereInput) => Promise<boolean>;
   message: (where?: MessageWhereInput) => Promise<boolean>;
+  notification: (where?: NotificationWhereInput) => Promise<boolean>;
   post: (where?: PostWhereInput) => Promise<boolean>;
   room: (where?: RoomWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
@@ -120,6 +121,27 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => MessageConnectionPromise;
+  notification: (
+    where: NotificationWhereUniqueInput
+  ) => NotificationNullablePromise;
+  notifications: (args?: {
+    where?: NotificationWhereInput;
+    orderBy?: NotificationOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Notification>;
+  notificationsConnection: (args?: {
+    where?: NotificationWhereInput;
+    orderBy?: NotificationOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => NotificationConnectionPromise;
   post: (where: PostWhereUniqueInput) => PostNullablePromise;
   posts: (args?: {
     where?: PostWhereInput;
@@ -243,6 +265,26 @@ export interface Prisma {
   }) => MessagePromise;
   deleteMessage: (where: MessageWhereUniqueInput) => MessagePromise;
   deleteManyMessages: (where?: MessageWhereInput) => BatchPayloadPromise;
+  createNotification: (data: NotificationCreateInput) => NotificationPromise;
+  updateNotification: (args: {
+    data: NotificationUpdateInput;
+    where: NotificationWhereUniqueInput;
+  }) => NotificationPromise;
+  updateManyNotifications: (args: {
+    data: NotificationUpdateManyMutationInput;
+    where?: NotificationWhereInput;
+  }) => BatchPayloadPromise;
+  upsertNotification: (args: {
+    where: NotificationWhereUniqueInput;
+    create: NotificationCreateInput;
+    update: NotificationUpdateInput;
+  }) => NotificationPromise;
+  deleteNotification: (
+    where: NotificationWhereUniqueInput
+  ) => NotificationPromise;
+  deleteManyNotifications: (
+    where?: NotificationWhereInput
+  ) => BatchPayloadPromise;
   createPost: (data: PostCreateInput) => PostPromise;
   updatePost: (args: {
     data: PostUpdateInput;
@@ -308,6 +350,9 @@ export interface Subscription {
   message: (
     where?: MessageSubscriptionWhereInput
   ) => MessageSubscriptionPayloadSubscription;
+  notification: (
+    where?: NotificationSubscriptionWhereInput
+  ) => NotificationSubscriptionPayloadSubscription;
   post: (
     where?: PostSubscriptionWhereInput
   ) => PostSubscriptionPayloadSubscription;
@@ -326,6 +371,8 @@ export interface ClientConstructor<T> {
 /**
  * Types
  */
+
+export type NotificationType = "LIKE" | "COMMENT" | "SUBSCRIPTION";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -350,6 +397,8 @@ export type UserOrderByInput =
   | "website_DESC"
   | "loginSecret_ASC"
   | "loginSecret_DESC"
+  | "isPrivate_ASC"
+  | "isPrivate_DESC"
   | "darkMode_ASC"
   | "darkMode_DESC"
   | "language_ASC"
@@ -416,6 +465,14 @@ export type MessageOrderByInput =
   | "createdAt_DESC"
   | "updatedAt_ASC"
   | "updatedAt_DESC";
+
+export type NotificationOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "type_ASC"
+  | "type_DESC"
+  | "requesting_ASC"
+  | "requesting_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -578,6 +635,8 @@ export interface UserWhereInput {
   loginSecret_not_starts_with?: Maybe<String>;
   loginSecret_ends_with?: Maybe<String>;
   loginSecret_not_ends_with?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
+  isPrivate_not?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   darkMode_not?: Maybe<Boolean>;
   language?: Maybe<String>;
@@ -612,6 +671,9 @@ export interface UserWhereInput {
   rooms_every?: Maybe<RoomWhereInput>;
   rooms_some?: Maybe<RoomWhereInput>;
   rooms_none?: Maybe<RoomWhereInput>;
+  notifications_every?: Maybe<NotificationWhereInput>;
+  notifications_some?: Maybe<NotificationWhereInput>;
+  notifications_none?: Maybe<NotificationWhereInput>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -943,6 +1005,36 @@ export interface MessageWhereInput {
   NOT?: Maybe<MessageWhereInput[] | MessageWhereInput>;
 }
 
+export interface NotificationWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  type?: Maybe<NotificationType>;
+  type_not?: Maybe<NotificationType>;
+  type_in?: Maybe<NotificationType[] | NotificationType>;
+  type_not_in?: Maybe<NotificationType[] | NotificationType>;
+  user?: Maybe<UserWhereInput>;
+  post?: Maybe<PostWhereInput>;
+  comment?: Maybe<CommentWhereInput>;
+  subscriber?: Maybe<UserWhereInput>;
+  requesting?: Maybe<Boolean>;
+  requesting_not?: Maybe<Boolean>;
+  AND?: Maybe<NotificationWhereInput[] | NotificationWhereInput>;
+  OR?: Maybe<NotificationWhereInput[] | NotificationWhereInput>;
+  NOT?: Maybe<NotificationWhereInput[] | NotificationWhereInput>;
+}
+
 export type FileWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
@@ -952,6 +1044,10 @@ export type LikeWhereUniqueInput = AtLeastOne<{
 }>;
 
 export type MessageWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export type NotificationWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
@@ -994,6 +1090,7 @@ export interface UserCreateWithoutCommentsInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
@@ -1001,6 +1098,7 @@ export interface UserCreateWithoutCommentsInput {
   posts?: Maybe<PostCreateManyWithoutUserInput>;
   likes?: Maybe<LikeCreateManyWithoutUserInput>;
   rooms?: Maybe<RoomCreateManyWithoutParticipantsInput>;
+  notifications?: Maybe<NotificationCreateManyWithoutUserInput>;
 }
 
 export interface UserCreateManyWithoutFollowersInput {
@@ -1022,6 +1120,7 @@ export interface UserCreateWithoutFollowersInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
@@ -1029,6 +1128,7 @@ export interface UserCreateWithoutFollowersInput {
   likes?: Maybe<LikeCreateManyWithoutUserInput>;
   comments?: Maybe<CommentCreateManyWithoutUserInput>;
   rooms?: Maybe<RoomCreateManyWithoutParticipantsInput>;
+  notifications?: Maybe<NotificationCreateManyWithoutUserInput>;
 }
 
 export interface PostCreateManyWithoutUserInput {
@@ -1082,6 +1182,7 @@ export interface UserCreateWithoutLikesInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
@@ -1089,6 +1190,7 @@ export interface UserCreateWithoutLikesInput {
   posts?: Maybe<PostCreateManyWithoutUserInput>;
   comments?: Maybe<CommentCreateManyWithoutUserInput>;
   rooms?: Maybe<RoomCreateManyWithoutParticipantsInput>;
+  notifications?: Maybe<NotificationCreateManyWithoutUserInput>;
 }
 
 export interface UserCreateManyWithoutFollowingInput {
@@ -1110,6 +1212,7 @@ export interface UserCreateWithoutFollowingInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   followers?: Maybe<UserCreateManyWithoutFollowingInput>;
@@ -1117,6 +1220,7 @@ export interface UserCreateWithoutFollowingInput {
   likes?: Maybe<LikeCreateManyWithoutUserInput>;
   comments?: Maybe<CommentCreateManyWithoutUserInput>;
   rooms?: Maybe<RoomCreateManyWithoutParticipantsInput>;
+  notifications?: Maybe<NotificationCreateManyWithoutUserInput>;
 }
 
 export interface LikeCreateManyWithoutUserInput {
@@ -1160,6 +1264,7 @@ export interface UserCreateWithoutPostsInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
@@ -1167,6 +1272,7 @@ export interface UserCreateWithoutPostsInput {
   likes?: Maybe<LikeCreateManyWithoutUserInput>;
   comments?: Maybe<CommentCreateManyWithoutUserInput>;
   rooms?: Maybe<RoomCreateManyWithoutParticipantsInput>;
+  notifications?: Maybe<NotificationCreateManyWithoutUserInput>;
 }
 
 export interface CommentCreateManyWithoutUserInput {
@@ -1239,6 +1345,7 @@ export interface UserCreateInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
@@ -1247,6 +1354,40 @@ export interface UserCreateInput {
   likes?: Maybe<LikeCreateManyWithoutUserInput>;
   comments?: Maybe<CommentCreateManyWithoutUserInput>;
   rooms?: Maybe<RoomCreateManyWithoutParticipantsInput>;
+  notifications?: Maybe<NotificationCreateManyWithoutUserInput>;
+}
+
+export interface NotificationCreateManyWithoutUserInput {
+  create?: Maybe<
+    NotificationCreateWithoutUserInput[] | NotificationCreateWithoutUserInput
+  >;
+  connect?: Maybe<
+    NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
+  >;
+}
+
+export interface NotificationCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  type: NotificationType;
+  post?: Maybe<PostCreateOneInput>;
+  comment?: Maybe<CommentCreateOneInput>;
+  subscriber?: Maybe<UserCreateOneInput>;
+  requesting?: Maybe<Boolean>;
+}
+
+export interface PostCreateOneInput {
+  create?: Maybe<PostCreateInput>;
+  connect?: Maybe<PostWhereUniqueInput>;
+}
+
+export interface PostCreateInput {
+  id?: Maybe<ID_Input>;
+  location?: Maybe<String>;
+  caption?: Maybe<String>;
+  user?: Maybe<UserCreateOneWithoutPostsInput>;
+  files?: Maybe<FileCreateManyWithoutPostInput>;
+  likes?: Maybe<LikeCreateManyWithoutPostInput>;
+  comments?: Maybe<CommentCreateManyWithoutPostInput>;
 }
 
 export interface CommentCreateManyWithoutPostInput {
@@ -1260,6 +1401,11 @@ export interface CommentCreateWithoutPostInput {
   id?: Maybe<ID_Input>;
   text: String;
   user?: Maybe<UserCreateOneWithoutCommentsInput>;
+}
+
+export interface CommentCreateOneInput {
+  create?: Maybe<CommentCreateInput>;
+  connect?: Maybe<CommentWhereUniqueInput>;
 }
 
 export interface CommentUpdateInput {
@@ -1288,6 +1434,7 @@ export interface UserUpdateWithoutCommentsDataInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
@@ -1295,6 +1442,7 @@ export interface UserUpdateWithoutCommentsDataInput {
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
   likes?: Maybe<LikeUpdateManyWithoutUserInput>;
   rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
+  notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
 }
 
 export interface UserUpdateManyWithoutFollowersInput {
@@ -1335,6 +1483,7 @@ export interface UserUpdateWithoutFollowersDataInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
@@ -1342,6 +1491,7 @@ export interface UserUpdateWithoutFollowersDataInput {
   likes?: Maybe<LikeUpdateManyWithoutUserInput>;
   comments?: Maybe<CommentUpdateManyWithoutUserInput>;
   rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
+  notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
 }
 
 export interface PostUpdateManyWithoutUserInput {
@@ -1517,6 +1667,7 @@ export interface UserUpdateWithoutLikesDataInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
@@ -1524,6 +1675,7 @@ export interface UserUpdateWithoutLikesDataInput {
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
   comments?: Maybe<CommentUpdateManyWithoutUserInput>;
   rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
+  notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
 }
 
 export interface UserUpdateManyWithoutFollowingInput {
@@ -1564,6 +1716,7 @@ export interface UserUpdateWithoutFollowingDataInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
@@ -1571,6 +1724,7 @@ export interface UserUpdateWithoutFollowingDataInput {
   likes?: Maybe<LikeUpdateManyWithoutUserInput>;
   comments?: Maybe<CommentUpdateManyWithoutUserInput>;
   rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
+  notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
 }
 
 export interface LikeUpdateManyWithoutUserInput {
@@ -1636,6 +1790,7 @@ export interface UserUpdateWithoutPostsDataInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
@@ -1643,6 +1798,7 @@ export interface UserUpdateWithoutPostsDataInput {
   likes?: Maybe<LikeUpdateManyWithoutUserInput>;
   comments?: Maybe<CommentUpdateManyWithoutUserInput>;
   rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
+  notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
 }
 
 export interface CommentUpdateManyWithoutUserInput {
@@ -1845,6 +2001,7 @@ export interface UserUpdateDataInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
@@ -1853,11 +2010,187 @@ export interface UserUpdateDataInput {
   likes?: Maybe<LikeUpdateManyWithoutUserInput>;
   comments?: Maybe<CommentUpdateManyWithoutUserInput>;
   rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
+  notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
+}
+
+export interface NotificationUpdateManyWithoutUserInput {
+  create?: Maybe<
+    NotificationCreateWithoutUserInput[] | NotificationCreateWithoutUserInput
+  >;
+  delete?: Maybe<NotificationWhereUniqueInput[] | NotificationWhereUniqueInput>;
+  connect?: Maybe<
+    NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
+  >;
+  set?: Maybe<NotificationWhereUniqueInput[] | NotificationWhereUniqueInput>;
+  disconnect?: Maybe<
+    NotificationWhereUniqueInput[] | NotificationWhereUniqueInput
+  >;
+  update?: Maybe<
+    | NotificationUpdateWithWhereUniqueWithoutUserInput[]
+    | NotificationUpdateWithWhereUniqueWithoutUserInput
+  >;
+  upsert?: Maybe<
+    | NotificationUpsertWithWhereUniqueWithoutUserInput[]
+    | NotificationUpsertWithWhereUniqueWithoutUserInput
+  >;
+  deleteMany?: Maybe<
+    NotificationScalarWhereInput[] | NotificationScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | NotificationUpdateManyWithWhereNestedInput[]
+    | NotificationUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface NotificationUpdateWithWhereUniqueWithoutUserInput {
+  where: NotificationWhereUniqueInput;
+  data: NotificationUpdateWithoutUserDataInput;
+}
+
+export interface NotificationUpdateWithoutUserDataInput {
+  type?: Maybe<NotificationType>;
+  post?: Maybe<PostUpdateOneInput>;
+  comment?: Maybe<CommentUpdateOneInput>;
+  subscriber?: Maybe<UserUpdateOneInput>;
+  requesting?: Maybe<Boolean>;
+}
+
+export interface PostUpdateOneInput {
+  create?: Maybe<PostCreateInput>;
+  update?: Maybe<PostUpdateDataInput>;
+  upsert?: Maybe<PostUpsertNestedInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<PostWhereUniqueInput>;
+}
+
+export interface PostUpdateDataInput {
+  location?: Maybe<String>;
+  caption?: Maybe<String>;
+  user?: Maybe<UserUpdateOneWithoutPostsInput>;
+  files?: Maybe<FileUpdateManyWithoutPostInput>;
+  likes?: Maybe<LikeUpdateManyWithoutPostInput>;
+  comments?: Maybe<CommentUpdateManyWithoutPostInput>;
+}
+
+export interface CommentUpdateManyWithoutPostInput {
+  create?: Maybe<
+    CommentCreateWithoutPostInput[] | CommentCreateWithoutPostInput
+  >;
+  delete?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+  set?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+  disconnect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
+  update?: Maybe<
+    | CommentUpdateWithWhereUniqueWithoutPostInput[]
+    | CommentUpdateWithWhereUniqueWithoutPostInput
+  >;
+  upsert?: Maybe<
+    | CommentUpsertWithWhereUniqueWithoutPostInput[]
+    | CommentUpsertWithWhereUniqueWithoutPostInput
+  >;
+  deleteMany?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
+  updateMany?: Maybe<
+    | CommentUpdateManyWithWhereNestedInput[]
+    | CommentUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface CommentUpdateWithWhereUniqueWithoutPostInput {
+  where: CommentWhereUniqueInput;
+  data: CommentUpdateWithoutPostDataInput;
+}
+
+export interface CommentUpdateWithoutPostDataInput {
+  text?: Maybe<String>;
+  user?: Maybe<UserUpdateOneWithoutCommentsInput>;
+}
+
+export interface CommentUpsertWithWhereUniqueWithoutPostInput {
+  where: CommentWhereUniqueInput;
+  update: CommentUpdateWithoutPostDataInput;
+  create: CommentCreateWithoutPostInput;
+}
+
+export interface PostUpsertNestedInput {
+  update: PostUpdateDataInput;
+  create: PostCreateInput;
+}
+
+export interface CommentUpdateOneInput {
+  create?: Maybe<CommentCreateInput>;
+  update?: Maybe<CommentUpdateDataInput>;
+  upsert?: Maybe<CommentUpsertNestedInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<CommentWhereUniqueInput>;
+}
+
+export interface CommentUpdateDataInput {
+  text?: Maybe<String>;
+  user?: Maybe<UserUpdateOneWithoutCommentsInput>;
+  post?: Maybe<PostUpdateOneWithoutCommentsInput>;
+}
+
+export interface CommentUpsertNestedInput {
+  update: CommentUpdateDataInput;
+  create: CommentCreateInput;
+}
+
+export interface UserUpdateOneInput {
+  create?: Maybe<UserCreateInput>;
+  update?: Maybe<UserUpdateDataInput>;
+  upsert?: Maybe<UserUpsertNestedInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface UserUpsertNestedInput {
   update: UserUpdateDataInput;
   create: UserCreateInput;
+}
+
+export interface NotificationUpsertWithWhereUniqueWithoutUserInput {
+  where: NotificationWhereUniqueInput;
+  update: NotificationUpdateWithoutUserDataInput;
+  create: NotificationCreateWithoutUserInput;
+}
+
+export interface NotificationScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  type?: Maybe<NotificationType>;
+  type_not?: Maybe<NotificationType>;
+  type_in?: Maybe<NotificationType[] | NotificationType>;
+  type_not_in?: Maybe<NotificationType[] | NotificationType>;
+  requesting?: Maybe<Boolean>;
+  requesting_not?: Maybe<Boolean>;
+  AND?: Maybe<NotificationScalarWhereInput[] | NotificationScalarWhereInput>;
+  OR?: Maybe<NotificationScalarWhereInput[] | NotificationScalarWhereInput>;
+  NOT?: Maybe<NotificationScalarWhereInput[] | NotificationScalarWhereInput>;
+}
+
+export interface NotificationUpdateManyWithWhereNestedInput {
+  where: NotificationScalarWhereInput;
+  data: NotificationUpdateManyDataInput;
+}
+
+export interface NotificationUpdateManyDataInput {
+  type?: Maybe<NotificationType>;
+  requesting?: Maybe<Boolean>;
 }
 
 export interface MessageUpsertWithWhereUniqueWithoutRoomInput {
@@ -1970,45 +2303,6 @@ export interface RoomScalarWhereInput {
 export interface UserUpsertWithoutPostsInput {
   update: UserUpdateWithoutPostsDataInput;
   create: UserCreateWithoutPostsInput;
-}
-
-export interface CommentUpdateManyWithoutPostInput {
-  create?: Maybe<
-    CommentCreateWithoutPostInput[] | CommentCreateWithoutPostInput
-  >;
-  delete?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-  connect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-  set?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-  disconnect?: Maybe<CommentWhereUniqueInput[] | CommentWhereUniqueInput>;
-  update?: Maybe<
-    | CommentUpdateWithWhereUniqueWithoutPostInput[]
-    | CommentUpdateWithWhereUniqueWithoutPostInput
-  >;
-  upsert?: Maybe<
-    | CommentUpsertWithWhereUniqueWithoutPostInput[]
-    | CommentUpsertWithWhereUniqueWithoutPostInput
-  >;
-  deleteMany?: Maybe<CommentScalarWhereInput[] | CommentScalarWhereInput>;
-  updateMany?: Maybe<
-    | CommentUpdateManyWithWhereNestedInput[]
-    | CommentUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface CommentUpdateWithWhereUniqueWithoutPostInput {
-  where: CommentWhereUniqueInput;
-  data: CommentUpdateWithoutPostDataInput;
-}
-
-export interface CommentUpdateWithoutPostDataInput {
-  text?: Maybe<String>;
-  user?: Maybe<UserUpdateOneWithoutCommentsInput>;
-}
-
-export interface CommentUpsertWithWhereUniqueWithoutPostInput {
-  where: CommentWhereUniqueInput;
-  update: CommentUpdateWithoutPostDataInput;
-  create: CommentCreateWithoutPostInput;
 }
 
 export interface PostUpsertWithoutLikesInput {
@@ -2219,6 +2513,8 @@ export interface UserScalarWhereInput {
   loginSecret_not_starts_with?: Maybe<String>;
   loginSecret_ends_with?: Maybe<String>;
   loginSecret_not_ends_with?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
+  isPrivate_not?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   darkMode_not?: Maybe<Boolean>;
   language?: Maybe<String>;
@@ -2272,6 +2568,7 @@ export interface UserUpdateManyDataInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
 }
@@ -2479,6 +2776,7 @@ export interface UserCreateWithoutRoomsInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
@@ -2486,6 +2784,7 @@ export interface UserCreateWithoutRoomsInput {
   posts?: Maybe<PostCreateManyWithoutUserInput>;
   likes?: Maybe<LikeCreateManyWithoutUserInput>;
   comments?: Maybe<CommentCreateManyWithoutUserInput>;
+  notifications?: Maybe<NotificationCreateManyWithoutUserInput>;
 }
 
 export interface MessageUpdateInput {
@@ -2542,6 +2841,7 @@ export interface UserUpdateWithoutRoomsDataInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
@@ -2549,6 +2849,7 @@ export interface UserUpdateWithoutRoomsDataInput {
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
   likes?: Maybe<LikeUpdateManyWithoutUserInput>;
   comments?: Maybe<CommentUpdateManyWithoutUserInput>;
+  notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
 }
 
 export interface UserUpsertWithWhereUniqueWithoutRoomsInput {
@@ -2566,14 +2867,90 @@ export interface MessageUpdateManyMutationInput {
   text?: Maybe<String>;
 }
 
-export interface PostCreateInput {
+export interface NotificationCreateInput {
   id?: Maybe<ID_Input>;
-  location?: Maybe<String>;
-  caption?: Maybe<String>;
-  user?: Maybe<UserCreateOneWithoutPostsInput>;
-  files?: Maybe<FileCreateManyWithoutPostInput>;
-  likes?: Maybe<LikeCreateManyWithoutPostInput>;
-  comments?: Maybe<CommentCreateManyWithoutPostInput>;
+  type: NotificationType;
+  user: UserCreateOneWithoutNotificationsInput;
+  post?: Maybe<PostCreateOneInput>;
+  comment?: Maybe<CommentCreateOneInput>;
+  subscriber?: Maybe<UserCreateOneInput>;
+  requesting?: Maybe<Boolean>;
+}
+
+export interface UserCreateOneWithoutNotificationsInput {
+  create?: Maybe<UserCreateWithoutNotificationsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateWithoutNotificationsInput {
+  id?: Maybe<ID_Input>;
+  avatar?: Maybe<String>;
+  username: String;
+  email?: Maybe<String>;
+  phone?: Maybe<String>;
+  password: String;
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  bio?: Maybe<String>;
+  website?: Maybe<String>;
+  loginSecret?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
+  darkMode?: Maybe<Boolean>;
+  language?: Maybe<String>;
+  following?: Maybe<UserCreateManyWithoutFollowersInput>;
+  followers?: Maybe<UserCreateManyWithoutFollowingInput>;
+  posts?: Maybe<PostCreateManyWithoutUserInput>;
+  likes?: Maybe<LikeCreateManyWithoutUserInput>;
+  comments?: Maybe<CommentCreateManyWithoutUserInput>;
+  rooms?: Maybe<RoomCreateManyWithoutParticipantsInput>;
+}
+
+export interface NotificationUpdateInput {
+  type?: Maybe<NotificationType>;
+  user?: Maybe<UserUpdateOneRequiredWithoutNotificationsInput>;
+  post?: Maybe<PostUpdateOneInput>;
+  comment?: Maybe<CommentUpdateOneInput>;
+  subscriber?: Maybe<UserUpdateOneInput>;
+  requesting?: Maybe<Boolean>;
+}
+
+export interface UserUpdateOneRequiredWithoutNotificationsInput {
+  create?: Maybe<UserCreateWithoutNotificationsInput>;
+  update?: Maybe<UserUpdateWithoutNotificationsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutNotificationsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutNotificationsDataInput {
+  avatar?: Maybe<String>;
+  username?: Maybe<String>;
+  email?: Maybe<String>;
+  phone?: Maybe<String>;
+  password?: Maybe<String>;
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  bio?: Maybe<String>;
+  website?: Maybe<String>;
+  loginSecret?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
+  darkMode?: Maybe<Boolean>;
+  language?: Maybe<String>;
+  following?: Maybe<UserUpdateManyWithoutFollowersInput>;
+  followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
+  posts?: Maybe<PostUpdateManyWithoutUserInput>;
+  likes?: Maybe<LikeUpdateManyWithoutUserInput>;
+  comments?: Maybe<CommentUpdateManyWithoutUserInput>;
+  rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
+}
+
+export interface UserUpsertWithoutNotificationsInput {
+  update: UserUpdateWithoutNotificationsDataInput;
+  create: UserCreateWithoutNotificationsInput;
+}
+
+export interface NotificationUpdateManyMutationInput {
+  type?: Maybe<NotificationType>;
+  requesting?: Maybe<Boolean>;
 }
 
 export interface PostUpdateInput {
@@ -2612,6 +2989,7 @@ export interface UserUpdateInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
@@ -2620,6 +2998,7 @@ export interface UserUpdateInput {
   likes?: Maybe<LikeUpdateManyWithoutUserInput>;
   comments?: Maybe<CommentUpdateManyWithoutUserInput>;
   rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
+  notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -2633,6 +3012,7 @@ export interface UserUpdateManyMutationInput {
   bio?: Maybe<String>;
   website?: Maybe<String>;
   loginSecret?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
 }
@@ -2679,6 +3059,23 @@ export interface MessageSubscriptionWhereInput {
   AND?: Maybe<MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput>;
   OR?: Maybe<MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput>;
   NOT?: Maybe<MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput>;
+}
+
+export interface NotificationSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<NotificationWhereInput>;
+  AND?: Maybe<
+    NotificationSubscriptionWhereInput[] | NotificationSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    NotificationSubscriptionWhereInput[] | NotificationSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    NotificationSubscriptionWhereInput[] | NotificationSubscriptionWhereInput
+  >;
 }
 
 export interface PostSubscriptionWhereInput {
@@ -2768,6 +3165,7 @@ export interface User {
   bio?: String;
   website?: String;
   loginSecret?: String;
+  isPrivate: Boolean;
   darkMode: Boolean;
   language: String;
   createdAt: DateTimeOutput;
@@ -2786,6 +3184,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   bio: () => Promise<String>;
   website: () => Promise<String>;
   loginSecret: () => Promise<String>;
+  isPrivate: () => Promise<Boolean>;
   darkMode: () => Promise<Boolean>;
   language: () => Promise<String>;
   following: <T = FragmentableArray<User>>(args?: {
@@ -2842,6 +3241,15 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  notifications: <T = FragmentableArray<Notification>>(args?: {
+    where?: NotificationWhereInput;
+    orderBy?: NotificationOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -2860,6 +3268,7 @@ export interface UserSubscription
   bio: () => Promise<AsyncIterator<String>>;
   website: () => Promise<AsyncIterator<String>>;
   loginSecret: () => Promise<AsyncIterator<String>>;
+  isPrivate: () => Promise<AsyncIterator<Boolean>>;
   darkMode: () => Promise<AsyncIterator<Boolean>>;
   language: () => Promise<AsyncIterator<String>>;
   following: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
@@ -2916,6 +3325,15 @@ export interface UserSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  notifications: <T = Promise<AsyncIterator<NotificationSubscription>>>(args?: {
+    where?: NotificationWhereInput;
+    orderBy?: NotificationOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -2934,6 +3352,7 @@ export interface UserNullablePromise
   bio: () => Promise<String>;
   website: () => Promise<String>;
   loginSecret: () => Promise<String>;
+  isPrivate: () => Promise<Boolean>;
   darkMode: () => Promise<Boolean>;
   language: () => Promise<String>;
   following: <T = FragmentableArray<User>>(args?: {
@@ -2984,6 +3403,15 @@ export interface UserNullablePromise
   rooms: <T = FragmentableArray<Room>>(args?: {
     where?: RoomWhereInput;
     orderBy?: RoomOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  notifications: <T = FragmentableArray<Notification>>(args?: {
+    where?: NotificationWhereInput;
+    orderBy?: NotificationOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -3306,6 +3734,48 @@ export interface MessageNullablePromise
   updatedAt: () => Promise<DateTimeOutput>;
 }
 
+export interface Notification {
+  id: ID_Output;
+  type: NotificationType;
+  requesting?: Boolean;
+}
+
+export interface NotificationPromise
+  extends Promise<Notification>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  type: () => Promise<NotificationType>;
+  user: <T = UserPromise>() => T;
+  post: <T = PostPromise>() => T;
+  comment: <T = CommentPromise>() => T;
+  subscriber: <T = UserPromise>() => T;
+  requesting: () => Promise<Boolean>;
+}
+
+export interface NotificationSubscription
+  extends Promise<AsyncIterator<Notification>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  type: () => Promise<AsyncIterator<NotificationType>>;
+  user: <T = UserSubscription>() => T;
+  post: <T = PostSubscription>() => T;
+  comment: <T = CommentSubscription>() => T;
+  subscriber: <T = UserSubscription>() => T;
+  requesting: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface NotificationNullablePromise
+  extends Promise<Notification | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  type: () => Promise<NotificationType>;
+  user: <T = UserPromise>() => T;
+  post: <T = PostPromise>() => T;
+  comment: <T = CommentPromise>() => T;
+  subscriber: <T = UserPromise>() => T;
+  requesting: () => Promise<Boolean>;
+}
+
 export interface CommentConnection {
   pageInfo: PageInfo;
   edges: CommentEdge[];
@@ -3541,6 +4011,62 @@ export interface AggregateMessagePromise
 
 export interface AggregateMessageSubscription
   extends Promise<AsyncIterator<AggregateMessage>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface NotificationConnection {
+  pageInfo: PageInfo;
+  edges: NotificationEdge[];
+}
+
+export interface NotificationConnectionPromise
+  extends Promise<NotificationConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<NotificationEdge>>() => T;
+  aggregate: <T = AggregateNotificationPromise>() => T;
+}
+
+export interface NotificationConnectionSubscription
+  extends Promise<AsyncIterator<NotificationConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<NotificationEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateNotificationSubscription>() => T;
+}
+
+export interface NotificationEdge {
+  node: Notification;
+  cursor: String;
+}
+
+export interface NotificationEdgePromise
+  extends Promise<NotificationEdge>,
+    Fragmentable {
+  node: <T = NotificationPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface NotificationEdgeSubscription
+  extends Promise<AsyncIterator<NotificationEdge>>,
+    Fragmentable {
+  node: <T = NotificationSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateNotification {
+  count: Int;
+}
+
+export interface AggregateNotificationPromise
+  extends Promise<AggregateNotification>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateNotificationSubscription
+  extends Promise<AsyncIterator<AggregateNotification>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -3920,6 +4446,53 @@ export interface MessagePreviousValuesSubscription
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
+export interface NotificationSubscriptionPayload {
+  mutation: MutationType;
+  node: Notification;
+  updatedFields: String[];
+  previousValues: NotificationPreviousValues;
+}
+
+export interface NotificationSubscriptionPayloadPromise
+  extends Promise<NotificationSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = NotificationPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = NotificationPreviousValuesPromise>() => T;
+}
+
+export interface NotificationSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<NotificationSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = NotificationSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = NotificationPreviousValuesSubscription>() => T;
+}
+
+export interface NotificationPreviousValues {
+  id: ID_Output;
+  type: NotificationType;
+  requesting?: Boolean;
+}
+
+export interface NotificationPreviousValuesPromise
+  extends Promise<NotificationPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  type: () => Promise<NotificationType>;
+  requesting: () => Promise<Boolean>;
+}
+
+export interface NotificationPreviousValuesSubscription
+  extends Promise<AsyncIterator<NotificationPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  type: () => Promise<AsyncIterator<NotificationType>>;
+  requesting: () => Promise<AsyncIterator<Boolean>>;
+}
+
 export interface PostSubscriptionPayload {
   mutation: MutationType;
   node: Post;
@@ -4057,6 +4630,7 @@ export interface UserPreviousValues {
   bio?: String;
   website?: String;
   loginSecret?: String;
+  isPrivate: Boolean;
   darkMode: Boolean;
   language: String;
   createdAt: DateTimeOutput;
@@ -4077,6 +4651,7 @@ export interface UserPreviousValuesPromise
   bio: () => Promise<String>;
   website: () => Promise<String>;
   loginSecret: () => Promise<String>;
+  isPrivate: () => Promise<Boolean>;
   darkMode: () => Promise<Boolean>;
   language: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
@@ -4097,6 +4672,7 @@ export interface UserPreviousValuesSubscription
   bio: () => Promise<AsyncIterator<String>>;
   website: () => Promise<AsyncIterator<String>>;
   loginSecret: () => Promise<AsyncIterator<String>>;
+  isPrivate: () => Promise<AsyncIterator<Boolean>>;
   darkMode: () => Promise<AsyncIterator<Boolean>>;
   language: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
@@ -4167,6 +4743,14 @@ export const models: Model[] = [
   },
   {
     name: "Message",
+    embedded: false
+  },
+  {
+    name: "NotificationType",
+    embedded: false
+  },
+  {
+    name: "Notification",
     embedded: false
   }
 ];

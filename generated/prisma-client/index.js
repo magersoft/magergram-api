@@ -31,6 +31,14 @@ var models = [
   {
     name: "Message",
     embedded: false
+  },
+  {
+    name: "NotificationType",
+    embedded: false
+  },
+  {
+    name: "Notification",
+    embedded: false
   }
 ];
 exports.Prisma = prisma_lib_1.makePrismaClientClass({

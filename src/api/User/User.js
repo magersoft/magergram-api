@@ -44,6 +44,23 @@ export default {
       const { user } = request;
       const { id: parentId } = parent;
       return user.id === parentId;
+    },
+    isRequestingSubscription: async (parent, _, { request }) => {
+      const { user } = request;
+      const { id: parentId } = parent;
+      try {
+        return await prisma.$exists.notification({
+          AND: [
+            { type: 'SUBSCRIPTION' },
+            { requesting: true },
+            { user: { id: user.id } },
+            { subscriber: { id: parentId } }
+          ]
+        });
+      } catch (e) {
+        console.error(e);
+        return false
+      }
     }
   }
 }

@@ -19,6 +19,10 @@ type AggregateMessage {
   count: Int!
 }
 
+type AggregateNotification {
+  count: Int!
+}
+
 type AggregatePost {
   count: Int!
 }
@@ -65,6 +69,11 @@ input CommentCreateManyWithoutPostInput {
 input CommentCreateManyWithoutUserInput {
   create: [CommentCreateWithoutUserInput!]
   connect: [CommentWhereUniqueInput!]
+}
+
+input CommentCreateOneInput {
+  create: CommentCreateInput
+  connect: CommentWhereUniqueInput
 }
 
 input CommentCreateWithoutPostInput {
@@ -170,6 +179,12 @@ input CommentSubscriptionWhereInput {
   NOT: [CommentSubscriptionWhereInput!]
 }
 
+input CommentUpdateDataInput {
+  text: String
+  user: UserUpdateOneWithoutCommentsInput
+  post: PostUpdateOneWithoutCommentsInput
+}
+
 input CommentUpdateInput {
   text: String
   user: UserUpdateOneWithoutCommentsInput
@@ -213,6 +228,15 @@ input CommentUpdateManyWithWhereNestedInput {
   data: CommentUpdateManyDataInput!
 }
 
+input CommentUpdateOneInput {
+  create: CommentCreateInput
+  update: CommentUpdateDataInput
+  upsert: CommentUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: CommentWhereUniqueInput
+}
+
 input CommentUpdateWithoutPostDataInput {
   text: String
   user: UserUpdateOneWithoutCommentsInput
@@ -231,6 +255,11 @@ input CommentUpdateWithWhereUniqueWithoutPostInput {
 input CommentUpdateWithWhereUniqueWithoutUserInput {
   where: CommentWhereUniqueInput!
   data: CommentUpdateWithoutUserDataInput!
+}
+
+input CommentUpsertNestedInput {
+  update: CommentUpdateDataInput!
+  create: CommentCreateInput!
 }
 
 input CommentUpsertWithWhereUniqueWithoutPostInput {
@@ -996,6 +1025,12 @@ type Mutation {
   upsertMessage(where: MessageWhereUniqueInput!, create: MessageCreateInput!, update: MessageUpdateInput!): Message!
   deleteMessage(where: MessageWhereUniqueInput!): Message
   deleteManyMessages(where: MessageWhereInput): BatchPayload!
+  createNotification(data: NotificationCreateInput!): Notification!
+  updateNotification(data: NotificationUpdateInput!, where: NotificationWhereUniqueInput!): Notification
+  updateManyNotifications(data: NotificationUpdateManyMutationInput!, where: NotificationWhereInput): BatchPayload!
+  upsertNotification(where: NotificationWhereUniqueInput!, create: NotificationCreateInput!, update: NotificationUpdateInput!): Notification!
+  deleteNotification(where: NotificationWhereUniqueInput!): Notification
+  deleteManyNotifications(where: NotificationWhereInput): BatchPayload!
   createPost(data: PostCreateInput!): Post!
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
@@ -1023,6 +1058,205 @@ enum MutationType {
 
 interface Node {
   id: ID!
+}
+
+type Notification {
+  id: ID!
+  type: NotificationType!
+  user: User!
+  post: Post
+  comment: Comment
+  subscriber: User
+  requesting: Boolean
+}
+
+type NotificationConnection {
+  pageInfo: PageInfo!
+  edges: [NotificationEdge]!
+  aggregate: AggregateNotification!
+}
+
+input NotificationCreateInput {
+  id: ID
+  type: NotificationType!
+  user: UserCreateOneWithoutNotificationsInput!
+  post: PostCreateOneInput
+  comment: CommentCreateOneInput
+  subscriber: UserCreateOneInput
+  requesting: Boolean
+}
+
+input NotificationCreateManyWithoutUserInput {
+  create: [NotificationCreateWithoutUserInput!]
+  connect: [NotificationWhereUniqueInput!]
+}
+
+input NotificationCreateWithoutUserInput {
+  id: ID
+  type: NotificationType!
+  post: PostCreateOneInput
+  comment: CommentCreateOneInput
+  subscriber: UserCreateOneInput
+  requesting: Boolean
+}
+
+type NotificationEdge {
+  node: Notification!
+  cursor: String!
+}
+
+enum NotificationOrderByInput {
+  id_ASC
+  id_DESC
+  type_ASC
+  type_DESC
+  requesting_ASC
+  requesting_DESC
+}
+
+type NotificationPreviousValues {
+  id: ID!
+  type: NotificationType!
+  requesting: Boolean
+}
+
+input NotificationScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  type: NotificationType
+  type_not: NotificationType
+  type_in: [NotificationType!]
+  type_not_in: [NotificationType!]
+  requesting: Boolean
+  requesting_not: Boolean
+  AND: [NotificationScalarWhereInput!]
+  OR: [NotificationScalarWhereInput!]
+  NOT: [NotificationScalarWhereInput!]
+}
+
+type NotificationSubscriptionPayload {
+  mutation: MutationType!
+  node: Notification
+  updatedFields: [String!]
+  previousValues: NotificationPreviousValues
+}
+
+input NotificationSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: NotificationWhereInput
+  AND: [NotificationSubscriptionWhereInput!]
+  OR: [NotificationSubscriptionWhereInput!]
+  NOT: [NotificationSubscriptionWhereInput!]
+}
+
+enum NotificationType {
+  LIKE
+  COMMENT
+  SUBSCRIPTION
+}
+
+input NotificationUpdateInput {
+  type: NotificationType
+  user: UserUpdateOneRequiredWithoutNotificationsInput
+  post: PostUpdateOneInput
+  comment: CommentUpdateOneInput
+  subscriber: UserUpdateOneInput
+  requesting: Boolean
+}
+
+input NotificationUpdateManyDataInput {
+  type: NotificationType
+  requesting: Boolean
+}
+
+input NotificationUpdateManyMutationInput {
+  type: NotificationType
+  requesting: Boolean
+}
+
+input NotificationUpdateManyWithoutUserInput {
+  create: [NotificationCreateWithoutUserInput!]
+  delete: [NotificationWhereUniqueInput!]
+  connect: [NotificationWhereUniqueInput!]
+  set: [NotificationWhereUniqueInput!]
+  disconnect: [NotificationWhereUniqueInput!]
+  update: [NotificationUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [NotificationUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [NotificationScalarWhereInput!]
+  updateMany: [NotificationUpdateManyWithWhereNestedInput!]
+}
+
+input NotificationUpdateManyWithWhereNestedInput {
+  where: NotificationScalarWhereInput!
+  data: NotificationUpdateManyDataInput!
+}
+
+input NotificationUpdateWithoutUserDataInput {
+  type: NotificationType
+  post: PostUpdateOneInput
+  comment: CommentUpdateOneInput
+  subscriber: UserUpdateOneInput
+  requesting: Boolean
+}
+
+input NotificationUpdateWithWhereUniqueWithoutUserInput {
+  where: NotificationWhereUniqueInput!
+  data: NotificationUpdateWithoutUserDataInput!
+}
+
+input NotificationUpsertWithWhereUniqueWithoutUserInput {
+  where: NotificationWhereUniqueInput!
+  update: NotificationUpdateWithoutUserDataInput!
+  create: NotificationCreateWithoutUserInput!
+}
+
+input NotificationWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  type: NotificationType
+  type_not: NotificationType
+  type_in: [NotificationType!]
+  type_not_in: [NotificationType!]
+  user: UserWhereInput
+  post: PostWhereInput
+  comment: CommentWhereInput
+  subscriber: UserWhereInput
+  requesting: Boolean
+  requesting_not: Boolean
+  AND: [NotificationWhereInput!]
+  OR: [NotificationWhereInput!]
+  NOT: [NotificationWhereInput!]
+}
+
+input NotificationWhereUniqueInput {
+  id: ID
 }
 
 type PageInfo {
@@ -1063,6 +1297,11 @@ input PostCreateInput {
 input PostCreateManyWithoutUserInput {
   create: [PostCreateWithoutUserInput!]
   connect: [PostWhereUniqueInput!]
+}
+
+input PostCreateOneInput {
+  create: PostCreateInput
+  connect: PostWhereUniqueInput
 }
 
 input PostCreateOneWithoutCommentsInput {
@@ -1224,6 +1463,15 @@ input PostSubscriptionWhereInput {
   NOT: [PostSubscriptionWhereInput!]
 }
 
+input PostUpdateDataInput {
+  location: String
+  caption: String
+  user: UserUpdateOneWithoutPostsInput
+  files: FileUpdateManyWithoutPostInput
+  likes: LikeUpdateManyWithoutPostInput
+  comments: CommentUpdateManyWithoutPostInput
+}
+
 input PostUpdateInput {
   location: String
   caption: String
@@ -1258,6 +1506,15 @@ input PostUpdateManyWithoutUserInput {
 input PostUpdateManyWithWhereNestedInput {
   where: PostScalarWhereInput!
   data: PostUpdateManyDataInput!
+}
+
+input PostUpdateOneInput {
+  create: PostCreateInput
+  update: PostUpdateDataInput
+  upsert: PostUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: PostWhereUniqueInput
 }
 
 input PostUpdateOneWithoutCommentsInput {
@@ -1322,6 +1579,11 @@ input PostUpdateWithoutUserDataInput {
 input PostUpdateWithWhereUniqueWithoutUserInput {
   where: PostWhereUniqueInput!
   data: PostUpdateWithoutUserDataInput!
+}
+
+input PostUpsertNestedInput {
+  update: PostUpdateDataInput!
+  create: PostCreateInput!
 }
 
 input PostUpsertWithoutCommentsInput {
@@ -1436,6 +1698,9 @@ type Query {
   message(where: MessageWhereUniqueInput!): Message
   messages(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Message]!
   messagesConnection(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MessageConnection!
+  notification(where: NotificationWhereUniqueInput!): Notification
+  notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification]!
+  notificationsConnection(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): NotificationConnection!
   post(where: PostWhereUniqueInput!): Post
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
@@ -1660,6 +1925,7 @@ type Subscription {
   file(where: FileSubscriptionWhereInput): FileSubscriptionPayload
   like(where: LikeSubscriptionWhereInput): LikeSubscriptionPayload
   message(where: MessageSubscriptionWhereInput): MessageSubscriptionPayload
+  notification(where: NotificationSubscriptionWhereInput): NotificationSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   room(where: RoomSubscriptionWhereInput): RoomSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
@@ -1677,6 +1943,7 @@ type User {
   bio: String
   website: String
   loginSecret: String
+  isPrivate: Boolean!
   darkMode: Boolean!
   language: String!
   following(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
@@ -1685,6 +1952,7 @@ type User {
   likes(where: LikeWhereInput, orderBy: LikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Like!]
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   rooms(where: RoomWhereInput, orderBy: RoomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Room!]
+  notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -1707,6 +1975,7 @@ input UserCreateInput {
   bio: String
   website: String
   loginSecret: String
+  isPrivate: Boolean
   darkMode: Boolean
   language: String
   following: UserCreateManyWithoutFollowersInput
@@ -1715,6 +1984,7 @@ input UserCreateInput {
   likes: LikeCreateManyWithoutUserInput
   comments: CommentCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
+  notifications: NotificationCreateManyWithoutUserInput
 }
 
 input UserCreateManyWithoutFollowersInput {
@@ -1747,6 +2017,11 @@ input UserCreateOneWithoutLikesInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateOneWithoutNotificationsInput {
+  create: UserCreateWithoutNotificationsInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreateOneWithoutPostsInput {
   create: UserCreateWithoutPostsInput
   connect: UserWhereUniqueInput
@@ -1764,6 +2039,7 @@ input UserCreateWithoutCommentsInput {
   bio: String
   website: String
   loginSecret: String
+  isPrivate: Boolean
   darkMode: Boolean
   language: String
   following: UserCreateManyWithoutFollowersInput
@@ -1771,6 +2047,7 @@ input UserCreateWithoutCommentsInput {
   posts: PostCreateManyWithoutUserInput
   likes: LikeCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
+  notifications: NotificationCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutFollowersInput {
@@ -1785,6 +2062,7 @@ input UserCreateWithoutFollowersInput {
   bio: String
   website: String
   loginSecret: String
+  isPrivate: Boolean
   darkMode: Boolean
   language: String
   following: UserCreateManyWithoutFollowersInput
@@ -1792,6 +2070,7 @@ input UserCreateWithoutFollowersInput {
   likes: LikeCreateManyWithoutUserInput
   comments: CommentCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
+  notifications: NotificationCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutFollowingInput {
@@ -1806,6 +2085,7 @@ input UserCreateWithoutFollowingInput {
   bio: String
   website: String
   loginSecret: String
+  isPrivate: Boolean
   darkMode: Boolean
   language: String
   followers: UserCreateManyWithoutFollowingInput
@@ -1813,6 +2093,7 @@ input UserCreateWithoutFollowingInput {
   likes: LikeCreateManyWithoutUserInput
   comments: CommentCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
+  notifications: NotificationCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutLikesInput {
@@ -1827,11 +2108,36 @@ input UserCreateWithoutLikesInput {
   bio: String
   website: String
   loginSecret: String
+  isPrivate: Boolean
   darkMode: Boolean
   language: String
   following: UserCreateManyWithoutFollowersInput
   followers: UserCreateManyWithoutFollowingInput
   posts: PostCreateManyWithoutUserInput
+  comments: CommentCreateManyWithoutUserInput
+  rooms: RoomCreateManyWithoutParticipantsInput
+  notifications: NotificationCreateManyWithoutUserInput
+}
+
+input UserCreateWithoutNotificationsInput {
+  id: ID
+  avatar: String
+  username: String!
+  email: String
+  phone: String
+  password: String!
+  firstName: String
+  lastName: String
+  bio: String
+  website: String
+  loginSecret: String
+  isPrivate: Boolean
+  darkMode: Boolean
+  language: String
+  following: UserCreateManyWithoutFollowersInput
+  followers: UserCreateManyWithoutFollowingInput
+  posts: PostCreateManyWithoutUserInput
+  likes: LikeCreateManyWithoutUserInput
   comments: CommentCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
 }
@@ -1848,6 +2154,7 @@ input UserCreateWithoutPostsInput {
   bio: String
   website: String
   loginSecret: String
+  isPrivate: Boolean
   darkMode: Boolean
   language: String
   following: UserCreateManyWithoutFollowersInput
@@ -1855,6 +2162,7 @@ input UserCreateWithoutPostsInput {
   likes: LikeCreateManyWithoutUserInput
   comments: CommentCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
+  notifications: NotificationCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutRoomsInput {
@@ -1869,6 +2177,7 @@ input UserCreateWithoutRoomsInput {
   bio: String
   website: String
   loginSecret: String
+  isPrivate: Boolean
   darkMode: Boolean
   language: String
   following: UserCreateManyWithoutFollowersInput
@@ -1876,6 +2185,7 @@ input UserCreateWithoutRoomsInput {
   posts: PostCreateManyWithoutUserInput
   likes: LikeCreateManyWithoutUserInput
   comments: CommentCreateManyWithoutUserInput
+  notifications: NotificationCreateManyWithoutUserInput
 }
 
 type UserEdge {
@@ -1906,6 +2216,8 @@ enum UserOrderByInput {
   website_DESC
   loginSecret_ASC
   loginSecret_DESC
+  isPrivate_ASC
+  isPrivate_DESC
   darkMode_ASC
   darkMode_DESC
   language_ASC
@@ -1928,6 +2240,7 @@ type UserPreviousValues {
   bio: String
   website: String
   loginSecret: String
+  isPrivate: Boolean!
   darkMode: Boolean!
   language: String!
   createdAt: DateTime!
@@ -2089,6 +2402,8 @@ input UserScalarWhereInput {
   loginSecret_not_starts_with: String
   loginSecret_ends_with: String
   loginSecret_not_ends_with: String
+  isPrivate: Boolean
+  isPrivate_not: Boolean
   darkMode: Boolean
   darkMode_not: Boolean
   language: String
@@ -2155,6 +2470,7 @@ input UserUpdateDataInput {
   bio: String
   website: String
   loginSecret: String
+  isPrivate: Boolean
   darkMode: Boolean
   language: String
   following: UserUpdateManyWithoutFollowersInput
@@ -2163,6 +2479,7 @@ input UserUpdateDataInput {
   likes: LikeUpdateManyWithoutUserInput
   comments: CommentUpdateManyWithoutUserInput
   rooms: RoomUpdateManyWithoutParticipantsInput
+  notifications: NotificationUpdateManyWithoutUserInput
 }
 
 input UserUpdateInput {
@@ -2176,6 +2493,7 @@ input UserUpdateInput {
   bio: String
   website: String
   loginSecret: String
+  isPrivate: Boolean
   darkMode: Boolean
   language: String
   following: UserUpdateManyWithoutFollowersInput
@@ -2184,6 +2502,7 @@ input UserUpdateInput {
   likes: LikeUpdateManyWithoutUserInput
   comments: CommentUpdateManyWithoutUserInput
   rooms: RoomUpdateManyWithoutParticipantsInput
+  notifications: NotificationUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyDataInput {
@@ -2197,6 +2516,7 @@ input UserUpdateManyDataInput {
   bio: String
   website: String
   loginSecret: String
+  isPrivate: Boolean
   darkMode: Boolean
   language: String
 }
@@ -2212,6 +2532,7 @@ input UserUpdateManyMutationInput {
   bio: String
   website: String
   loginSecret: String
+  isPrivate: Boolean
   darkMode: Boolean
   language: String
 }
@@ -2257,10 +2578,26 @@ input UserUpdateManyWithWhereNestedInput {
   data: UserUpdateManyDataInput!
 }
 
+input UserUpdateOneInput {
+  create: UserCreateInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateOneRequiredInput {
   create: UserCreateInput
   update: UserUpdateDataInput
   upsert: UserUpsertNestedInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneRequiredWithoutNotificationsInput {
+  create: UserCreateWithoutNotificationsInput
+  update: UserUpdateWithoutNotificationsDataInput
+  upsert: UserUpsertWithoutNotificationsInput
   connect: UserWhereUniqueInput
 }
 
@@ -2302,6 +2639,7 @@ input UserUpdateWithoutCommentsDataInput {
   bio: String
   website: String
   loginSecret: String
+  isPrivate: Boolean
   darkMode: Boolean
   language: String
   following: UserUpdateManyWithoutFollowersInput
@@ -2309,6 +2647,7 @@ input UserUpdateWithoutCommentsDataInput {
   posts: PostUpdateManyWithoutUserInput
   likes: LikeUpdateManyWithoutUserInput
   rooms: RoomUpdateManyWithoutParticipantsInput
+  notifications: NotificationUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutFollowersDataInput {
@@ -2322,6 +2661,7 @@ input UserUpdateWithoutFollowersDataInput {
   bio: String
   website: String
   loginSecret: String
+  isPrivate: Boolean
   darkMode: Boolean
   language: String
   following: UserUpdateManyWithoutFollowersInput
@@ -2329,6 +2669,7 @@ input UserUpdateWithoutFollowersDataInput {
   likes: LikeUpdateManyWithoutUserInput
   comments: CommentUpdateManyWithoutUserInput
   rooms: RoomUpdateManyWithoutParticipantsInput
+  notifications: NotificationUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutFollowingDataInput {
@@ -2342,6 +2683,7 @@ input UserUpdateWithoutFollowingDataInput {
   bio: String
   website: String
   loginSecret: String
+  isPrivate: Boolean
   darkMode: Boolean
   language: String
   followers: UserUpdateManyWithoutFollowingInput
@@ -2349,6 +2691,7 @@ input UserUpdateWithoutFollowingDataInput {
   likes: LikeUpdateManyWithoutUserInput
   comments: CommentUpdateManyWithoutUserInput
   rooms: RoomUpdateManyWithoutParticipantsInput
+  notifications: NotificationUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutLikesDataInput {
@@ -2362,11 +2705,35 @@ input UserUpdateWithoutLikesDataInput {
   bio: String
   website: String
   loginSecret: String
+  isPrivate: Boolean
   darkMode: Boolean
   language: String
   following: UserUpdateManyWithoutFollowersInput
   followers: UserUpdateManyWithoutFollowingInput
   posts: PostUpdateManyWithoutUserInput
+  comments: CommentUpdateManyWithoutUserInput
+  rooms: RoomUpdateManyWithoutParticipantsInput
+  notifications: NotificationUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutNotificationsDataInput {
+  avatar: String
+  username: String
+  email: String
+  phone: String
+  password: String
+  firstName: String
+  lastName: String
+  bio: String
+  website: String
+  loginSecret: String
+  isPrivate: Boolean
+  darkMode: Boolean
+  language: String
+  following: UserUpdateManyWithoutFollowersInput
+  followers: UserUpdateManyWithoutFollowingInput
+  posts: PostUpdateManyWithoutUserInput
+  likes: LikeUpdateManyWithoutUserInput
   comments: CommentUpdateManyWithoutUserInput
   rooms: RoomUpdateManyWithoutParticipantsInput
 }
@@ -2382,6 +2749,7 @@ input UserUpdateWithoutPostsDataInput {
   bio: String
   website: String
   loginSecret: String
+  isPrivate: Boolean
   darkMode: Boolean
   language: String
   following: UserUpdateManyWithoutFollowersInput
@@ -2389,6 +2757,7 @@ input UserUpdateWithoutPostsDataInput {
   likes: LikeUpdateManyWithoutUserInput
   comments: CommentUpdateManyWithoutUserInput
   rooms: RoomUpdateManyWithoutParticipantsInput
+  notifications: NotificationUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutRoomsDataInput {
@@ -2402,6 +2771,7 @@ input UserUpdateWithoutRoomsDataInput {
   bio: String
   website: String
   loginSecret: String
+  isPrivate: Boolean
   darkMode: Boolean
   language: String
   following: UserUpdateManyWithoutFollowersInput
@@ -2409,6 +2779,7 @@ input UserUpdateWithoutRoomsDataInput {
   posts: PostUpdateManyWithoutUserInput
   likes: LikeUpdateManyWithoutUserInput
   comments: CommentUpdateManyWithoutUserInput
+  notifications: NotificationUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithWhereUniqueWithoutFollowersInput {
@@ -2439,6 +2810,11 @@ input UserUpsertWithoutCommentsInput {
 input UserUpsertWithoutLikesInput {
   update: UserUpdateWithoutLikesDataInput!
   create: UserCreateWithoutLikesInput!
+}
+
+input UserUpsertWithoutNotificationsInput {
+  update: UserUpdateWithoutNotificationsDataInput!
+  create: UserCreateWithoutNotificationsInput!
 }
 
 input UserUpsertWithoutPostsInput {
@@ -2619,6 +2995,8 @@ input UserWhereInput {
   loginSecret_not_starts_with: String
   loginSecret_ends_with: String
   loginSecret_not_ends_with: String
+  isPrivate: Boolean
+  isPrivate_not: Boolean
   darkMode: Boolean
   darkMode_not: Boolean
   language: String
@@ -2653,6 +3031,9 @@ input UserWhereInput {
   rooms_every: RoomWhereInput
   rooms_some: RoomWhereInput
   rooms_none: RoomWhereInput
+  notifications_every: NotificationWhereInput
+  notifications_some: NotificationWhereInput
+  notifications_none: NotificationWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]

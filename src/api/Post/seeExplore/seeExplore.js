@@ -34,7 +34,10 @@ export default {
 
       const posts = await prisma.posts({
         where: {
-          id_not_in: excludePostIds
+          id_not_in: excludePostIds,
+          user: {
+            isPrivate: false
+          }
         }
       });
 

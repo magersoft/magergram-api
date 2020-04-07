@@ -10,6 +10,7 @@ type User {
   bio: String @default(value: "")
   website: String @default(value: "")
   loginSecret: String
+  isPrivate: Boolean! @default(value: false)
   darkMode: Boolean! @default(value: false)
   language: String! @default(value: "ru")
   following: [User!]! @relation(name: "FollowRelation")
@@ -18,6 +19,7 @@ type User {
   likes: [Like!]! @relation(name: "LikesOfUser", onDelete: CASCADE)
   comments: [Comment!]! @relation(name: "CommentsOfUser", onDelete: CASCADE)
   rooms: [Room!]!
+  notifications: [Notification!]! @relation(name: "NotificationOfUser", onDelete: CASCADE)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
@@ -75,4 +77,20 @@ type Message {
   room: Room!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
+}
+
+enum NotificationType {
+    LIKE,
+    COMMENT,
+    SUBSCRIPTION
+}
+
+type Notification {
+    id: ID! @id
+    type: NotificationType!
+    user: User! @relation(name: "NotificationOfUser")
+    post: Post @relation(name: "PostLikedRelation")
+    comment: Comment @relation(name: "CommentRelation")
+    subscriber: User @relation(name: "SubscriberRelation")
+    requesting: Boolean @default(value: false)
 }

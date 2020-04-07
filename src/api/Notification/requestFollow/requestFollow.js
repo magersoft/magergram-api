@@ -3,23 +3,23 @@ import { prisma } from '../../../../generated/prisma-client';
 
 export default {
   Mutation: {
-    follow: async (_, args, { request }) => {
+    requestFollow: async (_, { subscriberId }, { request }) => {
       isAuthenticated(request);
-      const { id } = args;
       const { user } = request;
       try {
-        await prisma.updateUser({
+        const notifications = await prisma.user({ id: user.id }).notifications({
           where: {
-            id: user.id
-          },
-          data: {
-            following: {
-              connect: {
-                id
-              }
+            AND: {
+              type: 'SUBSCRIPTION',
+              subscriber: { id: subscriberId },
+              requesting: true
             }
           }
         });
+
+        if (notifications.length) {
+          return false;
+        }
 
         await prisma.createNotification({
           type: 'SUBSCRIPTION',
@@ -30,14 +30,17 @@ export default {
           },
           subscriber: {
             connect: {
-              id
+              id: subscriberId
             }
-          }
+          },
+          requesting: true
         });
         return true;
       } catch (e) {
+        console.error(e);
         return false;
       }
+
     }
   }
 }
