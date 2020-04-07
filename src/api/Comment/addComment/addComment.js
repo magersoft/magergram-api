@@ -7,19 +7,63 @@ export default {
       isAuthenticated(request);
       const { text, postId } = args;
       const { user } = request;
-      return await prisma.createComment({
-        user: {
-          connect: {
-            id: user.id
+      try {
+        const authorPost = await prisma.post({ id: postId }).user();
+
+        const comment = await prisma.createComment({
+          user: {
+            connect: {
+              id: user.id
+            }
+          },
+          post: {
+            connect: {
+              id: postId
+            }
+          },
+          text
+        });
+
+        if (authorPost.id !== user.id) {
+          const existingNotification = await prisma.$exists.notification({
+            AND: [
+              { type: "COMMENT" },
+              { post: { id: postId } },
+              { comment: { id: comment.id } }
+            ]
+          });
+
+          if (!existingNotification) {
+            await prisma.createNotification({
+              type: "COMMENT",
+              user: {
+                connect: {
+                  id: authorPost.id
+                }
+              },
+              post: {
+                connect: {
+                  id: postId
+                }
+              },
+              comment: {
+                connect: {
+                  id: comment.id
+                }
+              },
+              subscriber: {
+                connect: {
+                  id: user.id
+                }
+              }
+            });
           }
-        },
-        post: {
-          connect: {
-            id: postId
-          }
-        },
-        text
-      })
+        }
+
+        return comment
+      } catch (e) {
+        console.error(e.message);
+      }
     }
   }
 }

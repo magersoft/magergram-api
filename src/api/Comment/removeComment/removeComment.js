@@ -12,7 +12,16 @@ export default {
       if (user.id !== commentUserId) {
         throw Error('You cannot be perform this action');
       }
+
+      await prisma.deleteManyNotifications({
+        AND: [
+          { type: "COMMENT" },
+          { comment: { id } }
+        ]
+      });
+
       await prisma.deleteComment({ id });
+
       return id;
     }
   }
