@@ -13,6 +13,7 @@ type User {
   isPrivate: Boolean! @default(value: false)
   darkMode: Boolean! @default(value: false)
   language: String! @default(value: "ru")
+  subscriptionEndpoint: String @unique
   following: [User!]! @relation(name: "FollowRelation")
   followers: [User!]! @relation(name: "FollowRelation")
   posts: [Post!]! @relation(name: "PostsOfUser", onDelete: CASCADE)

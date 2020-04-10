@@ -1987,6 +1987,7 @@ type User {
   isPrivate: Boolean!
   darkMode: Boolean!
   language: String!
+  subscriptionEndpoint: String
   following(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   followers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
@@ -2019,6 +2020,7 @@ input UserCreateInput {
   isPrivate: Boolean
   darkMode: Boolean
   language: String
+  subscriptionEndpoint: String
   following: UserCreateManyWithoutFollowersInput
   followers: UserCreateManyWithoutFollowingInput
   posts: PostCreateManyWithoutUserInput
@@ -2083,6 +2085,7 @@ input UserCreateWithoutCommentsInput {
   isPrivate: Boolean
   darkMode: Boolean
   language: String
+  subscriptionEndpoint: String
   following: UserCreateManyWithoutFollowersInput
   followers: UserCreateManyWithoutFollowingInput
   posts: PostCreateManyWithoutUserInput
@@ -2106,6 +2109,7 @@ input UserCreateWithoutFollowersInput {
   isPrivate: Boolean
   darkMode: Boolean
   language: String
+  subscriptionEndpoint: String
   following: UserCreateManyWithoutFollowersInput
   posts: PostCreateManyWithoutUserInput
   likes: LikeCreateManyWithoutUserInput
@@ -2129,6 +2133,7 @@ input UserCreateWithoutFollowingInput {
   isPrivate: Boolean
   darkMode: Boolean
   language: String
+  subscriptionEndpoint: String
   followers: UserCreateManyWithoutFollowingInput
   posts: PostCreateManyWithoutUserInput
   likes: LikeCreateManyWithoutUserInput
@@ -2152,6 +2157,7 @@ input UserCreateWithoutLikesInput {
   isPrivate: Boolean
   darkMode: Boolean
   language: String
+  subscriptionEndpoint: String
   following: UserCreateManyWithoutFollowersInput
   followers: UserCreateManyWithoutFollowingInput
   posts: PostCreateManyWithoutUserInput
@@ -2175,6 +2181,7 @@ input UserCreateWithoutNotificationsInput {
   isPrivate: Boolean
   darkMode: Boolean
   language: String
+  subscriptionEndpoint: String
   following: UserCreateManyWithoutFollowersInput
   followers: UserCreateManyWithoutFollowingInput
   posts: PostCreateManyWithoutUserInput
@@ -2198,6 +2205,7 @@ input UserCreateWithoutPostsInput {
   isPrivate: Boolean
   darkMode: Boolean
   language: String
+  subscriptionEndpoint: String
   following: UserCreateManyWithoutFollowersInput
   followers: UserCreateManyWithoutFollowingInput
   likes: LikeCreateManyWithoutUserInput
@@ -2221,6 +2229,7 @@ input UserCreateWithoutRoomsInput {
   isPrivate: Boolean
   darkMode: Boolean
   language: String
+  subscriptionEndpoint: String
   following: UserCreateManyWithoutFollowersInput
   followers: UserCreateManyWithoutFollowingInput
   posts: PostCreateManyWithoutUserInput
@@ -2263,6 +2272,8 @@ enum UserOrderByInput {
   darkMode_DESC
   language_ASC
   language_DESC
+  subscriptionEndpoint_ASC
+  subscriptionEndpoint_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -2284,6 +2295,7 @@ type UserPreviousValues {
   isPrivate: Boolean!
   darkMode: Boolean!
   language: String!
+  subscriptionEndpoint: String
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -2461,6 +2473,20 @@ input UserScalarWhereInput {
   language_not_starts_with: String
   language_ends_with: String
   language_not_ends_with: String
+  subscriptionEndpoint: String
+  subscriptionEndpoint_not: String
+  subscriptionEndpoint_in: [String!]
+  subscriptionEndpoint_not_in: [String!]
+  subscriptionEndpoint_lt: String
+  subscriptionEndpoint_lte: String
+  subscriptionEndpoint_gt: String
+  subscriptionEndpoint_gte: String
+  subscriptionEndpoint_contains: String
+  subscriptionEndpoint_not_contains: String
+  subscriptionEndpoint_starts_with: String
+  subscriptionEndpoint_not_starts_with: String
+  subscriptionEndpoint_ends_with: String
+  subscriptionEndpoint_not_ends_with: String
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -2514,6 +2540,7 @@ input UserUpdateDataInput {
   isPrivate: Boolean
   darkMode: Boolean
   language: String
+  subscriptionEndpoint: String
   following: UserUpdateManyWithoutFollowersInput
   followers: UserUpdateManyWithoutFollowingInput
   posts: PostUpdateManyWithoutUserInput
@@ -2537,6 +2564,7 @@ input UserUpdateInput {
   isPrivate: Boolean
   darkMode: Boolean
   language: String
+  subscriptionEndpoint: String
   following: UserUpdateManyWithoutFollowersInput
   followers: UserUpdateManyWithoutFollowingInput
   posts: PostUpdateManyWithoutUserInput
@@ -2560,6 +2588,7 @@ input UserUpdateManyDataInput {
   isPrivate: Boolean
   darkMode: Boolean
   language: String
+  subscriptionEndpoint: String
 }
 
 input UserUpdateManyMutationInput {
@@ -2576,6 +2605,7 @@ input UserUpdateManyMutationInput {
   isPrivate: Boolean
   darkMode: Boolean
   language: String
+  subscriptionEndpoint: String
 }
 
 input UserUpdateManyWithoutFollowersInput {
@@ -2683,6 +2713,7 @@ input UserUpdateWithoutCommentsDataInput {
   isPrivate: Boolean
   darkMode: Boolean
   language: String
+  subscriptionEndpoint: String
   following: UserUpdateManyWithoutFollowersInput
   followers: UserUpdateManyWithoutFollowingInput
   posts: PostUpdateManyWithoutUserInput
@@ -2705,6 +2736,7 @@ input UserUpdateWithoutFollowersDataInput {
   isPrivate: Boolean
   darkMode: Boolean
   language: String
+  subscriptionEndpoint: String
   following: UserUpdateManyWithoutFollowersInput
   posts: PostUpdateManyWithoutUserInput
   likes: LikeUpdateManyWithoutUserInput
@@ -2727,6 +2759,7 @@ input UserUpdateWithoutFollowingDataInput {
   isPrivate: Boolean
   darkMode: Boolean
   language: String
+  subscriptionEndpoint: String
   followers: UserUpdateManyWithoutFollowingInput
   posts: PostUpdateManyWithoutUserInput
   likes: LikeUpdateManyWithoutUserInput
@@ -2749,6 +2782,7 @@ input UserUpdateWithoutLikesDataInput {
   isPrivate: Boolean
   darkMode: Boolean
   language: String
+  subscriptionEndpoint: String
   following: UserUpdateManyWithoutFollowersInput
   followers: UserUpdateManyWithoutFollowingInput
   posts: PostUpdateManyWithoutUserInput
@@ -2771,6 +2805,7 @@ input UserUpdateWithoutNotificationsDataInput {
   isPrivate: Boolean
   darkMode: Boolean
   language: String
+  subscriptionEndpoint: String
   following: UserUpdateManyWithoutFollowersInput
   followers: UserUpdateManyWithoutFollowingInput
   posts: PostUpdateManyWithoutUserInput
@@ -2793,6 +2828,7 @@ input UserUpdateWithoutPostsDataInput {
   isPrivate: Boolean
   darkMode: Boolean
   language: String
+  subscriptionEndpoint: String
   following: UserUpdateManyWithoutFollowersInput
   followers: UserUpdateManyWithoutFollowingInput
   likes: LikeUpdateManyWithoutUserInput
@@ -2815,6 +2851,7 @@ input UserUpdateWithoutRoomsDataInput {
   isPrivate: Boolean
   darkMode: Boolean
   language: String
+  subscriptionEndpoint: String
   following: UserUpdateManyWithoutFollowersInput
   followers: UserUpdateManyWithoutFollowingInput
   posts: PostUpdateManyWithoutUserInput
@@ -3054,6 +3091,20 @@ input UserWhereInput {
   language_not_starts_with: String
   language_ends_with: String
   language_not_ends_with: String
+  subscriptionEndpoint: String
+  subscriptionEndpoint_not: String
+  subscriptionEndpoint_in: [String!]
+  subscriptionEndpoint_not_in: [String!]
+  subscriptionEndpoint_lt: String
+  subscriptionEndpoint_lte: String
+  subscriptionEndpoint_gt: String
+  subscriptionEndpoint_gte: String
+  subscriptionEndpoint_contains: String
+  subscriptionEndpoint_not_contains: String
+  subscriptionEndpoint_starts_with: String
+  subscriptionEndpoint_not_starts_with: String
+  subscriptionEndpoint_ends_with: String
+  subscriptionEndpoint_not_ends_with: String
   following_every: UserWhereInput
   following_some: UserWhereInput
   following_none: UserWhereInput
@@ -3101,6 +3152,7 @@ input UserWhereUniqueInput {
   username: String
   email: String
   phone: String
+  subscriptionEndpoint: String
 }
 `
       }

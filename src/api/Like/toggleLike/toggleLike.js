@@ -1,5 +1,6 @@
 import { isAuthenticated } from '../../../middlewares';
 import { prisma } from '../../../../generated/prisma-client';
+import webpush from '../../../webPush';
 
 export default {
   Mutation: {
@@ -71,6 +72,16 @@ export default {
                   }
                 }
               });
+
+              const subscriberUser = await prisma.user({ id: user.id });
+              const notificationPushEndpoint = JSON.parse(authorPost.subscriptionEndpoint);
+              const payload = JSON.stringify({
+                title: subscriberUser.username,
+                body: 'поставил(-а) вашему фото "Нравится"',
+                icon: `${process.env.CLIENT_URL}/logo192.png`,
+                vibrate: [100, 50, 100]
+              });
+              await webpush.sendNotification(notificationPushEndpoint, payload);
             }
           }
         }

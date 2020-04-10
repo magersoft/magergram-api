@@ -403,6 +403,8 @@ export type UserOrderByInput =
   | "darkMode_DESC"
   | "language_ASC"
   | "language_DESC"
+  | "subscriptionEndpoint_ASC"
+  | "subscriptionEndpoint_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -657,6 +659,20 @@ export interface UserWhereInput {
   language_not_starts_with?: Maybe<String>;
   language_ends_with?: Maybe<String>;
   language_not_ends_with?: Maybe<String>;
+  subscriptionEndpoint?: Maybe<String>;
+  subscriptionEndpoint_not?: Maybe<String>;
+  subscriptionEndpoint_in?: Maybe<String[] | String>;
+  subscriptionEndpoint_not_in?: Maybe<String[] | String>;
+  subscriptionEndpoint_lt?: Maybe<String>;
+  subscriptionEndpoint_lte?: Maybe<String>;
+  subscriptionEndpoint_gt?: Maybe<String>;
+  subscriptionEndpoint_gte?: Maybe<String>;
+  subscriptionEndpoint_contains?: Maybe<String>;
+  subscriptionEndpoint_not_contains?: Maybe<String>;
+  subscriptionEndpoint_starts_with?: Maybe<String>;
+  subscriptionEndpoint_not_starts_with?: Maybe<String>;
+  subscriptionEndpoint_ends_with?: Maybe<String>;
+  subscriptionEndpoint_not_ends_with?: Maybe<String>;
   following_every?: Maybe<UserWhereInput>;
   following_some?: Maybe<UserWhereInput>;
   following_none?: Maybe<UserWhereInput>;
@@ -1084,6 +1100,7 @@ export type UserWhereUniqueInput = AtLeastOne<{
   username?: Maybe<String>;
   email?: Maybe<String>;
   phone?: Maybe<String>;
+  subscriptionEndpoint?: Maybe<String>;
 }>;
 
 export interface CommentCreateInput {
@@ -1113,6 +1130,7 @@ export interface UserCreateWithoutCommentsInput {
   isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
+  subscriptionEndpoint?: Maybe<String>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
   followers?: Maybe<UserCreateManyWithoutFollowingInput>;
   posts?: Maybe<PostCreateManyWithoutUserInput>;
@@ -1143,6 +1161,7 @@ export interface UserCreateWithoutFollowersInput {
   isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
+  subscriptionEndpoint?: Maybe<String>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
   posts?: Maybe<PostCreateManyWithoutUserInput>;
   likes?: Maybe<LikeCreateManyWithoutUserInput>;
@@ -1205,6 +1224,7 @@ export interface UserCreateWithoutLikesInput {
   isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
+  subscriptionEndpoint?: Maybe<String>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
   followers?: Maybe<UserCreateManyWithoutFollowingInput>;
   posts?: Maybe<PostCreateManyWithoutUserInput>;
@@ -1235,6 +1255,7 @@ export interface UserCreateWithoutFollowingInput {
   isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
+  subscriptionEndpoint?: Maybe<String>;
   followers?: Maybe<UserCreateManyWithoutFollowingInput>;
   posts?: Maybe<PostCreateManyWithoutUserInput>;
   likes?: Maybe<LikeCreateManyWithoutUserInput>;
@@ -1287,6 +1308,7 @@ export interface UserCreateWithoutPostsInput {
   isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
+  subscriptionEndpoint?: Maybe<String>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
   followers?: Maybe<UserCreateManyWithoutFollowingInput>;
   likes?: Maybe<LikeCreateManyWithoutUserInput>;
@@ -1368,6 +1390,7 @@ export interface UserCreateInput {
   isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
+  subscriptionEndpoint?: Maybe<String>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
   followers?: Maybe<UserCreateManyWithoutFollowingInput>;
   posts?: Maybe<PostCreateManyWithoutUserInput>;
@@ -1457,6 +1480,7 @@ export interface UserUpdateWithoutCommentsDataInput {
   isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
+  subscriptionEndpoint?: Maybe<String>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
@@ -1506,6 +1530,7 @@ export interface UserUpdateWithoutFollowersDataInput {
   isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
+  subscriptionEndpoint?: Maybe<String>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
   likes?: Maybe<LikeUpdateManyWithoutUserInput>;
@@ -1690,6 +1715,7 @@ export interface UserUpdateWithoutLikesDataInput {
   isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
+  subscriptionEndpoint?: Maybe<String>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
@@ -1739,6 +1765,7 @@ export interface UserUpdateWithoutFollowingDataInput {
   isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
+  subscriptionEndpoint?: Maybe<String>;
   followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
   likes?: Maybe<LikeUpdateManyWithoutUserInput>;
@@ -1813,6 +1840,7 @@ export interface UserUpdateWithoutPostsDataInput {
   isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
+  subscriptionEndpoint?: Maybe<String>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
   likes?: Maybe<LikeUpdateManyWithoutUserInput>;
@@ -2024,6 +2052,7 @@ export interface UserUpdateDataInput {
   isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
+  subscriptionEndpoint?: Maybe<String>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
@@ -2567,6 +2596,20 @@ export interface UserScalarWhereInput {
   language_not_starts_with?: Maybe<String>;
   language_ends_with?: Maybe<String>;
   language_not_ends_with?: Maybe<String>;
+  subscriptionEndpoint?: Maybe<String>;
+  subscriptionEndpoint_not?: Maybe<String>;
+  subscriptionEndpoint_in?: Maybe<String[] | String>;
+  subscriptionEndpoint_not_in?: Maybe<String[] | String>;
+  subscriptionEndpoint_lt?: Maybe<String>;
+  subscriptionEndpoint_lte?: Maybe<String>;
+  subscriptionEndpoint_gt?: Maybe<String>;
+  subscriptionEndpoint_gte?: Maybe<String>;
+  subscriptionEndpoint_contains?: Maybe<String>;
+  subscriptionEndpoint_not_contains?: Maybe<String>;
+  subscriptionEndpoint_starts_with?: Maybe<String>;
+  subscriptionEndpoint_not_starts_with?: Maybe<String>;
+  subscriptionEndpoint_ends_with?: Maybe<String>;
+  subscriptionEndpoint_not_ends_with?: Maybe<String>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -2607,6 +2650,7 @@ export interface UserUpdateManyDataInput {
   isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
+  subscriptionEndpoint?: Maybe<String>;
 }
 
 export interface UserUpsertWithoutLikesInput {
@@ -2815,6 +2859,7 @@ export interface UserCreateWithoutRoomsInput {
   isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
+  subscriptionEndpoint?: Maybe<String>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
   followers?: Maybe<UserCreateManyWithoutFollowingInput>;
   posts?: Maybe<PostCreateManyWithoutUserInput>;
@@ -2880,6 +2925,7 @@ export interface UserUpdateWithoutRoomsDataInput {
   isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
+  subscriptionEndpoint?: Maybe<String>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
@@ -2933,6 +2979,7 @@ export interface UserCreateWithoutNotificationsInput {
   isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
+  subscriptionEndpoint?: Maybe<String>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
   followers?: Maybe<UserCreateManyWithoutFollowingInput>;
   posts?: Maybe<PostCreateManyWithoutUserInput>;
@@ -2971,6 +3018,7 @@ export interface UserUpdateWithoutNotificationsDataInput {
   isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
+  subscriptionEndpoint?: Maybe<String>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
@@ -3028,6 +3076,7 @@ export interface UserUpdateInput {
   isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
+  subscriptionEndpoint?: Maybe<String>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
@@ -3051,6 +3100,7 @@ export interface UserUpdateManyMutationInput {
   isPrivate?: Maybe<Boolean>;
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
+  subscriptionEndpoint?: Maybe<String>;
 }
 
 export interface CommentSubscriptionWhereInput {
@@ -3204,6 +3254,7 @@ export interface User {
   isPrivate: Boolean;
   darkMode: Boolean;
   language: String;
+  subscriptionEndpoint?: String;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -3223,6 +3274,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   isPrivate: () => Promise<Boolean>;
   darkMode: () => Promise<Boolean>;
   language: () => Promise<String>;
+  subscriptionEndpoint: () => Promise<String>;
   following: <T = FragmentableArray<User>>(args?: {
     where?: UserWhereInput;
     orderBy?: UserOrderByInput;
@@ -3307,6 +3359,7 @@ export interface UserSubscription
   isPrivate: () => Promise<AsyncIterator<Boolean>>;
   darkMode: () => Promise<AsyncIterator<Boolean>>;
   language: () => Promise<AsyncIterator<String>>;
+  subscriptionEndpoint: () => Promise<AsyncIterator<String>>;
   following: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
     where?: UserWhereInput;
     orderBy?: UserOrderByInput;
@@ -3391,6 +3444,7 @@ export interface UserNullablePromise
   isPrivate: () => Promise<Boolean>;
   darkMode: () => Promise<Boolean>;
   language: () => Promise<String>;
+  subscriptionEndpoint: () => Promise<String>;
   following: <T = FragmentableArray<User>>(args?: {
     where?: UserWhereInput;
     orderBy?: UserOrderByInput;
@@ -4683,6 +4737,7 @@ export interface UserPreviousValues {
   isPrivate: Boolean;
   darkMode: Boolean;
   language: String;
+  subscriptionEndpoint?: String;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -4704,6 +4759,7 @@ export interface UserPreviousValuesPromise
   isPrivate: () => Promise<Boolean>;
   darkMode: () => Promise<Boolean>;
   language: () => Promise<String>;
+  subscriptionEndpoint: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -4725,6 +4781,7 @@ export interface UserPreviousValuesSubscription
   isPrivate: () => Promise<AsyncIterator<Boolean>>;
   darkMode: () => Promise<AsyncIterator<Boolean>>;
   language: () => Promise<AsyncIterator<String>>;
+  subscriptionEndpoint: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }

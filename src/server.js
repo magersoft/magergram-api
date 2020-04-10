@@ -7,6 +7,7 @@ import { authenticateJwt } from './passport';
 import './passport';
 
 const PORT = process.env.PORT || 4000;
+const CLIENT_URL = process.env.CLIENT_URL;
 
 const server = new GraphQLServer({
   schema,
@@ -18,7 +19,7 @@ const options = {
 };
 
 server.express.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Origin', `${CLIENT_URL}`);
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
