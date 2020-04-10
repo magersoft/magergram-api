@@ -1,5 +1,6 @@
 import { isAuthenticated } from '../../../middlewares';
 import { prisma } from '../../../../generated/prisma-client';
+import Notification from '../../../utils/Notification';
 
 export default {
   Mutation: {
@@ -35,12 +36,19 @@ export default {
           },
           requesting: true
         });
+
+        const subscriberUser = await prisma.user({ id: subscriberId });
+        const requestUser = await prisma.user({ id: user.id });
+        const notification = new Notification(subscriberUser, {
+          title: requestUser.username
+        }, 'requestFollow');
+        notification.push();
+
         return true;
       } catch (e) {
         console.error(e);
         return false;
       }
-
     }
   }
 }

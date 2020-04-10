@@ -1,5 +1,6 @@
 import { isAuthenticated } from '../../../middlewares';
 import { prisma } from '../../../../generated/prisma-client';
+import Notification from '../../../utils/Notification';
 
 export default {
   Mutation: {
@@ -8,7 +9,7 @@ export default {
       const { id } = args;
       const { user } = request;
       try {
-        await prisma.updateUser({
+        const updatedUser = await prisma.updateUser({
           where: {
             id: user.id
           },
@@ -34,6 +35,13 @@ export default {
             }
           }
         });
+
+        const subscriberUser = await prisma.user({ id });
+        const notification = new Notification(subscriberUser, {
+          title: updatedUser.username
+        }, 'subscription');
+        await notification.push();
+
         return true;
       } catch (e) {
         return false;

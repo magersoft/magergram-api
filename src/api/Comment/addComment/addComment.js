@@ -1,5 +1,6 @@
 import { isAuthenticated } from '../../../middlewares';
 import { prisma } from '../../../../generated/prisma-client';
+import Notification from '../../../utils/Notification';
 
 export default {
   Mutation: {
@@ -57,6 +58,12 @@ export default {
                 }
               }
             });
+
+            const notification = new Notification(authorPost, {
+              title: user.username,
+              comment: comment.text
+            }, 'comment');
+            await notification.push();
           }
         }
 

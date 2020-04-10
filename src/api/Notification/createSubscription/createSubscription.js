@@ -1,4 +1,3 @@
-import webpush from '../../../webPush';
 import { prisma } from '../../../../generated/prisma-client';
 
 export default {
