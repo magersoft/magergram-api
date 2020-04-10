@@ -5,9 +5,9 @@ import logger from 'morgan';
 import schema from './schema';
 import { authenticateJwt } from './passport';
 import './passport';
+import cors from 'cors';
 
 const PORT = process.env.PORT || 4000;
-const DOMAIN = process.env.DOMAIN;
 
 const server = new GraphQLServer({
   schema,
@@ -26,5 +26,6 @@ server.express.use((req, res, next) => {
 server.express.use(logger('dev'));
 server.express.use(authenticateJwt);
 server.express.use('/static', express.static(process.cwd() + '/uploads'));
+server.express.use(cors())
 
 server.start(options, () => console.log(`✅ Server running on port http://localhost:${PORT}`));
