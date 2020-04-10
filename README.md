@@ -2,7 +2,7 @@
 
 For Instagram clone on Node.js, GraphQL, Prisma, React and React Native
 
-[Go to Magergram client repo](https://github.com/magersoft/magergram-client)
+[Go to Magergram client repository](https://github.com/magersoft/magergram-client)
 
 #### Start server in dev mode
 `yarn dev`
