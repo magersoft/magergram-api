@@ -3,6 +3,7 @@ type User {
   postsCount: Int!
   followingCount: Int!
   followersCount: Int!
+  newNotificationsCount: Int!
   isFollowing: Boolean!
   isSelf: Boolean!
   isRequestingSubscription: Boolean!

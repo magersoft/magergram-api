@@ -475,6 +475,8 @@ export type NotificationOrderByInput =
   | "type_DESC"
   | "requesting_ASC"
   | "requesting_DESC"
+  | "showed_ASC"
+  | "showed_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -1050,6 +1052,8 @@ export interface NotificationWhereInput {
   subscriber?: Maybe<UserWhereInput>;
   requesting?: Maybe<Boolean>;
   requesting_not?: Maybe<Boolean>;
+  showed?: Maybe<Boolean>;
+  showed_not?: Maybe<Boolean>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -1416,6 +1420,7 @@ export interface NotificationCreateWithoutUserInput {
   comment?: Maybe<CommentCreateOneInput>;
   subscriber?: Maybe<UserCreateOneInput>;
   requesting?: Maybe<Boolean>;
+  showed?: Maybe<Boolean>;
 }
 
 export interface PostCreateOneInput {
@@ -2102,6 +2107,7 @@ export interface NotificationUpdateWithoutUserDataInput {
   comment?: Maybe<CommentUpdateOneInput>;
   subscriber?: Maybe<UserUpdateOneInput>;
   requesting?: Maybe<Boolean>;
+  showed?: Maybe<Boolean>;
 }
 
 export interface PostUpdateOneInput {
@@ -2227,6 +2233,8 @@ export interface NotificationScalarWhereInput {
   type_not_in?: Maybe<NotificationType[] | NotificationType>;
   requesting?: Maybe<Boolean>;
   requesting_not?: Maybe<Boolean>;
+  showed?: Maybe<Boolean>;
+  showed_not?: Maybe<Boolean>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -2256,6 +2264,7 @@ export interface NotificationUpdateManyWithWhereNestedInput {
 export interface NotificationUpdateManyDataInput {
   type?: Maybe<NotificationType>;
   requesting?: Maybe<Boolean>;
+  showed?: Maybe<Boolean>;
 }
 
 export interface MessageUpsertWithWhereUniqueWithoutRoomInput {
@@ -2957,6 +2966,7 @@ export interface NotificationCreateInput {
   comment?: Maybe<CommentCreateOneInput>;
   subscriber?: Maybe<UserCreateOneInput>;
   requesting?: Maybe<Boolean>;
+  showed?: Maybe<Boolean>;
 }
 
 export interface UserCreateOneWithoutNotificationsInput {
@@ -2995,6 +3005,7 @@ export interface NotificationUpdateInput {
   comment?: Maybe<CommentUpdateOneInput>;
   subscriber?: Maybe<UserUpdateOneInput>;
   requesting?: Maybe<Boolean>;
+  showed?: Maybe<Boolean>;
 }
 
 export interface UserUpdateOneRequiredWithoutNotificationsInput {
@@ -3035,6 +3046,7 @@ export interface UserUpsertWithoutNotificationsInput {
 export interface NotificationUpdateManyMutationInput {
   type?: Maybe<NotificationType>;
   requesting?: Maybe<Boolean>;
+  showed?: Maybe<Boolean>;
 }
 
 export interface PostUpdateInput {
@@ -3828,6 +3840,7 @@ export interface Notification {
   id: ID_Output;
   type: NotificationType;
   requesting?: Boolean;
+  showed?: Boolean;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -3842,6 +3855,7 @@ export interface NotificationPromise
   comment: <T = CommentPromise>() => T;
   subscriber: <T = UserPromise>() => T;
   requesting: () => Promise<Boolean>;
+  showed: () => Promise<Boolean>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -3856,6 +3870,7 @@ export interface NotificationSubscription
   comment: <T = CommentSubscription>() => T;
   subscriber: <T = UserSubscription>() => T;
   requesting: () => Promise<AsyncIterator<Boolean>>;
+  showed: () => Promise<AsyncIterator<Boolean>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -3870,6 +3885,7 @@ export interface NotificationNullablePromise
   comment: <T = CommentPromise>() => T;
   subscriber: <T = UserPromise>() => T;
   requesting: () => Promise<Boolean>;
+  showed: () => Promise<Boolean>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -4573,6 +4589,7 @@ export interface NotificationPreviousValues {
   id: ID_Output;
   type: NotificationType;
   requesting?: Boolean;
+  showed?: Boolean;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -4583,6 +4600,7 @@ export interface NotificationPreviousValuesPromise
   id: () => Promise<ID_Output>;
   type: () => Promise<NotificationType>;
   requesting: () => Promise<Boolean>;
+  showed: () => Promise<Boolean>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -4593,6 +4611,7 @@ export interface NotificationPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   type: () => Promise<AsyncIterator<NotificationType>>;
   requesting: () => Promise<AsyncIterator<Boolean>>;
+  showed: () => Promise<AsyncIterator<Boolean>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }

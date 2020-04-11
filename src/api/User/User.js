@@ -24,6 +24,12 @@ export default {
         following_some: { id }
       }
     }).aggregate().count(),
+    newNotificationsCount: ({ id }) => prisma.notificationsConnection({
+      where: {
+        user: { id },
+        showed: false
+      }
+    }).aggregate().count(),
     fullName: parent => {
       return `${parent.firstName} ${parent.lastName}`
     },

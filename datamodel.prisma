@@ -95,6 +95,7 @@ type Notification {
     comment: Comment @relation(name: "CommentRelation")
     subscriber: User @relation(name: "SubscriberRelation")
     requesting: Boolean @default(value: false)
+    showed: Boolean @default(value: false)
     createdAt: DateTime! @createdAt
     updatedAt: DateTime! @updatedAt
 }

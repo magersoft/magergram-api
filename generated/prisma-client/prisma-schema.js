@@ -1068,6 +1068,7 @@ type Notification {
   comment: Comment
   subscriber: User
   requesting: Boolean
+  showed: Boolean
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -1086,6 +1087,7 @@ input NotificationCreateInput {
   comment: CommentCreateOneInput
   subscriber: UserCreateOneInput
   requesting: Boolean
+  showed: Boolean
 }
 
 input NotificationCreateManyWithoutUserInput {
@@ -1100,6 +1102,7 @@ input NotificationCreateWithoutUserInput {
   comment: CommentCreateOneInput
   subscriber: UserCreateOneInput
   requesting: Boolean
+  showed: Boolean
 }
 
 type NotificationEdge {
@@ -1114,6 +1117,8 @@ enum NotificationOrderByInput {
   type_DESC
   requesting_ASC
   requesting_DESC
+  showed_ASC
+  showed_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -1124,6 +1129,7 @@ type NotificationPreviousValues {
   id: ID!
   type: NotificationType!
   requesting: Boolean
+  showed: Boolean
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -1149,6 +1155,8 @@ input NotificationScalarWhereInput {
   type_not_in: [NotificationType!]
   requesting: Boolean
   requesting_not: Boolean
+  showed: Boolean
+  showed_not: Boolean
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -1202,16 +1210,19 @@ input NotificationUpdateInput {
   comment: CommentUpdateOneInput
   subscriber: UserUpdateOneInput
   requesting: Boolean
+  showed: Boolean
 }
 
 input NotificationUpdateManyDataInput {
   type: NotificationType
   requesting: Boolean
+  showed: Boolean
 }
 
 input NotificationUpdateManyMutationInput {
   type: NotificationType
   requesting: Boolean
+  showed: Boolean
 }
 
 input NotificationUpdateManyWithoutUserInput {
@@ -1237,6 +1248,7 @@ input NotificationUpdateWithoutUserDataInput {
   comment: CommentUpdateOneInput
   subscriber: UserUpdateOneInput
   requesting: Boolean
+  showed: Boolean
 }
 
 input NotificationUpdateWithWhereUniqueWithoutUserInput {
@@ -1275,6 +1287,8 @@ input NotificationWhereInput {
   subscriber: UserWhereInput
   requesting: Boolean
   requesting_not: Boolean
+  showed: Boolean
+  showed_not: Boolean
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
