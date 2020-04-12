@@ -3,7 +3,7 @@ import { prisma } from '../../../../generated/prisma-client';
 
 export default {
   Query: {
-    seeNotifications: async (_, __, { request }) => {
+    seeNotifications: async (_, { perPage, page }, { request }) => {
       isAuthenticated(request);
       const { user } = request;
       try {
@@ -15,7 +15,12 @@ export default {
             user: { id: user.id }
           }
         })
-        return await prisma.user({ id: user.id }).notifications({ orderBy: 'createdAt_DESC' });
+        return await prisma.user({ id: user.id })
+          .notifications({
+            first: perPage,
+            skip: perPage * page,
+            orderBy: 'createdAt_DESC'
+          });
       } catch (e) {
         console.error(e)
       }
