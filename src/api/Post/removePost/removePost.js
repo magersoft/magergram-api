@@ -15,6 +15,7 @@ export default {
           throw new Error('Permission denied');
         }
         const files = await prisma.post({ id }).files();
+        await prisma.deleteManyNotifications({ post: { id } });
         await prisma.deletePost({ id });
 
         for (let i = 0; i < files.length; i++) {
