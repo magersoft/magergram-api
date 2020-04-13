@@ -39,8 +39,12 @@ export default {
           preparedPhone = phone.replace('+', '').replace('8', '7');
         }
 
+        if (!(/^[a-z-0-9]+$/.test(username))) {
+          throw new Error('Only english lower case letter and digits');
+        }
+
         await prisma.createUser({
-          username,
+          username: username.trim(),
           email,
           phone: preparedPhone,
           password: savePassword,
@@ -69,6 +73,9 @@ export default {
       const { username } = args;
       try {
         const user = await prisma.user({ username });
+        if (!(/^[a-z-0-9]+$/.test(username))) {
+          throw new Error('Only english lower case letter and digits');
+        }
         if (user) {
           throw new Error('Username is already in use')
         }
