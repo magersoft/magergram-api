@@ -66,7 +66,7 @@ export default class Notification {
         from: 'push@magergram.com',
         to: this.user.email,
         subject: `${ICON[this.type]} Magergram Notification`,
-        html: `${this.user.username} ${DICTIONARY[this.type]} <br />
+        html: `${this.payload.username} ${DICTIONARY[this.type]} <br />
                ${this.type === 'comment' ? this.payload.comment : ''}<br />
                Чтобы посмотреть это уведомление авторизуйтесь в приложении Magergram<br /><br /><br />
                <a href="${process.env.CLIENT_URL}">Войти в приложение</a>`
