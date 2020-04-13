@@ -10,7 +10,8 @@ export default {
       const post = await prisma.createPost({
         caption, location, user: { connect: { id: user.id } }
       });
-      files.forEach(async file => {
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
         await prisma.createFile({
           url: file,
           post: {
@@ -18,8 +19,8 @@ export default {
               id: post.id
             }
           }
-        });
-      });
+        })
+      }
       return post;
     }
   }

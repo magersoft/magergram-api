@@ -77,6 +77,10 @@ export default {
                 title: user.username
               }, 'like');
               await notification.push();
+
+              if (authorPost.email && authorPost.emailNotification) {
+                await notification.email();
+              }
             }
           }
         }

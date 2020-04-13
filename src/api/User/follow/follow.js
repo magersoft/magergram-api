@@ -42,6 +42,10 @@ export default {
         }, 'subscription');
         await notification.push();
 
+        if (subscriberUser.email && subscriberUser.emailNotification) {
+          await notification.email();
+        }
+
         return true;
       } catch (e) {
         return false;

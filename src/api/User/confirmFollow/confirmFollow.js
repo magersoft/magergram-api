@@ -38,7 +38,11 @@ export default {
         const notification = new Notification(confirmedUser, {
           title: user.username
         }, 'confirmFollow');
-        notification.push();
+        await notification.push();
+
+        if (confirmedUser.email && confirmedUser.emailNotification) {
+          await notification.email();
+        }
 
         return await prisma.deleteNotification({ id: notificationId });
       } catch (e) {

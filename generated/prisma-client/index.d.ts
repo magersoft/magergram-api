@@ -405,6 +405,8 @@ export type UserOrderByInput =
   | "language_DESC"
   | "subscriptionEndpoint_ASC"
   | "subscriptionEndpoint_DESC"
+  | "emailNotification_ASC"
+  | "emailNotification_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -675,6 +677,8 @@ export interface UserWhereInput {
   subscriptionEndpoint_not_starts_with?: Maybe<String>;
   subscriptionEndpoint_ends_with?: Maybe<String>;
   subscriptionEndpoint_not_ends_with?: Maybe<String>;
+  emailNotification?: Maybe<Boolean>;
+  emailNotification_not?: Maybe<Boolean>;
   following_every?: Maybe<UserWhereInput>;
   following_some?: Maybe<UserWhereInput>;
   following_none?: Maybe<UserWhereInput>;
@@ -1135,6 +1139,7 @@ export interface UserCreateWithoutCommentsInput {
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   subscriptionEndpoint?: Maybe<String>;
+  emailNotification?: Maybe<Boolean>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
   followers?: Maybe<UserCreateManyWithoutFollowingInput>;
   posts?: Maybe<PostCreateManyWithoutUserInput>;
@@ -1166,6 +1171,7 @@ export interface UserCreateWithoutFollowersInput {
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   subscriptionEndpoint?: Maybe<String>;
+  emailNotification?: Maybe<Boolean>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
   posts?: Maybe<PostCreateManyWithoutUserInput>;
   likes?: Maybe<LikeCreateManyWithoutUserInput>;
@@ -1229,6 +1235,7 @@ export interface UserCreateWithoutLikesInput {
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   subscriptionEndpoint?: Maybe<String>;
+  emailNotification?: Maybe<Boolean>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
   followers?: Maybe<UserCreateManyWithoutFollowingInput>;
   posts?: Maybe<PostCreateManyWithoutUserInput>;
@@ -1260,6 +1267,7 @@ export interface UserCreateWithoutFollowingInput {
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   subscriptionEndpoint?: Maybe<String>;
+  emailNotification?: Maybe<Boolean>;
   followers?: Maybe<UserCreateManyWithoutFollowingInput>;
   posts?: Maybe<PostCreateManyWithoutUserInput>;
   likes?: Maybe<LikeCreateManyWithoutUserInput>;
@@ -1313,6 +1321,7 @@ export interface UserCreateWithoutPostsInput {
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   subscriptionEndpoint?: Maybe<String>;
+  emailNotification?: Maybe<Boolean>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
   followers?: Maybe<UserCreateManyWithoutFollowingInput>;
   likes?: Maybe<LikeCreateManyWithoutUserInput>;
@@ -1395,6 +1404,7 @@ export interface UserCreateInput {
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   subscriptionEndpoint?: Maybe<String>;
+  emailNotification?: Maybe<Boolean>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
   followers?: Maybe<UserCreateManyWithoutFollowingInput>;
   posts?: Maybe<PostCreateManyWithoutUserInput>;
@@ -1486,6 +1496,7 @@ export interface UserUpdateWithoutCommentsDataInput {
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   subscriptionEndpoint?: Maybe<String>;
+  emailNotification?: Maybe<Boolean>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
@@ -1536,6 +1547,7 @@ export interface UserUpdateWithoutFollowersDataInput {
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   subscriptionEndpoint?: Maybe<String>;
+  emailNotification?: Maybe<Boolean>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
   likes?: Maybe<LikeUpdateManyWithoutUserInput>;
@@ -1721,6 +1733,7 @@ export interface UserUpdateWithoutLikesDataInput {
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   subscriptionEndpoint?: Maybe<String>;
+  emailNotification?: Maybe<Boolean>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
@@ -1771,6 +1784,7 @@ export interface UserUpdateWithoutFollowingDataInput {
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   subscriptionEndpoint?: Maybe<String>;
+  emailNotification?: Maybe<Boolean>;
   followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
   likes?: Maybe<LikeUpdateManyWithoutUserInput>;
@@ -1846,6 +1860,7 @@ export interface UserUpdateWithoutPostsDataInput {
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   subscriptionEndpoint?: Maybe<String>;
+  emailNotification?: Maybe<Boolean>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
   likes?: Maybe<LikeUpdateManyWithoutUserInput>;
@@ -2058,6 +2073,7 @@ export interface UserUpdateDataInput {
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   subscriptionEndpoint?: Maybe<String>;
+  emailNotification?: Maybe<Boolean>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
@@ -2619,6 +2635,8 @@ export interface UserScalarWhereInput {
   subscriptionEndpoint_not_starts_with?: Maybe<String>;
   subscriptionEndpoint_ends_with?: Maybe<String>;
   subscriptionEndpoint_not_ends_with?: Maybe<String>;
+  emailNotification?: Maybe<Boolean>;
+  emailNotification_not?: Maybe<Boolean>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -2660,6 +2678,7 @@ export interface UserUpdateManyDataInput {
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   subscriptionEndpoint?: Maybe<String>;
+  emailNotification?: Maybe<Boolean>;
 }
 
 export interface UserUpsertWithoutLikesInput {
@@ -2869,6 +2888,7 @@ export interface UserCreateWithoutRoomsInput {
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   subscriptionEndpoint?: Maybe<String>;
+  emailNotification?: Maybe<Boolean>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
   followers?: Maybe<UserCreateManyWithoutFollowingInput>;
   posts?: Maybe<PostCreateManyWithoutUserInput>;
@@ -2935,6 +2955,7 @@ export interface UserUpdateWithoutRoomsDataInput {
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   subscriptionEndpoint?: Maybe<String>;
+  emailNotification?: Maybe<Boolean>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
@@ -2990,6 +3011,7 @@ export interface UserCreateWithoutNotificationsInput {
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   subscriptionEndpoint?: Maybe<String>;
+  emailNotification?: Maybe<Boolean>;
   following?: Maybe<UserCreateManyWithoutFollowersInput>;
   followers?: Maybe<UserCreateManyWithoutFollowingInput>;
   posts?: Maybe<PostCreateManyWithoutUserInput>;
@@ -3030,6 +3052,7 @@ export interface UserUpdateWithoutNotificationsDataInput {
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   subscriptionEndpoint?: Maybe<String>;
+  emailNotification?: Maybe<Boolean>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
@@ -3089,6 +3112,7 @@ export interface UserUpdateInput {
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   subscriptionEndpoint?: Maybe<String>;
+  emailNotification?: Maybe<Boolean>;
   following?: Maybe<UserUpdateManyWithoutFollowersInput>;
   followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
   posts?: Maybe<PostUpdateManyWithoutUserInput>;
@@ -3113,6 +3137,7 @@ export interface UserUpdateManyMutationInput {
   darkMode?: Maybe<Boolean>;
   language?: Maybe<String>;
   subscriptionEndpoint?: Maybe<String>;
+  emailNotification?: Maybe<Boolean>;
 }
 
 export interface CommentSubscriptionWhereInput {
@@ -3267,6 +3292,7 @@ export interface User {
   darkMode: Boolean;
   language: String;
   subscriptionEndpoint?: String;
+  emailNotification?: Boolean;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -3287,6 +3313,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   darkMode: () => Promise<Boolean>;
   language: () => Promise<String>;
   subscriptionEndpoint: () => Promise<String>;
+  emailNotification: () => Promise<Boolean>;
   following: <T = FragmentableArray<User>>(args?: {
     where?: UserWhereInput;
     orderBy?: UserOrderByInput;
@@ -3372,6 +3399,7 @@ export interface UserSubscription
   darkMode: () => Promise<AsyncIterator<Boolean>>;
   language: () => Promise<AsyncIterator<String>>;
   subscriptionEndpoint: () => Promise<AsyncIterator<String>>;
+  emailNotification: () => Promise<AsyncIterator<Boolean>>;
   following: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
     where?: UserWhereInput;
     orderBy?: UserOrderByInput;
@@ -3457,6 +3485,7 @@ export interface UserNullablePromise
   darkMode: () => Promise<Boolean>;
   language: () => Promise<String>;
   subscriptionEndpoint: () => Promise<String>;
+  emailNotification: () => Promise<Boolean>;
   following: <T = FragmentableArray<User>>(args?: {
     where?: UserWhereInput;
     orderBy?: UserOrderByInput;
@@ -4757,6 +4786,7 @@ export interface UserPreviousValues {
   darkMode: Boolean;
   language: String;
   subscriptionEndpoint?: String;
+  emailNotification?: Boolean;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -4779,6 +4809,7 @@ export interface UserPreviousValuesPromise
   darkMode: () => Promise<Boolean>;
   language: () => Promise<String>;
   subscriptionEndpoint: () => Promise<String>;
+  emailNotification: () => Promise<Boolean>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -4801,6 +4832,7 @@ export interface UserPreviousValuesSubscription
   darkMode: () => Promise<AsyncIterator<Boolean>>;
   language: () => Promise<AsyncIterator<String>>;
   subscriptionEndpoint: () => Promise<AsyncIterator<String>>;
+  emailNotification: () => Promise<AsyncIterator<Boolean>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }

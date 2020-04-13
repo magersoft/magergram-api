@@ -64,6 +64,10 @@ export default {
               comment: comment.text
             }, 'comment');
             await notification.push();
+
+            if (authorPost.email && authorPost.emailNotification) {
+              await notification.email();
+            }
           }
         }
 

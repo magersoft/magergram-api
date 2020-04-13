@@ -42,7 +42,11 @@ export default {
         const notification = new Notification(subscriberUser, {
           title: requestUser.username
         }, 'requestFollow');
-        notification.push();
+        await notification.push();
+
+        if (subscriberUser.email && subscriberUser.emailNotification) {
+          await notification.email();
+        }
 
         return true;
       } catch (e) {
