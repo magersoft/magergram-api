@@ -26,12 +26,12 @@ export default {
           type: 'SUBSCRIPTION',
           user: {
             connect: {
-              id: user.id
+              id
             }
           },
           subscriber: {
             connect: {
-              id
+              id: user.id
             }
           }
         });
