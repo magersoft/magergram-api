@@ -1,3 +1,4 @@
 type Query {
   seeRoom(id: String!): Room!
+  seeMessages(roomId: String!, perPage: Int!, page: Int): [Message!]!
 }

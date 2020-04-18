@@ -465,6 +465,8 @@ export type MessageOrderByInput =
   | "id_DESC"
   | "text_ASC"
   | "text_DESC"
+  | "read_ASC"
+  | "read_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -1010,6 +1012,8 @@ export interface MessageWhereInput {
   from?: Maybe<UserWhereInput>;
   to?: Maybe<UserWhereInput>;
   room?: Maybe<RoomWhereInput>;
+  read?: Maybe<Boolean>;
+  read_not?: Maybe<Boolean>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -1381,6 +1385,7 @@ export interface MessageCreateWithoutRoomInput {
   text: String;
   from: UserCreateOneInput;
   to: UserCreateOneInput;
+  read?: Maybe<Boolean>;
 }
 
 export interface UserCreateOneInput {
@@ -2049,6 +2054,7 @@ export interface MessageUpdateWithoutRoomDataInput {
   text?: Maybe<String>;
   from?: Maybe<UserUpdateOneRequiredInput>;
   to?: Maybe<UserUpdateOneRequiredInput>;
+  read?: Maybe<Boolean>;
 }
 
 export interface UserUpdateOneRequiredInput {
@@ -2318,6 +2324,8 @@ export interface MessageScalarWhereInput {
   text_not_starts_with?: Maybe<String>;
   text_ends_with?: Maybe<String>;
   text_not_ends_with?: Maybe<String>;
+  read?: Maybe<Boolean>;
+  read_not?: Maybe<Boolean>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -2346,6 +2354,7 @@ export interface MessageUpdateManyWithWhereNestedInput {
 
 export interface MessageUpdateManyDataInput {
   text?: Maybe<String>;
+  read?: Maybe<Boolean>;
 }
 
 export interface RoomUpsertWithWhereUniqueWithoutParticipantsInput {
@@ -2855,6 +2864,7 @@ export interface MessageCreateInput {
   from: UserCreateOneInput;
   to: UserCreateOneInput;
   room: RoomCreateOneWithoutMessagesInput;
+  read?: Maybe<Boolean>;
 }
 
 export interface RoomCreateOneWithoutMessagesInput {
@@ -2902,6 +2912,7 @@ export interface MessageUpdateInput {
   from?: Maybe<UserUpdateOneRequiredInput>;
   to?: Maybe<UserUpdateOneRequiredInput>;
   room?: Maybe<RoomUpdateOneRequiredWithoutMessagesInput>;
+  read?: Maybe<Boolean>;
 }
 
 export interface RoomUpdateOneRequiredWithoutMessagesInput {
@@ -2977,6 +2988,7 @@ export interface RoomUpsertWithoutMessagesInput {
 
 export interface MessageUpdateManyMutationInput {
   text?: Maybe<String>;
+  read?: Maybe<Boolean>;
 }
 
 export interface NotificationCreateInput {
@@ -3827,6 +3839,7 @@ export interface RoomNullablePromise
 export interface Message {
   id: ID_Output;
   text: String;
+  read: Boolean;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -3837,6 +3850,7 @@ export interface MessagePromise extends Promise<Message>, Fragmentable {
   from: <T = UserPromise>() => T;
   to: <T = UserPromise>() => T;
   room: <T = RoomPromise>() => T;
+  read: () => Promise<Boolean>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -3849,6 +3863,7 @@ export interface MessageSubscription
   from: <T = UserSubscription>() => T;
   to: <T = UserSubscription>() => T;
   room: <T = RoomSubscription>() => T;
+  read: () => Promise<AsyncIterator<Boolean>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -3861,6 +3876,7 @@ export interface MessageNullablePromise
   from: <T = UserPromise>() => T;
   to: <T = UserPromise>() => T;
   room: <T = RoomPromise>() => T;
+  read: () => Promise<Boolean>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -4567,6 +4583,7 @@ export interface MessageSubscriptionPayloadSubscription
 export interface MessagePreviousValues {
   id: ID_Output;
   text: String;
+  read: Boolean;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -4576,6 +4593,7 @@ export interface MessagePreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   text: () => Promise<String>;
+  read: () => Promise<Boolean>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -4585,6 +4603,7 @@ export interface MessagePreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   text: () => Promise<AsyncIterator<String>>;
+  read: () => Promise<AsyncIterator<Boolean>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }

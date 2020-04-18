@@ -77,6 +77,7 @@ type Message {
   from: User! @relation(name: "FromRelation")
   to: User! @relation(name: "ToRelation")
   room: Room!
+  read: Boolean! @default(value: false)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }

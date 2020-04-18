@@ -774,6 +774,7 @@ type Message {
   from: User!
   to: User!
   room: Room!
+  read: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -790,6 +791,7 @@ input MessageCreateInput {
   from: UserCreateOneInput!
   to: UserCreateOneInput!
   room: RoomCreateOneWithoutMessagesInput!
+  read: Boolean
 }
 
 input MessageCreateManyWithoutRoomInput {
@@ -802,6 +804,7 @@ input MessageCreateWithoutRoomInput {
   text: String!
   from: UserCreateOneInput!
   to: UserCreateOneInput!
+  read: Boolean
 }
 
 type MessageEdge {
@@ -814,6 +817,8 @@ enum MessageOrderByInput {
   id_DESC
   text_ASC
   text_DESC
+  read_ASC
+  read_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -823,6 +828,7 @@ enum MessageOrderByInput {
 type MessagePreviousValues {
   id: ID!
   text: String!
+  read: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -856,6 +862,8 @@ input MessageScalarWhereInput {
   text_not_starts_with: String
   text_ends_with: String
   text_not_ends_with: String
+  read: Boolean
+  read_not: Boolean
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -900,14 +908,17 @@ input MessageUpdateInput {
   from: UserUpdateOneRequiredInput
   to: UserUpdateOneRequiredInput
   room: RoomUpdateOneRequiredWithoutMessagesInput
+  read: Boolean
 }
 
 input MessageUpdateManyDataInput {
   text: String
+  read: Boolean
 }
 
 input MessageUpdateManyMutationInput {
   text: String
+  read: Boolean
 }
 
 input MessageUpdateManyWithoutRoomInput {
@@ -931,6 +942,7 @@ input MessageUpdateWithoutRoomDataInput {
   text: String
   from: UserUpdateOneRequiredInput
   to: UserUpdateOneRequiredInput
+  read: Boolean
 }
 
 input MessageUpdateWithWhereUniqueWithoutRoomInput {
@@ -976,6 +988,8 @@ input MessageWhereInput {
   from: UserWhereInput
   to: UserWhereInput
   room: RoomWhereInput
+  read: Boolean
+  read_not: Boolean
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]

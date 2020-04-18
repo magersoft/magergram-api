@@ -3,7 +3,7 @@ import { prisma } from '../../../../generated/prisma-client';
 
 export default {
   Mutation: {
-    sendMessage: async (_, args, { request }) => {
+    sendMessage: async (_, args, { request, pubSub }) => {
       isAuthenticated(request);
 
       const { user } = request;
@@ -45,7 +45,7 @@ export default {
             id: room.id
           }
         }
-      })
+      });
     }
   }
 }
