@@ -1,0 +1,7 @@
+type Subscription {
+  typingMessage: Boolean!
+}
+
+type Mutation {
+  typingMessage(roomId: String!, toUserId: String!, typing: Boolean!): Boolean!
+}

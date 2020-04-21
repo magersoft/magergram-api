@@ -1,6 +1,6 @@
 import './env';
 import express  from 'express';
-import { GraphQLServer } from 'graphql-yoga';
+import { GraphQLServer, PubSub } from 'graphql-yoga';
 import logger from 'morgan';
 import schema from './schema';
 import { authenticateJwt } from './passport';
@@ -9,9 +9,12 @@ import cors from 'cors';
 
 const PORT = process.env.PORT || 4000;
 
+const pubSub = new PubSub();
+pubSub.ee.setMaxListeners(99);
+
 const server = new GraphQLServer({
   schema,
-  context: ({request}) => ({ request })
+  context: ({request}) => ({ request, pubSub })
 });
 
 const options = {
