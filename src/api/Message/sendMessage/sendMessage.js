@@ -3,7 +3,7 @@ import { prisma } from '../../../../generated/prisma-client';
 
 export default {
   Mutation: {
-    sendMessage: async (_, args, { request, pubSub }) => {
+    sendMessage: async (_, args, { request }) => {
       isAuthenticated(request);
 
       const { user } = request;

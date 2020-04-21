@@ -4,6 +4,7 @@ type User {
   followingCount: Int!
   followersCount: Int!
   newNotificationsCount: Int!
+  newMessagesCount: Int!
   isFollowing: Boolean!
   isSelf: Boolean!
   isRequestingSubscription: Boolean!

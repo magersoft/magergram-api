@@ -30,6 +30,12 @@ export default {
         showed: false
       }
     }).aggregate().count(),
+    newMessagesCount: ({ id }) => prisma.messagesConnection({
+      where: {
+        to: { id },
+        read: false
+      }
+    }).aggregate().count(),
     fullName: parent => {
       return `${parent.firstName} ${parent.lastName}`
     },
