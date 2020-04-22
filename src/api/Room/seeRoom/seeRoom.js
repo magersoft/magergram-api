@@ -12,19 +12,6 @@ export default {
         }
       });
       if (canSee) {
-        const participants = await prisma.room({ id }).participants();
-        const itsMe = participants.filter(participant => participant.id === user.id)[0];
-
-        await prisma.updateManyMessages({
-          data: {
-            read: true
-          },
-          where: {
-              room: { id },
-              to: { id: itsMe.id }
-          }
-        });
-
         return await prisma.room({ id });
       } else {
         throw Error('You can\'t see this')
@@ -36,6 +23,28 @@ export default {
         last: perPage,
         skip: perPage * page,
       })
+    }
+  },
+  Mutation: {
+    readRoomMessages: async (_, { roomId }, { request }) => {
+      try {
+        const { user } = request;
+
+        await prisma.updateManyMessages({
+          data: {
+            read: true
+          },
+          where: {
+            room: { id: roomId },
+            to: { id: user.id }
+          }
+        });
+
+        return true;
+      } catch (e) {
+        console.error(e);
+        return false;
+      }
     }
   }
 }
