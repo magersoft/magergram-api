@@ -1,18 +1,22 @@
 {
   "name": "magergram",
   "version": "1.2.5",
-  "description": "Instagram clone with NodeJS, Prisma, GraphQL, React and React Native",
+  "description": "Instagram clone with NodeJS, Prisma, GraphQL, TypeScript",
   "repository": "https://github.com/magersoft/magergram.git",
   "author": "magersoft <magervlad@yandex.ru>",
   "license": "MIT",
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
-    "dev": "nodemon --exec babel-node src/server.js",
+    "dev": "nodemon --exec ts-node src/server.ts -e ts,graphql",
     "generate": "prisma generate",
     "prisma": "yarn run prisma:deploy && yarn run generate",
     "prisma:deploy": "prisma deploy --force",
     "predeploy": "yarn run generate",
     "deploy": "git push heroku master",
-    "build": "babel src -d build",
+    "prebuild": "rm -rf build",
+    "build": "tsc",
     "postbuild": "cd src && copy ./api/*.graphql ../build/ && copy ./api/**/*.graphql ../build/ && copy ./api/**/**/*.graphql ../build/",
     "start": "node build/server.js"
   },
@@ -41,13 +45,23 @@
     "passport-jwt": "^4.0.0",
     "prisma-client-lib": "^1.34.10",
     "sharp": "^0.25.2",
+    "ts-node": "^8.9.0",
+    "tslint-config-prettier": "^1.18.0",
     "twilio": "^3.40.0",
+    "typescript": "^3.8.3",
     "uuid-v4": "^0.1.0",
     "web-push": "^3.4.3"
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.9.0",
+    "@types/bcrypt": "^3.0.0",
+    "@types/cors": "^2.8.6",
+    "@types/jsonwebtoken": "^8.3.9",
+    "@types/node": "^13.13.2",
+    "@types/nodemailer": "^6.4.0",
+    "@types/twilio": "^2.11.0",
     "copy": "^0.3.2",
+    "gql-merge": "^0.0.6",
     "nodemon": "^2.0.2"
   }
 }
