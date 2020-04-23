@@ -2,8 +2,8 @@ endpoint: https://eu1.prisma.sh/vladislav-mager-bf1192/magergram/dev
 datamodel: datamodel.prisma
 
 generate:
-  - generator: javascript-client
-    output: ./generated/prisma-client/
+  - generator: typescript-client
+    output: ./src/generated/prisma-client/
 
   - generator: graphql-schema
     output: ./src/api/models.graphql

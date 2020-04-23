@@ -1,4 +1,4 @@
-import { prisma } from '../../../../generated/prisma-client';
+import { prisma } from '../../../generated/prisma-client';
 import { generateSecret, sendSecretMail } from '../../../utils/sendEmail';
 import { hashPassword } from '../../../utils/bcryptPassword';
 import is from 'is_js';

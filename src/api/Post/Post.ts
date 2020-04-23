@@ -1,4 +1,4 @@
-import { prisma, File, Comment, User, Like } from '../../../generated/prisma-client';
+import { prisma, File, Comment, User, Like } from '../../generated/prisma-client';
 
 export default {
   Post: {

@@ -1,4 +1,4 @@
-import { prisma, Room, User } from '../../../generated/prisma-client';
+import { prisma, Room, User } from '../../generated/prisma-client';
 
 export default {
   Message: {

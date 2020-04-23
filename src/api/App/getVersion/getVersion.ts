@@ -1,10 +1,9 @@
-// @ts-ignore
-import * as packageJson from '../../../../package.json';
+const pkg = require('../../../../package.json');
 
 export default {
   Query: {
     getVersion: (): string => {
-      return packageJson.version;
+      return pkg.version;
     }
   }
 }

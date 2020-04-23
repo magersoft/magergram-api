@@ -1,5 +1,5 @@
 import { isAuthenticated } from '../../../middlewares';
-import { Message, prisma, User } from '../../../../generated/prisma-client';
+import { Message, prisma, User } from '../../../generated/prisma-client';
 
 export default {
   Mutation: {

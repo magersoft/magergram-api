@@ -1,7 +1,7 @@
 import webPush from '../webPush';
 import nodemailer from 'nodemailer';
 import sgTransport from 'nodemailer-sendgrid-transport';
-import { User } from '../../generated/prisma-client';
+import { User } from '../generated/prisma-client';
 
 type NotificationType = 'like' | 'comment' | 'subscription' | 'requestFollow' | 'confirmFollow' | 'newPost';
 

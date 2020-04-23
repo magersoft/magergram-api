@@ -1,5 +1,5 @@
 import { isAuthenticated } from '../../../middlewares';
-import { File, prisma, User } from '../../../../generated/prisma-client';
+import { File, prisma, User } from '../../../generated/prisma-client';
 import { deleteFile } from '../../File/delete/deleteFile';
 
 const STORAGE_BUCKET = process.env.STORAGE_BUCKET;

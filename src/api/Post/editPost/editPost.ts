@@ -1,5 +1,5 @@
 import { isAuthenticated } from '../../../middlewares';
-import { prisma, Post, User } from '../../../../generated/prisma-client';
+import { prisma, Post, User } from '../../../generated/prisma-client';
 
 const DELETE = 'DELETE';
 const EDIT = 'EDIT';

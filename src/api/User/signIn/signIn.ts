@@ -1,5 +1,5 @@
 import { generateToken } from '../../../utils/createJWT';
-import { prisma } from '../../../../generated/prisma-client';
+import { prisma } from '../../../generated/prisma-client';
 import { comparePassword } from '../../../utils/bcryptPassword';
 import is from 'is_js';
 import { isValidPhone } from '../../../utils/sendSMS';

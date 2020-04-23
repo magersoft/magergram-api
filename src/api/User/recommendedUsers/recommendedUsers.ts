@@ -1,4 +1,4 @@
-import { prisma, User } from '../../../../generated/prisma-client';
+import { prisma, User } from '../../../generated/prisma-client';
 import { isAuthenticated } from '../../../middlewares';
 
 export default {

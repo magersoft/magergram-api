@@ -1,5 +1,5 @@
 import { isAuthenticated } from '../../../middlewares';
-import { Message, prisma, Room, User } from '../../../../generated/prisma-client';
+import { Message, prisma, Room, User } from '../../../generated/prisma-client';
 
 export default {
   Query: {

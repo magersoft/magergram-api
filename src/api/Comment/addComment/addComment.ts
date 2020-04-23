@@ -1,5 +1,5 @@
 import { isAuthenticated } from '../../../middlewares';
-import { Comment, prisma } from '../../../../generated/prisma-client';
+import { Comment, prisma } from '../../../generated/prisma-client';
 import Notification from '../../../utils/Notification';
 
 export default {

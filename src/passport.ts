@@ -1,6 +1,6 @@
 import passport from 'passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
-import { prisma, User } from '../generated/prisma-client';
+import { prisma, User } from './generated/prisma-client';
 import { ServerResponse } from 'http';
 
 const jwtOptions = {

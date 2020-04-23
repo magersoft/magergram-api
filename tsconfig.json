@@ -28,10 +28,9 @@
     "scripts",
     "acceptance-tests",
     "webpack",
-    "jest",
-    "generated"
+    "jest"
   ],
   "include": [
-    "src"
+    "./src"
   ]
 }

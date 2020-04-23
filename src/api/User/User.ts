@@ -1,4 +1,4 @@
-import { prisma, User, Post, Like, Room, Notification } from '../../../generated/prisma-client';
+import { prisma, User, Post, Like, Room, Notification } from '../../generated/prisma-client';
 
 export default {
   User: {
