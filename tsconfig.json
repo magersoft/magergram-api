@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "outDir": "build",
+    "outDir": "javascript",
     "module": "commonjs",
     "target": "es5",
     "lib": ["es6", "dom", "esnext.asynciterable"],
@@ -29,6 +29,6 @@
     "acceptance-tests",
     "webpack",
     "jest",
-    "generated"
+    "generated",
   ]
 }
