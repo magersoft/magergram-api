@@ -1,6 +1,6 @@
 {
   "name": "magergram",
-  "version": "0.2.6",
+  "version": "0.3.0",
   "description": "Instagram clone with NodeJS, Prisma, GraphQL, React and React Native",
   "repository": "https://github.com/magersoft/magergram.git",
   "author": "magersoft <magervlad@yandex.ru>",
