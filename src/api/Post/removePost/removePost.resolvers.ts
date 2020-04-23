@@ -1,6 +1,6 @@
 import { isAuthenticated } from '../../../middlewares';
 import { File, prisma, User } from '../../../generated/prisma-client';
-import { deleteFile } from '../../File/delete/deleteFile';
+import { deleteFileResolvers } from '../../File/delete/deleteFile.resolvers';
 
 const STORAGE_BUCKET = process.env.STORAGE_BUCKET;
 
@@ -21,7 +21,7 @@ export default {
         for (let i = 0; i < files.length; i++) {
           try {
             const filename = files[i].url.replace(`https://storage.googleapis.com/${STORAGE_BUCKET}/`, '');
-            await deleteFile(filename);
+            await deleteFileResolvers(filename);
           } catch (e) {
             console.error(e.message);
             return false;

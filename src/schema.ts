@@ -4,7 +4,7 @@ import { fileLoader, mergeResolvers, mergeTypes } from 'merge-graphql-schemas';
 import { GraphQLSchema } from 'graphql';
 
 const allTypes: GraphQLSchema[] = fileLoader(path.join(__dirname, '/api/**/*.graphql'));
-const allResolvers: any[] = fileLoader(path.join(__dirname, '/api/**/*.ts'));
+const allResolvers: any[] = fileLoader(path.join(__dirname, '/api/**/*.resolvers.*'));
 
 const schema = makeExecutableSchema({
   typeDefs: mergeTypes(allTypes),

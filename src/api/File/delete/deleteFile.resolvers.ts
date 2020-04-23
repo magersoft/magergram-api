@@ -3,7 +3,7 @@ import { isAuthenticated } from '../../../middlewares';
 
 const STORAGE_BUCKET = process.env.STORAGE_BUCKET;
 
-export const deleteFile = async filename => {
+export const deleteFileResolvers = async filename => {
   try {
     await bucket.file(filename).delete();
     console.log(`gs://${STORAGE_BUCKET}/${filename} deleted.`);
@@ -19,7 +19,7 @@ export default {
       const { src } = args;
       const filename = src.replace(`https://storage.googleapis.com/${STORAGE_BUCKET}/`, '');
       try {
-        await deleteFile(filename);
+        await deleteFileResolvers(filename);
         return true;
       } catch (e) {
         console.error(e);

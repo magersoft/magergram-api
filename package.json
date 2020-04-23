@@ -10,7 +10,6 @@
   },
   "scripts": {
     "dev": "nodemon --exec ts-node src/server.ts -e ts,graphql",
-    "production": "yarn run build && node -r dotenv/config build/server.js",
     "generate": "prisma generate",
     "prisma": "yarn run prisma:deploy && yarn run generate",
     "prisma:deploy": "prisma deploy --force",
