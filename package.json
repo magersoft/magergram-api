@@ -19,7 +19,7 @@
     "prebuild": "rm -rf build",
     "build": "tsc",
     "postbuild": "cd src && copy ./api/*.graphql ../build/ && copy ./api/**/*.graphql ../build/ && copy ./api/**/**/*.graphql ../build/",
-    "start": "node build/src/server.js"
+    "start": "node build/server.js"
   },
   "dependencies": {
     "@babel/cli": "^7.8.4",
