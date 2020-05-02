@@ -1,5 +1,6 @@
 import { isAuthenticated } from '../../../middlewares';
 import { Message, prisma, User } from '../../../generated/prisma-client';
+import Notification from '../../../utils/Notification';
 
 export default {
   Mutation: {
@@ -27,6 +28,13 @@ export default {
       if (!room) {
         throw Error('Room not found');
       }
+
+      const toUser: User | null = await prisma.user({ id: toId });
+      const notification = new Notification(toUser, {
+        title: user.username
+      }, 'message');
+      notification.push();
+      // notification.email();
 
       return await prisma.createMessage({
         text: message,

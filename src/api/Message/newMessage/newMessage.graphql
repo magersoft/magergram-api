@@ -1,3 +1,4 @@
 type Subscription {
   newMessage(roomId: String!): Message
+  listenMessage(userId: String!): Message
 }

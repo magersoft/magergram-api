@@ -3,7 +3,7 @@ import nodemailer from 'nodemailer';
 import sgTransport from 'nodemailer-sendgrid-transport';
 import { User } from '../generated/prisma-client';
 
-type NotificationType = 'like' | 'comment' | 'subscription' | 'requestFollow' | 'confirmFollow' | 'newPost';
+type NotificationType = 'like' | 'comment' | 'subscription' | 'requestFollow' | 'confirmFollow' | 'newPost' | 'message';
 
 interface INotificationType {
   like: string,
@@ -11,7 +11,8 @@ interface INotificationType {
   subscription: string,
   requestFollow: string,
   confirmFollow: string,
-  newPost: string
+  newPost: string,
+  message: string
 }
 
 export interface INotification {
@@ -32,7 +33,8 @@ const DICTIONARY: INotificationType = {
   subscription: 'подписался(-сь) на ваши обновления',
   requestFollow: 'отправил(-а) запрос на подписку',
   confirmFollow: 'принял(-а) ваш запрос на подписку',
-  newPost: 'опубликовал(-а) новую публикацию'
+  newPost: 'опубликовал(-а) новую публикацию',
+  message: 'прислал(-а) вам сообщение'
 }
 
 const ICON: INotificationType = {
@@ -41,7 +43,8 @@ const ICON: INotificationType = {
   subscription: '👤',
   requestFollow: '✉️',
   confirmFollow: '✅',
-  newPost: '🏞'
+  newPost: '🏞',
+  message: '📩'
 }
 
 export default class Notification implements INotification {
