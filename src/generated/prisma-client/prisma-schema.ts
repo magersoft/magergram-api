@@ -6,6 +6,10 @@ export const typeDefs = /* GraphQL */ `type AggregateComment {
   count: Int!
 }
 
+type AggregateFavorite {
+  count: Int!
+}
+
 type AggregateFile {
   count: Int!
 }
@@ -330,6 +334,183 @@ input CommentWhereUniqueInput {
 }
 
 scalar DateTime
+
+type Favorite {
+  id: ID!
+  user: User!
+  post: Post!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type FavoriteConnection {
+  pageInfo: PageInfo!
+  edges: [FavoriteEdge]!
+  aggregate: AggregateFavorite!
+}
+
+input FavoriteCreateInput {
+  id: ID
+  user: UserCreateOneWithoutFavoritesInput!
+  post: PostCreateOneInput!
+}
+
+input FavoriteCreateManyWithoutUserInput {
+  create: [FavoriteCreateWithoutUserInput!]
+  connect: [FavoriteWhereUniqueInput!]
+}
+
+input FavoriteCreateWithoutUserInput {
+  id: ID
+  post: PostCreateOneInput!
+}
+
+type FavoriteEdge {
+  node: Favorite!
+  cursor: String!
+}
+
+enum FavoriteOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type FavoritePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input FavoriteScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [FavoriteScalarWhereInput!]
+  OR: [FavoriteScalarWhereInput!]
+  NOT: [FavoriteScalarWhereInput!]
+}
+
+type FavoriteSubscriptionPayload {
+  mutation: MutationType!
+  node: Favorite
+  updatedFields: [String!]
+  previousValues: FavoritePreviousValues
+}
+
+input FavoriteSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: FavoriteWhereInput
+  AND: [FavoriteSubscriptionWhereInput!]
+  OR: [FavoriteSubscriptionWhereInput!]
+  NOT: [FavoriteSubscriptionWhereInput!]
+}
+
+input FavoriteUpdateInput {
+  user: UserUpdateOneRequiredWithoutFavoritesInput
+  post: PostUpdateOneRequiredInput
+}
+
+input FavoriteUpdateManyWithoutUserInput {
+  create: [FavoriteCreateWithoutUserInput!]
+  delete: [FavoriteWhereUniqueInput!]
+  connect: [FavoriteWhereUniqueInput!]
+  set: [FavoriteWhereUniqueInput!]
+  disconnect: [FavoriteWhereUniqueInput!]
+  update: [FavoriteUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [FavoriteUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [FavoriteScalarWhereInput!]
+}
+
+input FavoriteUpdateWithoutUserDataInput {
+  post: PostUpdateOneRequiredInput
+}
+
+input FavoriteUpdateWithWhereUniqueWithoutUserInput {
+  where: FavoriteWhereUniqueInput!
+  data: FavoriteUpdateWithoutUserDataInput!
+}
+
+input FavoriteUpsertWithWhereUniqueWithoutUserInput {
+  where: FavoriteWhereUniqueInput!
+  update: FavoriteUpdateWithoutUserDataInput!
+  create: FavoriteCreateWithoutUserInput!
+}
+
+input FavoriteWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  user: UserWhereInput
+  post: PostWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [FavoriteWhereInput!]
+  OR: [FavoriteWhereInput!]
+  NOT: [FavoriteWhereInput!]
+}
+
+input FavoriteWhereUniqueInput {
+  id: ID
+}
 
 type File {
   id: ID!
@@ -1021,6 +1202,11 @@ type Mutation {
   upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
   deleteComment(where: CommentWhereUniqueInput!): Comment
   deleteManyComments(where: CommentWhereInput): BatchPayload!
+  createFavorite(data: FavoriteCreateInput!): Favorite!
+  updateFavorite(data: FavoriteUpdateInput!, where: FavoriteWhereUniqueInput!): Favorite
+  upsertFavorite(where: FavoriteWhereUniqueInput!, create: FavoriteCreateInput!, update: FavoriteUpdateInput!): Favorite!
+  deleteFavorite(where: FavoriteWhereUniqueInput!): Favorite
+  deleteManyFavorites(where: FavoriteWhereInput): BatchPayload!
   createFile(data: FileCreateInput!): File!
   updateFile(data: FileUpdateInput!, where: FileWhereUniqueInput!): File
   updateManyFiles(data: FileUpdateManyMutationInput!, where: FileWhereInput): BatchPayload!
@@ -1585,6 +1771,13 @@ input PostUpdateOneInput {
   connect: PostWhereUniqueInput
 }
 
+input PostUpdateOneRequiredInput {
+  create: PostCreateInput
+  update: PostUpdateDataInput
+  upsert: PostUpsertNestedInput
+  connect: PostWhereUniqueInput
+}
+
 input PostUpdateOneWithoutCommentsInput {
   create: PostCreateWithoutCommentsInput
   update: PostUpdateWithoutCommentsDataInput
@@ -1757,6 +1950,9 @@ type Query {
   comment(where: CommentWhereUniqueInput!): Comment
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
   commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
+  favorite(where: FavoriteWhereUniqueInput!): Favorite
+  favorites(where: FavoriteWhereInput, orderBy: FavoriteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Favorite]!
+  favoritesConnection(where: FavoriteWhereInput, orderBy: FavoriteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FavoriteConnection!
   file(where: FileWhereUniqueInput!): File
   files(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File]!
   filesConnection(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FileConnection!
@@ -1990,6 +2186,7 @@ input RoomWhereUniqueInput {
 
 type Subscription {
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
+  favorite(where: FavoriteSubscriptionWhereInput): FavoriteSubscriptionPayload
   file(where: FileSubscriptionWhereInput): FileSubscriptionPayload
   like(where: LikeSubscriptionWhereInput): LikeSubscriptionPayload
   message(where: MessageSubscriptionWhereInput): MessageSubscriptionPayload
@@ -2023,6 +2220,7 @@ type User {
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   rooms(where: RoomWhereInput, orderBy: RoomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Room!]
   notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
+  favorites(where: FavoriteWhereInput, orderBy: FavoriteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Favorite!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -2057,6 +2255,7 @@ input UserCreateInput {
   comments: CommentCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
   notifications: NotificationCreateManyWithoutUserInput
+  favorites: FavoriteCreateManyWithoutUserInput
 }
 
 input UserCreateManyWithoutFollowersInput {
@@ -2081,6 +2280,11 @@ input UserCreateOneInput {
 
 input UserCreateOneWithoutCommentsInput {
   create: UserCreateWithoutCommentsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutFavoritesInput {
+  create: UserCreateWithoutFavoritesInput
   connect: UserWhereUniqueInput
 }
 
@@ -2122,6 +2326,33 @@ input UserCreateWithoutCommentsInput {
   likes: LikeCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
   notifications: NotificationCreateManyWithoutUserInput
+  favorites: FavoriteCreateManyWithoutUserInput
+}
+
+input UserCreateWithoutFavoritesInput {
+  id: ID
+  avatar: String
+  username: String!
+  email: String
+  phone: String
+  password: String!
+  firstName: String
+  lastName: String
+  bio: String
+  website: String
+  loginSecret: String
+  isPrivate: Boolean
+  darkMode: Boolean
+  language: String
+  subscriptionEndpoint: String
+  emailNotification: Boolean
+  following: UserCreateManyWithoutFollowersInput
+  followers: UserCreateManyWithoutFollowingInput
+  posts: PostCreateManyWithoutUserInput
+  likes: LikeCreateManyWithoutUserInput
+  comments: CommentCreateManyWithoutUserInput
+  rooms: RoomCreateManyWithoutParticipantsInput
+  notifications: NotificationCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutFollowersInput {
@@ -2147,6 +2378,7 @@ input UserCreateWithoutFollowersInput {
   comments: CommentCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
   notifications: NotificationCreateManyWithoutUserInput
+  favorites: FavoriteCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutFollowingInput {
@@ -2172,6 +2404,7 @@ input UserCreateWithoutFollowingInput {
   comments: CommentCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
   notifications: NotificationCreateManyWithoutUserInput
+  favorites: FavoriteCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutLikesInput {
@@ -2197,6 +2430,7 @@ input UserCreateWithoutLikesInput {
   comments: CommentCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
   notifications: NotificationCreateManyWithoutUserInput
+  favorites: FavoriteCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutNotificationsInput {
@@ -2222,6 +2456,7 @@ input UserCreateWithoutNotificationsInput {
   likes: LikeCreateManyWithoutUserInput
   comments: CommentCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
+  favorites: FavoriteCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutPostsInput {
@@ -2247,6 +2482,7 @@ input UserCreateWithoutPostsInput {
   comments: CommentCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
   notifications: NotificationCreateManyWithoutUserInput
+  favorites: FavoriteCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutRoomsInput {
@@ -2272,6 +2508,7 @@ input UserCreateWithoutRoomsInput {
   likes: LikeCreateManyWithoutUserInput
   comments: CommentCreateManyWithoutUserInput
   notifications: NotificationCreateManyWithoutUserInput
+  favorites: FavoriteCreateManyWithoutUserInput
 }
 
 type UserEdge {
@@ -2590,6 +2827,7 @@ input UserUpdateDataInput {
   comments: CommentUpdateManyWithoutUserInput
   rooms: RoomUpdateManyWithoutParticipantsInput
   notifications: NotificationUpdateManyWithoutUserInput
+  favorites: FavoriteUpdateManyWithoutUserInput
 }
 
 input UserUpdateInput {
@@ -2615,6 +2853,7 @@ input UserUpdateInput {
   comments: CommentUpdateManyWithoutUserInput
   rooms: RoomUpdateManyWithoutParticipantsInput
   notifications: NotificationUpdateManyWithoutUserInput
+  favorites: FavoriteUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyDataInput {
@@ -2710,6 +2949,13 @@ input UserUpdateOneRequiredInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateOneRequiredWithoutFavoritesInput {
+  create: UserCreateWithoutFavoritesInput
+  update: UserUpdateWithoutFavoritesDataInput
+  upsert: UserUpsertWithoutFavoritesInput
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateOneRequiredWithoutNotificationsInput {
   create: UserCreateWithoutNotificationsInput
   update: UserUpdateWithoutNotificationsDataInput
@@ -2766,6 +3012,32 @@ input UserUpdateWithoutCommentsDataInput {
   likes: LikeUpdateManyWithoutUserInput
   rooms: RoomUpdateManyWithoutParticipantsInput
   notifications: NotificationUpdateManyWithoutUserInput
+  favorites: FavoriteUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutFavoritesDataInput {
+  avatar: String
+  username: String
+  email: String
+  phone: String
+  password: String
+  firstName: String
+  lastName: String
+  bio: String
+  website: String
+  loginSecret: String
+  isPrivate: Boolean
+  darkMode: Boolean
+  language: String
+  subscriptionEndpoint: String
+  emailNotification: Boolean
+  following: UserUpdateManyWithoutFollowersInput
+  followers: UserUpdateManyWithoutFollowingInput
+  posts: PostUpdateManyWithoutUserInput
+  likes: LikeUpdateManyWithoutUserInput
+  comments: CommentUpdateManyWithoutUserInput
+  rooms: RoomUpdateManyWithoutParticipantsInput
+  notifications: NotificationUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutFollowersDataInput {
@@ -2790,6 +3062,7 @@ input UserUpdateWithoutFollowersDataInput {
   comments: CommentUpdateManyWithoutUserInput
   rooms: RoomUpdateManyWithoutParticipantsInput
   notifications: NotificationUpdateManyWithoutUserInput
+  favorites: FavoriteUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutFollowingDataInput {
@@ -2814,6 +3087,7 @@ input UserUpdateWithoutFollowingDataInput {
   comments: CommentUpdateManyWithoutUserInput
   rooms: RoomUpdateManyWithoutParticipantsInput
   notifications: NotificationUpdateManyWithoutUserInput
+  favorites: FavoriteUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutLikesDataInput {
@@ -2838,6 +3112,7 @@ input UserUpdateWithoutLikesDataInput {
   comments: CommentUpdateManyWithoutUserInput
   rooms: RoomUpdateManyWithoutParticipantsInput
   notifications: NotificationUpdateManyWithoutUserInput
+  favorites: FavoriteUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutNotificationsDataInput {
@@ -2862,6 +3137,7 @@ input UserUpdateWithoutNotificationsDataInput {
   likes: LikeUpdateManyWithoutUserInput
   comments: CommentUpdateManyWithoutUserInput
   rooms: RoomUpdateManyWithoutParticipantsInput
+  favorites: FavoriteUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutPostsDataInput {
@@ -2886,6 +3162,7 @@ input UserUpdateWithoutPostsDataInput {
   comments: CommentUpdateManyWithoutUserInput
   rooms: RoomUpdateManyWithoutParticipantsInput
   notifications: NotificationUpdateManyWithoutUserInput
+  favorites: FavoriteUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutRoomsDataInput {
@@ -2910,6 +3187,7 @@ input UserUpdateWithoutRoomsDataInput {
   likes: LikeUpdateManyWithoutUserInput
   comments: CommentUpdateManyWithoutUserInput
   notifications: NotificationUpdateManyWithoutUserInput
+  favorites: FavoriteUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithWhereUniqueWithoutFollowersInput {
@@ -2935,6 +3213,11 @@ input UserUpsertNestedInput {
 input UserUpsertWithoutCommentsInput {
   update: UserUpdateWithoutCommentsDataInput!
   create: UserCreateWithoutCommentsInput!
+}
+
+input UserUpsertWithoutFavoritesInput {
+  update: UserUpdateWithoutFavoritesDataInput!
+  create: UserCreateWithoutFavoritesInput!
 }
 
 input UserUpsertWithoutLikesInput {
@@ -3180,6 +3463,9 @@ input UserWhereInput {
   notifications_every: NotificationWhereInput
   notifications_some: NotificationWhereInput
   notifications_none: NotificationWhereInput
+  favorites_every: FavoriteWhereInput
+  favorites_some: FavoriteWhereInput
+  favorites_none: FavoriteWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]

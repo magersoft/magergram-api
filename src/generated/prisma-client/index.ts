@@ -17,6 +17,7 @@ export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
   comment: (where?: CommentWhereInput) => Promise<boolean>;
+  favorite: (where?: FavoriteWhereInput) => Promise<boolean>;
   file: (where?: FileWhereInput) => Promise<boolean>;
   like: (where?: LikeWhereInput) => Promise<boolean>;
   message: (where?: MessageWhereInput) => Promise<boolean>;
@@ -64,6 +65,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => CommentConnectionPromise;
+  favorite: (where: FavoriteWhereUniqueInput) => FavoriteNullablePromise;
+  favorites: (args?: {
+    where?: FavoriteWhereInput;
+    orderBy?: FavoriteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Favorite>;
+  favoritesConnection: (args?: {
+    where?: FavoriteWhereInput;
+    orderBy?: FavoriteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FavoriteConnectionPromise;
   file: (where: FileWhereUniqueInput) => FileNullablePromise;
   files: (args?: {
     where?: FileWhereInput;
@@ -221,6 +241,18 @@ export interface Prisma {
   }) => CommentPromise;
   deleteComment: (where: CommentWhereUniqueInput) => CommentPromise;
   deleteManyComments: (where?: CommentWhereInput) => BatchPayloadPromise;
+  createFavorite: (data: FavoriteCreateInput) => FavoritePromise;
+  updateFavorite: (args: {
+    data: FavoriteUpdateInput;
+    where: FavoriteWhereUniqueInput;
+  }) => FavoritePromise;
+  upsertFavorite: (args: {
+    where: FavoriteWhereUniqueInput;
+    create: FavoriteCreateInput;
+    update: FavoriteUpdateInput;
+  }) => FavoritePromise;
+  deleteFavorite: (where: FavoriteWhereUniqueInput) => FavoritePromise;
+  deleteManyFavorites: (where?: FavoriteWhereInput) => BatchPayloadPromise;
   createFile: (data: FileCreateInput) => FilePromise;
   updateFile: (args: {
     data: FileUpdateInput;
@@ -341,6 +373,9 @@ export interface Subscription {
   comment: (
     where?: CommentSubscriptionWhereInput
   ) => CommentSubscriptionPayloadSubscription;
+  favorite: (
+    where?: FavoriteSubscriptionWhereInput
+  ) => FavoriteSubscriptionPayloadSubscription;
   file: (
     where?: FileSubscriptionWhereInput
   ) => FileSubscriptionPayloadSubscription;
@@ -481,6 +516,14 @@ export type NotificationOrderByInput =
   | "requesting_DESC"
   | "showed_ASC"
   | "showed_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
+export type FavoriteOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -702,6 +745,9 @@ export interface UserWhereInput {
   notifications_every?: Maybe<NotificationWhereInput>;
   notifications_some?: Maybe<NotificationWhereInput>;
   notifications_none?: Maybe<NotificationWhereInput>;
+  favorites_every?: Maybe<FavoriteWhereInput>;
+  favorites_some?: Maybe<FavoriteWhereInput>;
+  favorites_none?: Maybe<FavoriteWhereInput>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -1083,6 +1129,48 @@ export interface NotificationWhereInput {
   NOT?: Maybe<NotificationWhereInput[] | NotificationWhereInput>;
 }
 
+export interface FavoriteWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  user?: Maybe<UserWhereInput>;
+  post?: Maybe<PostWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<FavoriteWhereInput[] | FavoriteWhereInput>;
+  OR?: Maybe<FavoriteWhereInput[] | FavoriteWhereInput>;
+  NOT?: Maybe<FavoriteWhereInput[] | FavoriteWhereInput>;
+}
+
+export type FavoriteWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
 export type FileWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
@@ -1150,6 +1238,7 @@ export interface UserCreateWithoutCommentsInput {
   likes?: Maybe<LikeCreateManyWithoutUserInput>;
   rooms?: Maybe<RoomCreateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationCreateManyWithoutUserInput>;
+  favorites?: Maybe<FavoriteCreateManyWithoutUserInput>;
 }
 
 export interface UserCreateManyWithoutFollowersInput {
@@ -1182,6 +1271,7 @@ export interface UserCreateWithoutFollowersInput {
   comments?: Maybe<CommentCreateManyWithoutUserInput>;
   rooms?: Maybe<RoomCreateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationCreateManyWithoutUserInput>;
+  favorites?: Maybe<FavoriteCreateManyWithoutUserInput>;
 }
 
 export interface PostCreateManyWithoutUserInput {
@@ -1246,6 +1336,7 @@ export interface UserCreateWithoutLikesInput {
   comments?: Maybe<CommentCreateManyWithoutUserInput>;
   rooms?: Maybe<RoomCreateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationCreateManyWithoutUserInput>;
+  favorites?: Maybe<FavoriteCreateManyWithoutUserInput>;
 }
 
 export interface UserCreateManyWithoutFollowingInput {
@@ -1278,6 +1369,7 @@ export interface UserCreateWithoutFollowingInput {
   comments?: Maybe<CommentCreateManyWithoutUserInput>;
   rooms?: Maybe<RoomCreateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationCreateManyWithoutUserInput>;
+  favorites?: Maybe<FavoriteCreateManyWithoutUserInput>;
 }
 
 export interface LikeCreateManyWithoutUserInput {
@@ -1332,6 +1424,7 @@ export interface UserCreateWithoutPostsInput {
   comments?: Maybe<CommentCreateManyWithoutUserInput>;
   rooms?: Maybe<RoomCreateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationCreateManyWithoutUserInput>;
+  favorites?: Maybe<FavoriteCreateManyWithoutUserInput>;
 }
 
 export interface CommentCreateManyWithoutUserInput {
@@ -1417,6 +1510,7 @@ export interface UserCreateInput {
   comments?: Maybe<CommentCreateManyWithoutUserInput>;
   rooms?: Maybe<RoomCreateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationCreateManyWithoutUserInput>;
+  favorites?: Maybe<FavoriteCreateManyWithoutUserInput>;
 }
 
 export interface NotificationCreateManyWithoutUserInput {
@@ -1471,6 +1565,18 @@ export interface CommentCreateOneInput {
   connect?: Maybe<CommentWhereUniqueInput>;
 }
 
+export interface FavoriteCreateManyWithoutUserInput {
+  create?: Maybe<
+    FavoriteCreateWithoutUserInput[] | FavoriteCreateWithoutUserInput
+  >;
+  connect?: Maybe<FavoriteWhereUniqueInput[] | FavoriteWhereUniqueInput>;
+}
+
+export interface FavoriteCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  post: PostCreateOneInput;
+}
+
 export interface CommentUpdateInput {
   text?: Maybe<String>;
   user?: Maybe<UserUpdateOneWithoutCommentsInput>;
@@ -1508,6 +1614,7 @@ export interface UserUpdateWithoutCommentsDataInput {
   likes?: Maybe<LikeUpdateManyWithoutUserInput>;
   rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
+  favorites?: Maybe<FavoriteUpdateManyWithoutUserInput>;
 }
 
 export interface UserUpdateManyWithoutFollowersInput {
@@ -1559,6 +1666,7 @@ export interface UserUpdateWithoutFollowersDataInput {
   comments?: Maybe<CommentUpdateManyWithoutUserInput>;
   rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
+  favorites?: Maybe<FavoriteUpdateManyWithoutUserInput>;
 }
 
 export interface PostUpdateManyWithoutUserInput {
@@ -1745,6 +1853,7 @@ export interface UserUpdateWithoutLikesDataInput {
   comments?: Maybe<CommentUpdateManyWithoutUserInput>;
   rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
+  favorites?: Maybe<FavoriteUpdateManyWithoutUserInput>;
 }
 
 export interface UserUpdateManyWithoutFollowingInput {
@@ -1796,6 +1905,7 @@ export interface UserUpdateWithoutFollowingDataInput {
   comments?: Maybe<CommentUpdateManyWithoutUserInput>;
   rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
+  favorites?: Maybe<FavoriteUpdateManyWithoutUserInput>;
 }
 
 export interface LikeUpdateManyWithoutUserInput {
@@ -1872,6 +1982,7 @@ export interface UserUpdateWithoutPostsDataInput {
   comments?: Maybe<CommentUpdateManyWithoutUserInput>;
   rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
+  favorites?: Maybe<FavoriteUpdateManyWithoutUserInput>;
 }
 
 export interface CommentUpdateManyWithoutUserInput {
@@ -2087,6 +2198,7 @@ export interface UserUpdateDataInput {
   comments?: Maybe<CommentUpdateManyWithoutUserInput>;
   rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
+  favorites?: Maybe<FavoriteUpdateManyWithoutUserInput>;
 }
 
 export interface NotificationUpdateManyWithoutUserInput {
@@ -2287,6 +2399,83 @@ export interface NotificationUpdateManyDataInput {
   type?: Maybe<NotificationType>;
   requesting?: Maybe<Boolean>;
   showed?: Maybe<Boolean>;
+}
+
+export interface FavoriteUpdateManyWithoutUserInput {
+  create?: Maybe<
+    FavoriteCreateWithoutUserInput[] | FavoriteCreateWithoutUserInput
+  >;
+  delete?: Maybe<FavoriteWhereUniqueInput[] | FavoriteWhereUniqueInput>;
+  connect?: Maybe<FavoriteWhereUniqueInput[] | FavoriteWhereUniqueInput>;
+  set?: Maybe<FavoriteWhereUniqueInput[] | FavoriteWhereUniqueInput>;
+  disconnect?: Maybe<FavoriteWhereUniqueInput[] | FavoriteWhereUniqueInput>;
+  update?: Maybe<
+    | FavoriteUpdateWithWhereUniqueWithoutUserInput[]
+    | FavoriteUpdateWithWhereUniqueWithoutUserInput
+  >;
+  upsert?: Maybe<
+    | FavoriteUpsertWithWhereUniqueWithoutUserInput[]
+    | FavoriteUpsertWithWhereUniqueWithoutUserInput
+  >;
+  deleteMany?: Maybe<FavoriteScalarWhereInput[] | FavoriteScalarWhereInput>;
+}
+
+export interface FavoriteUpdateWithWhereUniqueWithoutUserInput {
+  where: FavoriteWhereUniqueInput;
+  data: FavoriteUpdateWithoutUserDataInput;
+}
+
+export interface FavoriteUpdateWithoutUserDataInput {
+  post?: Maybe<PostUpdateOneRequiredInput>;
+}
+
+export interface PostUpdateOneRequiredInput {
+  create?: Maybe<PostCreateInput>;
+  update?: Maybe<PostUpdateDataInput>;
+  upsert?: Maybe<PostUpsertNestedInput>;
+  connect?: Maybe<PostWhereUniqueInput>;
+}
+
+export interface FavoriteUpsertWithWhereUniqueWithoutUserInput {
+  where: FavoriteWhereUniqueInput;
+  update: FavoriteUpdateWithoutUserDataInput;
+  create: FavoriteCreateWithoutUserInput;
+}
+
+export interface FavoriteScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<FavoriteScalarWhereInput[] | FavoriteScalarWhereInput>;
+  OR?: Maybe<FavoriteScalarWhereInput[] | FavoriteScalarWhereInput>;
+  NOT?: Maybe<FavoriteScalarWhereInput[] | FavoriteScalarWhereInput>;
 }
 
 export interface MessageUpsertWithWhereUniqueWithoutRoomInput {
@@ -2796,6 +2985,85 @@ export interface CommentUpdateManyMutationInput {
   text?: Maybe<String>;
 }
 
+export interface FavoriteCreateInput {
+  id?: Maybe<ID_Input>;
+  user: UserCreateOneWithoutFavoritesInput;
+  post: PostCreateOneInput;
+}
+
+export interface UserCreateOneWithoutFavoritesInput {
+  create?: Maybe<UserCreateWithoutFavoritesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateWithoutFavoritesInput {
+  id?: Maybe<ID_Input>;
+  avatar?: Maybe<String>;
+  username: String;
+  email?: Maybe<String>;
+  phone?: Maybe<String>;
+  password: String;
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  bio?: Maybe<String>;
+  website?: Maybe<String>;
+  loginSecret?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
+  darkMode?: Maybe<Boolean>;
+  language?: Maybe<String>;
+  subscriptionEndpoint?: Maybe<String>;
+  emailNotification?: Maybe<Boolean>;
+  following?: Maybe<UserCreateManyWithoutFollowersInput>;
+  followers?: Maybe<UserCreateManyWithoutFollowingInput>;
+  posts?: Maybe<PostCreateManyWithoutUserInput>;
+  likes?: Maybe<LikeCreateManyWithoutUserInput>;
+  comments?: Maybe<CommentCreateManyWithoutUserInput>;
+  rooms?: Maybe<RoomCreateManyWithoutParticipantsInput>;
+  notifications?: Maybe<NotificationCreateManyWithoutUserInput>;
+}
+
+export interface FavoriteUpdateInput {
+  user?: Maybe<UserUpdateOneRequiredWithoutFavoritesInput>;
+  post?: Maybe<PostUpdateOneRequiredInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutFavoritesInput {
+  create?: Maybe<UserCreateWithoutFavoritesInput>;
+  update?: Maybe<UserUpdateWithoutFavoritesDataInput>;
+  upsert?: Maybe<UserUpsertWithoutFavoritesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutFavoritesDataInput {
+  avatar?: Maybe<String>;
+  username?: Maybe<String>;
+  email?: Maybe<String>;
+  phone?: Maybe<String>;
+  password?: Maybe<String>;
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  bio?: Maybe<String>;
+  website?: Maybe<String>;
+  loginSecret?: Maybe<String>;
+  isPrivate?: Maybe<Boolean>;
+  darkMode?: Maybe<Boolean>;
+  language?: Maybe<String>;
+  subscriptionEndpoint?: Maybe<String>;
+  emailNotification?: Maybe<Boolean>;
+  following?: Maybe<UserUpdateManyWithoutFollowersInput>;
+  followers?: Maybe<UserUpdateManyWithoutFollowingInput>;
+  posts?: Maybe<PostUpdateManyWithoutUserInput>;
+  likes?: Maybe<LikeUpdateManyWithoutUserInput>;
+  comments?: Maybe<CommentUpdateManyWithoutUserInput>;
+  rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
+  notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
+}
+
+export interface UserUpsertWithoutFavoritesInput {
+  update: UserUpdateWithoutFavoritesDataInput;
+  create: UserCreateWithoutFavoritesInput;
+}
+
 export interface FileCreateInput {
   id?: Maybe<ID_Input>;
   url: String;
@@ -2905,6 +3173,7 @@ export interface UserCreateWithoutRoomsInput {
   likes?: Maybe<LikeCreateManyWithoutUserInput>;
   comments?: Maybe<CommentCreateManyWithoutUserInput>;
   notifications?: Maybe<NotificationCreateManyWithoutUserInput>;
+  favorites?: Maybe<FavoriteCreateManyWithoutUserInput>;
 }
 
 export interface MessageUpdateInput {
@@ -2973,6 +3242,7 @@ export interface UserUpdateWithoutRoomsDataInput {
   likes?: Maybe<LikeUpdateManyWithoutUserInput>;
   comments?: Maybe<CommentUpdateManyWithoutUserInput>;
   notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
+  favorites?: Maybe<FavoriteUpdateManyWithoutUserInput>;
 }
 
 export interface UserUpsertWithWhereUniqueWithoutRoomsInput {
@@ -3030,6 +3300,7 @@ export interface UserCreateWithoutNotificationsInput {
   likes?: Maybe<LikeCreateManyWithoutUserInput>;
   comments?: Maybe<CommentCreateManyWithoutUserInput>;
   rooms?: Maybe<RoomCreateManyWithoutParticipantsInput>;
+  favorites?: Maybe<FavoriteCreateManyWithoutUserInput>;
 }
 
 export interface NotificationUpdateInput {
@@ -3071,6 +3342,7 @@ export interface UserUpdateWithoutNotificationsDataInput {
   likes?: Maybe<LikeUpdateManyWithoutUserInput>;
   comments?: Maybe<CommentUpdateManyWithoutUserInput>;
   rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
+  favorites?: Maybe<FavoriteUpdateManyWithoutUserInput>;
 }
 
 export interface UserUpsertWithoutNotificationsInput {
@@ -3132,6 +3404,7 @@ export interface UserUpdateInput {
   comments?: Maybe<CommentUpdateManyWithoutUserInput>;
   rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
+  favorites?: Maybe<FavoriteUpdateManyWithoutUserInput>;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -3161,6 +3434,21 @@ export interface CommentSubscriptionWhereInput {
   AND?: Maybe<CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput>;
   OR?: Maybe<CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput>;
   NOT?: Maybe<CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput>;
+}
+
+export interface FavoriteSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<FavoriteWhereInput>;
+  AND?: Maybe<
+    FavoriteSubscriptionWhereInput[] | FavoriteSubscriptionWhereInput
+  >;
+  OR?: Maybe<FavoriteSubscriptionWhereInput[] | FavoriteSubscriptionWhereInput>;
+  NOT?: Maybe<
+    FavoriteSubscriptionWhereInput[] | FavoriteSubscriptionWhereInput
+  >;
 }
 
 export interface FileSubscriptionWhereInput {
@@ -3389,6 +3677,15 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  favorites: <T = FragmentableArray<Favorite>>(args?: {
+    where?: FavoriteWhereInput;
+    orderBy?: FavoriteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -3475,6 +3772,15 @@ export interface UserSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  favorites: <T = Promise<AsyncIterator<FavoriteSubscription>>>(args?: {
+    where?: FavoriteWhereInput;
+    orderBy?: FavoriteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -3555,6 +3861,15 @@ export interface UserNullablePromise
   notifications: <T = FragmentableArray<Notification>>(args?: {
     where?: NotificationWhereInput;
     orderBy?: NotificationOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  favorites: <T = FragmentableArray<Favorite>>(args?: {
+    where?: FavoriteWhereInput;
+    orderBy?: FavoriteOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -3935,6 +4250,40 @@ export interface NotificationNullablePromise
   updatedAt: () => Promise<DateTimeOutput>;
 }
 
+export interface Favorite {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+}
+
+export interface FavoritePromise extends Promise<Favorite>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  user: <T = UserPromise>() => T;
+  post: <T = PostPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface FavoriteSubscription
+  extends Promise<AsyncIterator<Favorite>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  user: <T = UserSubscription>() => T;
+  post: <T = PostSubscription>() => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface FavoriteNullablePromise
+  extends Promise<Favorite | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  user: <T = UserPromise>() => T;
+  post: <T = PostPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
 export interface CommentConnection {
   pageInfo: PageInfo;
   edges: CommentEdge[];
@@ -4008,6 +4357,62 @@ export interface AggregateCommentPromise
 
 export interface AggregateCommentSubscription
   extends Promise<AsyncIterator<AggregateComment>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface FavoriteConnection {
+  pageInfo: PageInfo;
+  edges: FavoriteEdge[];
+}
+
+export interface FavoriteConnectionPromise
+  extends Promise<FavoriteConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<FavoriteEdge>>() => T;
+  aggregate: <T = AggregateFavoritePromise>() => T;
+}
+
+export interface FavoriteConnectionSubscription
+  extends Promise<AsyncIterator<FavoriteConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<FavoriteEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateFavoriteSubscription>() => T;
+}
+
+export interface FavoriteEdge {
+  node: Favorite;
+  cursor: String;
+}
+
+export interface FavoriteEdgePromise
+  extends Promise<FavoriteEdge>,
+    Fragmentable {
+  node: <T = FavoritePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface FavoriteEdgeSubscription
+  extends Promise<AsyncIterator<FavoriteEdge>>,
+    Fragmentable {
+  node: <T = FavoriteSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateFavorite {
+  count: Int;
+}
+
+export interface AggregateFavoritePromise
+  extends Promise<AggregateFavorite>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateFavoriteSubscription
+  extends Promise<AsyncIterator<AggregateFavorite>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -4454,6 +4859,53 @@ export interface CommentPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   text: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface FavoriteSubscriptionPayload {
+  mutation: MutationType;
+  node: Favorite;
+  updatedFields: String[];
+  previousValues: FavoritePreviousValues;
+}
+
+export interface FavoriteSubscriptionPayloadPromise
+  extends Promise<FavoriteSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = FavoritePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = FavoritePreviousValuesPromise>() => T;
+}
+
+export interface FavoriteSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<FavoriteSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = FavoriteSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = FavoritePreviousValuesSubscription>() => T;
+}
+
+export interface FavoritePreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+}
+
+export interface FavoritePreviousValuesPromise
+  extends Promise<FavoritePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface FavoritePreviousValuesSubscription
+  extends Promise<AsyncIterator<FavoritePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -4928,6 +5380,10 @@ export const models: Model[] = [
   },
   {
     name: "Notification",
+    embedded: false
+  },
+  {
+    name: "Favorite",
     embedded: false
   }
 ];

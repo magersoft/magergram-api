@@ -22,6 +22,7 @@ type User {
   comments: [Comment!]! @relation(name: "CommentsOfUser", onDelete: CASCADE)
   rooms: [Room!]!
   notifications: [Notification!]! @relation(name: "NotificationOfUser", onDelete: CASCADE)
+  favorites: [Favorite!]! @relation(name: "FavoriteOfUser", onDelete: CASCADE)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
@@ -98,6 +99,14 @@ type Notification {
     subscriber: User @relation(name: "SubscriberRelation")
     requesting: Boolean @default(value: false)
     showed: Boolean @default(value: false)
+    createdAt: DateTime! @createdAt
+    updatedAt: DateTime! @updatedAt
+}
+
+type Favorite {
+    id: ID! @id
+    user: User! @relation(name: "FavoriteOfUser")
+    post: Post! @relation(name: "FavoriteOfPost")
     createdAt: DateTime! @createdAt
     updatedAt: DateTime! @updatedAt
 }

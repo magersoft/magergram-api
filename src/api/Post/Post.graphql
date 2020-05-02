@@ -3,4 +3,5 @@ type Post {
   likeCount: Int!
   commentCount: Int!
   lastComments: [Comment!]!
+  isFavorite: Boolean!
 }

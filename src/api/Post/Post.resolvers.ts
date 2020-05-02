@@ -34,6 +34,20 @@ export default {
           }
         ]
       })
+    },
+    isFavorite: (parent: User, _, { request }): Promise<boolean> => {
+      const user: User = request.user;
+      const { id } = parent;
+      return prisma.$exists.favorite({
+        AND: [
+          {
+            user: { id: user.id },
+          },
+          {
+            post: { id }
+          }
+        ]
+      });
     }
   }
 }
