@@ -2221,6 +2221,8 @@ type User {
   rooms(where: RoomWhereInput, orderBy: RoomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Room!]
   notifications(where: NotificationWhereInput, orderBy: NotificationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Notification!]
   favorites(where: FavoriteWhereInput, orderBy: FavoriteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Favorite!]
+  ipdata: String!
+  latestOnline: DateTime
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -2256,6 +2258,8 @@ input UserCreateInput {
   rooms: RoomCreateManyWithoutParticipantsInput
   notifications: NotificationCreateManyWithoutUserInput
   favorites: FavoriteCreateManyWithoutUserInput
+  ipdata: String!
+  latestOnline: DateTime
 }
 
 input UserCreateManyWithoutFollowersInput {
@@ -2327,6 +2331,8 @@ input UserCreateWithoutCommentsInput {
   rooms: RoomCreateManyWithoutParticipantsInput
   notifications: NotificationCreateManyWithoutUserInput
   favorites: FavoriteCreateManyWithoutUserInput
+  ipdata: String!
+  latestOnline: DateTime
 }
 
 input UserCreateWithoutFavoritesInput {
@@ -2353,6 +2359,8 @@ input UserCreateWithoutFavoritesInput {
   comments: CommentCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
   notifications: NotificationCreateManyWithoutUserInput
+  ipdata: String!
+  latestOnline: DateTime
 }
 
 input UserCreateWithoutFollowersInput {
@@ -2379,6 +2387,8 @@ input UserCreateWithoutFollowersInput {
   rooms: RoomCreateManyWithoutParticipantsInput
   notifications: NotificationCreateManyWithoutUserInput
   favorites: FavoriteCreateManyWithoutUserInput
+  ipdata: String!
+  latestOnline: DateTime
 }
 
 input UserCreateWithoutFollowingInput {
@@ -2405,6 +2415,8 @@ input UserCreateWithoutFollowingInput {
   rooms: RoomCreateManyWithoutParticipantsInput
   notifications: NotificationCreateManyWithoutUserInput
   favorites: FavoriteCreateManyWithoutUserInput
+  ipdata: String!
+  latestOnline: DateTime
 }
 
 input UserCreateWithoutLikesInput {
@@ -2431,6 +2443,8 @@ input UserCreateWithoutLikesInput {
   rooms: RoomCreateManyWithoutParticipantsInput
   notifications: NotificationCreateManyWithoutUserInput
   favorites: FavoriteCreateManyWithoutUserInput
+  ipdata: String!
+  latestOnline: DateTime
 }
 
 input UserCreateWithoutNotificationsInput {
@@ -2457,6 +2471,8 @@ input UserCreateWithoutNotificationsInput {
   comments: CommentCreateManyWithoutUserInput
   rooms: RoomCreateManyWithoutParticipantsInput
   favorites: FavoriteCreateManyWithoutUserInput
+  ipdata: String!
+  latestOnline: DateTime
 }
 
 input UserCreateWithoutPostsInput {
@@ -2483,6 +2499,8 @@ input UserCreateWithoutPostsInput {
   rooms: RoomCreateManyWithoutParticipantsInput
   notifications: NotificationCreateManyWithoutUserInput
   favorites: FavoriteCreateManyWithoutUserInput
+  ipdata: String!
+  latestOnline: DateTime
 }
 
 input UserCreateWithoutRoomsInput {
@@ -2509,6 +2527,8 @@ input UserCreateWithoutRoomsInput {
   comments: CommentCreateManyWithoutUserInput
   notifications: NotificationCreateManyWithoutUserInput
   favorites: FavoriteCreateManyWithoutUserInput
+  ipdata: String!
+  latestOnline: DateTime
 }
 
 type UserEdge {
@@ -2549,6 +2569,10 @@ enum UserOrderByInput {
   subscriptionEndpoint_DESC
   emailNotification_ASC
   emailNotification_DESC
+  ipdata_ASC
+  ipdata_DESC
+  latestOnline_ASC
+  latestOnline_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -2572,6 +2596,8 @@ type UserPreviousValues {
   language: String!
   subscriptionEndpoint: String
   emailNotification: Boolean
+  ipdata: String!
+  latestOnline: DateTime
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -2765,6 +2791,28 @@ input UserScalarWhereInput {
   subscriptionEndpoint_not_ends_with: String
   emailNotification: Boolean
   emailNotification_not: Boolean
+  ipdata: String
+  ipdata_not: String
+  ipdata_in: [String!]
+  ipdata_not_in: [String!]
+  ipdata_lt: String
+  ipdata_lte: String
+  ipdata_gt: String
+  ipdata_gte: String
+  ipdata_contains: String
+  ipdata_not_contains: String
+  ipdata_starts_with: String
+  ipdata_not_starts_with: String
+  ipdata_ends_with: String
+  ipdata_not_ends_with: String
+  latestOnline: DateTime
+  latestOnline_not: DateTime
+  latestOnline_in: [DateTime!]
+  latestOnline_not_in: [DateTime!]
+  latestOnline_lt: DateTime
+  latestOnline_lte: DateTime
+  latestOnline_gt: DateTime
+  latestOnline_gte: DateTime
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -2828,6 +2876,8 @@ input UserUpdateDataInput {
   rooms: RoomUpdateManyWithoutParticipantsInput
   notifications: NotificationUpdateManyWithoutUserInput
   favorites: FavoriteUpdateManyWithoutUserInput
+  ipdata: String
+  latestOnline: DateTime
 }
 
 input UserUpdateInput {
@@ -2854,6 +2904,8 @@ input UserUpdateInput {
   rooms: RoomUpdateManyWithoutParticipantsInput
   notifications: NotificationUpdateManyWithoutUserInput
   favorites: FavoriteUpdateManyWithoutUserInput
+  ipdata: String
+  latestOnline: DateTime
 }
 
 input UserUpdateManyDataInput {
@@ -2872,6 +2924,8 @@ input UserUpdateManyDataInput {
   language: String
   subscriptionEndpoint: String
   emailNotification: Boolean
+  ipdata: String
+  latestOnline: DateTime
 }
 
 input UserUpdateManyMutationInput {
@@ -2890,6 +2944,8 @@ input UserUpdateManyMutationInput {
   language: String
   subscriptionEndpoint: String
   emailNotification: Boolean
+  ipdata: String
+  latestOnline: DateTime
 }
 
 input UserUpdateManyWithoutFollowersInput {
@@ -3013,6 +3069,8 @@ input UserUpdateWithoutCommentsDataInput {
   rooms: RoomUpdateManyWithoutParticipantsInput
   notifications: NotificationUpdateManyWithoutUserInput
   favorites: FavoriteUpdateManyWithoutUserInput
+  ipdata: String
+  latestOnline: DateTime
 }
 
 input UserUpdateWithoutFavoritesDataInput {
@@ -3038,6 +3096,8 @@ input UserUpdateWithoutFavoritesDataInput {
   comments: CommentUpdateManyWithoutUserInput
   rooms: RoomUpdateManyWithoutParticipantsInput
   notifications: NotificationUpdateManyWithoutUserInput
+  ipdata: String
+  latestOnline: DateTime
 }
 
 input UserUpdateWithoutFollowersDataInput {
@@ -3063,6 +3123,8 @@ input UserUpdateWithoutFollowersDataInput {
   rooms: RoomUpdateManyWithoutParticipantsInput
   notifications: NotificationUpdateManyWithoutUserInput
   favorites: FavoriteUpdateManyWithoutUserInput
+  ipdata: String
+  latestOnline: DateTime
 }
 
 input UserUpdateWithoutFollowingDataInput {
@@ -3088,6 +3150,8 @@ input UserUpdateWithoutFollowingDataInput {
   rooms: RoomUpdateManyWithoutParticipantsInput
   notifications: NotificationUpdateManyWithoutUserInput
   favorites: FavoriteUpdateManyWithoutUserInput
+  ipdata: String
+  latestOnline: DateTime
 }
 
 input UserUpdateWithoutLikesDataInput {
@@ -3113,6 +3177,8 @@ input UserUpdateWithoutLikesDataInput {
   rooms: RoomUpdateManyWithoutParticipantsInput
   notifications: NotificationUpdateManyWithoutUserInput
   favorites: FavoriteUpdateManyWithoutUserInput
+  ipdata: String
+  latestOnline: DateTime
 }
 
 input UserUpdateWithoutNotificationsDataInput {
@@ -3138,6 +3204,8 @@ input UserUpdateWithoutNotificationsDataInput {
   comments: CommentUpdateManyWithoutUserInput
   rooms: RoomUpdateManyWithoutParticipantsInput
   favorites: FavoriteUpdateManyWithoutUserInput
+  ipdata: String
+  latestOnline: DateTime
 }
 
 input UserUpdateWithoutPostsDataInput {
@@ -3163,6 +3231,8 @@ input UserUpdateWithoutPostsDataInput {
   rooms: RoomUpdateManyWithoutParticipantsInput
   notifications: NotificationUpdateManyWithoutUserInput
   favorites: FavoriteUpdateManyWithoutUserInput
+  ipdata: String
+  latestOnline: DateTime
 }
 
 input UserUpdateWithoutRoomsDataInput {
@@ -3188,6 +3258,8 @@ input UserUpdateWithoutRoomsDataInput {
   comments: CommentUpdateManyWithoutUserInput
   notifications: NotificationUpdateManyWithoutUserInput
   favorites: FavoriteUpdateManyWithoutUserInput
+  ipdata: String
+  latestOnline: DateTime
 }
 
 input UserUpdateWithWhereUniqueWithoutFollowersInput {
@@ -3466,6 +3538,28 @@ input UserWhereInput {
   favorites_every: FavoriteWhereInput
   favorites_some: FavoriteWhereInput
   favorites_none: FavoriteWhereInput
+  ipdata: String
+  ipdata_not: String
+  ipdata_in: [String!]
+  ipdata_not_in: [String!]
+  ipdata_lt: String
+  ipdata_lte: String
+  ipdata_gt: String
+  ipdata_gte: String
+  ipdata_contains: String
+  ipdata_not_contains: String
+  ipdata_starts_with: String
+  ipdata_not_starts_with: String
+  ipdata_ends_with: String
+  ipdata_not_ends_with: String
+  latestOnline: DateTime
+  latestOnline_not: DateTime
+  latestOnline_in: [DateTime!]
+  latestOnline_not_in: [DateTime!]
+  latestOnline_lt: DateTime
+  latestOnline_lte: DateTime
+  latestOnline_gt: DateTime
+  latestOnline_gte: DateTime
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]

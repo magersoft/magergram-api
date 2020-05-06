@@ -7,7 +7,7 @@ import { isValidPhone, sendVerificationSMS } from '../../../utils/sendSMS';
 export default {
   Mutation: {
     createAccount: async (_, args) => {
-      const { username, email, phone, password, firstName, lastName } = args;
+      const { username, email, phone, password, firstName, lastName, ipdata } = args;
       try {
         if (email) {
           if (!is.email(email)) {
@@ -49,7 +49,8 @@ export default {
           phone: preparedPhone,
           password: savePassword,
           firstName,
-          lastName
+          lastName,
+          ipdata
         });
 
         const loginSecret: string|void = generateSecret(phone ? 'PHONE' : 'EMAIL');

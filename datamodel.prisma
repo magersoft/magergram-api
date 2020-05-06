@@ -23,6 +23,8 @@ type User {
   rooms: [Room!]!
   notifications: [Notification!]! @relation(name: "NotificationOfUser", onDelete: CASCADE)
   favorites: [Favorite!]! @relation(name: "FavoriteOfUser", onDelete: CASCADE)
+  ipdata: String!
+  latestOnline: DateTime
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }

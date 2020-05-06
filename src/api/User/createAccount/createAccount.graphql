@@ -4,7 +4,7 @@ type CreateAccountResponse {
 }
 
 type Mutation {
-  createAccount(username: String!, email: String, phone: String, password: String!, firstName: String, lastName: String): CreateAccountResponse!
+  createAccount(username: String!, email: String, phone: String, password: String!, firstName: String, lastName: String, ipdata: String!): CreateAccountResponse!
 }
 
 type checkExistUsernameResponse {

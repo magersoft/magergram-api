@@ -442,6 +442,10 @@ export type UserOrderByInput =
   | "subscriptionEndpoint_DESC"
   | "emailNotification_ASC"
   | "emailNotification_DESC"
+  | "ipdata_ASC"
+  | "ipdata_DESC"
+  | "latestOnline_ASC"
+  | "latestOnline_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -748,6 +752,28 @@ export interface UserWhereInput {
   favorites_every?: Maybe<FavoriteWhereInput>;
   favorites_some?: Maybe<FavoriteWhereInput>;
   favorites_none?: Maybe<FavoriteWhereInput>;
+  ipdata?: Maybe<String>;
+  ipdata_not?: Maybe<String>;
+  ipdata_in?: Maybe<String[] | String>;
+  ipdata_not_in?: Maybe<String[] | String>;
+  ipdata_lt?: Maybe<String>;
+  ipdata_lte?: Maybe<String>;
+  ipdata_gt?: Maybe<String>;
+  ipdata_gte?: Maybe<String>;
+  ipdata_contains?: Maybe<String>;
+  ipdata_not_contains?: Maybe<String>;
+  ipdata_starts_with?: Maybe<String>;
+  ipdata_not_starts_with?: Maybe<String>;
+  ipdata_ends_with?: Maybe<String>;
+  ipdata_not_ends_with?: Maybe<String>;
+  latestOnline?: Maybe<DateTimeInput>;
+  latestOnline_not?: Maybe<DateTimeInput>;
+  latestOnline_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  latestOnline_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  latestOnline_lt?: Maybe<DateTimeInput>;
+  latestOnline_lte?: Maybe<DateTimeInput>;
+  latestOnline_gt?: Maybe<DateTimeInput>;
+  latestOnline_gte?: Maybe<DateTimeInput>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -1239,6 +1265,8 @@ export interface UserCreateWithoutCommentsInput {
   rooms?: Maybe<RoomCreateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationCreateManyWithoutUserInput>;
   favorites?: Maybe<FavoriteCreateManyWithoutUserInput>;
+  ipdata: String;
+  latestOnline?: Maybe<DateTimeInput>;
 }
 
 export interface UserCreateManyWithoutFollowersInput {
@@ -1272,6 +1300,8 @@ export interface UserCreateWithoutFollowersInput {
   rooms?: Maybe<RoomCreateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationCreateManyWithoutUserInput>;
   favorites?: Maybe<FavoriteCreateManyWithoutUserInput>;
+  ipdata: String;
+  latestOnline?: Maybe<DateTimeInput>;
 }
 
 export interface PostCreateManyWithoutUserInput {
@@ -1337,6 +1367,8 @@ export interface UserCreateWithoutLikesInput {
   rooms?: Maybe<RoomCreateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationCreateManyWithoutUserInput>;
   favorites?: Maybe<FavoriteCreateManyWithoutUserInput>;
+  ipdata: String;
+  latestOnline?: Maybe<DateTimeInput>;
 }
 
 export interface UserCreateManyWithoutFollowingInput {
@@ -1370,6 +1402,8 @@ export interface UserCreateWithoutFollowingInput {
   rooms?: Maybe<RoomCreateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationCreateManyWithoutUserInput>;
   favorites?: Maybe<FavoriteCreateManyWithoutUserInput>;
+  ipdata: String;
+  latestOnline?: Maybe<DateTimeInput>;
 }
 
 export interface LikeCreateManyWithoutUserInput {
@@ -1425,6 +1459,8 @@ export interface UserCreateWithoutPostsInput {
   rooms?: Maybe<RoomCreateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationCreateManyWithoutUserInput>;
   favorites?: Maybe<FavoriteCreateManyWithoutUserInput>;
+  ipdata: String;
+  latestOnline?: Maybe<DateTimeInput>;
 }
 
 export interface CommentCreateManyWithoutUserInput {
@@ -1511,6 +1547,8 @@ export interface UserCreateInput {
   rooms?: Maybe<RoomCreateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationCreateManyWithoutUserInput>;
   favorites?: Maybe<FavoriteCreateManyWithoutUserInput>;
+  ipdata: String;
+  latestOnline?: Maybe<DateTimeInput>;
 }
 
 export interface NotificationCreateManyWithoutUserInput {
@@ -1615,6 +1653,8 @@ export interface UserUpdateWithoutCommentsDataInput {
   rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
   favorites?: Maybe<FavoriteUpdateManyWithoutUserInput>;
+  ipdata?: Maybe<String>;
+  latestOnline?: Maybe<DateTimeInput>;
 }
 
 export interface UserUpdateManyWithoutFollowersInput {
@@ -1667,6 +1707,8 @@ export interface UserUpdateWithoutFollowersDataInput {
   rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
   favorites?: Maybe<FavoriteUpdateManyWithoutUserInput>;
+  ipdata?: Maybe<String>;
+  latestOnline?: Maybe<DateTimeInput>;
 }
 
 export interface PostUpdateManyWithoutUserInput {
@@ -1854,6 +1896,8 @@ export interface UserUpdateWithoutLikesDataInput {
   rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
   favorites?: Maybe<FavoriteUpdateManyWithoutUserInput>;
+  ipdata?: Maybe<String>;
+  latestOnline?: Maybe<DateTimeInput>;
 }
 
 export interface UserUpdateManyWithoutFollowingInput {
@@ -1906,6 +1950,8 @@ export interface UserUpdateWithoutFollowingDataInput {
   rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
   favorites?: Maybe<FavoriteUpdateManyWithoutUserInput>;
+  ipdata?: Maybe<String>;
+  latestOnline?: Maybe<DateTimeInput>;
 }
 
 export interface LikeUpdateManyWithoutUserInput {
@@ -1983,6 +2029,8 @@ export interface UserUpdateWithoutPostsDataInput {
   rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
   favorites?: Maybe<FavoriteUpdateManyWithoutUserInput>;
+  ipdata?: Maybe<String>;
+  latestOnline?: Maybe<DateTimeInput>;
 }
 
 export interface CommentUpdateManyWithoutUserInput {
@@ -2199,6 +2247,8 @@ export interface UserUpdateDataInput {
   rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
   favorites?: Maybe<FavoriteUpdateManyWithoutUserInput>;
+  ipdata?: Maybe<String>;
+  latestOnline?: Maybe<DateTimeInput>;
 }
 
 export interface NotificationUpdateManyWithoutUserInput {
@@ -2835,6 +2885,28 @@ export interface UserScalarWhereInput {
   subscriptionEndpoint_not_ends_with?: Maybe<String>;
   emailNotification?: Maybe<Boolean>;
   emailNotification_not?: Maybe<Boolean>;
+  ipdata?: Maybe<String>;
+  ipdata_not?: Maybe<String>;
+  ipdata_in?: Maybe<String[] | String>;
+  ipdata_not_in?: Maybe<String[] | String>;
+  ipdata_lt?: Maybe<String>;
+  ipdata_lte?: Maybe<String>;
+  ipdata_gt?: Maybe<String>;
+  ipdata_gte?: Maybe<String>;
+  ipdata_contains?: Maybe<String>;
+  ipdata_not_contains?: Maybe<String>;
+  ipdata_starts_with?: Maybe<String>;
+  ipdata_not_starts_with?: Maybe<String>;
+  ipdata_ends_with?: Maybe<String>;
+  ipdata_not_ends_with?: Maybe<String>;
+  latestOnline?: Maybe<DateTimeInput>;
+  latestOnline_not?: Maybe<DateTimeInput>;
+  latestOnline_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  latestOnline_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  latestOnline_lt?: Maybe<DateTimeInput>;
+  latestOnline_lte?: Maybe<DateTimeInput>;
+  latestOnline_gt?: Maybe<DateTimeInput>;
+  latestOnline_gte?: Maybe<DateTimeInput>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -2877,6 +2949,8 @@ export interface UserUpdateManyDataInput {
   language?: Maybe<String>;
   subscriptionEndpoint?: Maybe<String>;
   emailNotification?: Maybe<Boolean>;
+  ipdata?: Maybe<String>;
+  latestOnline?: Maybe<DateTimeInput>;
 }
 
 export interface UserUpsertWithoutLikesInput {
@@ -3020,6 +3094,8 @@ export interface UserCreateWithoutFavoritesInput {
   comments?: Maybe<CommentCreateManyWithoutUserInput>;
   rooms?: Maybe<RoomCreateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationCreateManyWithoutUserInput>;
+  ipdata: String;
+  latestOnline?: Maybe<DateTimeInput>;
 }
 
 export interface FavoriteUpdateInput {
@@ -3057,6 +3133,8 @@ export interface UserUpdateWithoutFavoritesDataInput {
   comments?: Maybe<CommentUpdateManyWithoutUserInput>;
   rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
+  ipdata?: Maybe<String>;
+  latestOnline?: Maybe<DateTimeInput>;
 }
 
 export interface UserUpsertWithoutFavoritesInput {
@@ -3174,6 +3252,8 @@ export interface UserCreateWithoutRoomsInput {
   comments?: Maybe<CommentCreateManyWithoutUserInput>;
   notifications?: Maybe<NotificationCreateManyWithoutUserInput>;
   favorites?: Maybe<FavoriteCreateManyWithoutUserInput>;
+  ipdata: String;
+  latestOnline?: Maybe<DateTimeInput>;
 }
 
 export interface MessageUpdateInput {
@@ -3243,6 +3323,8 @@ export interface UserUpdateWithoutRoomsDataInput {
   comments?: Maybe<CommentUpdateManyWithoutUserInput>;
   notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
   favorites?: Maybe<FavoriteUpdateManyWithoutUserInput>;
+  ipdata?: Maybe<String>;
+  latestOnline?: Maybe<DateTimeInput>;
 }
 
 export interface UserUpsertWithWhereUniqueWithoutRoomsInput {
@@ -3301,6 +3383,8 @@ export interface UserCreateWithoutNotificationsInput {
   comments?: Maybe<CommentCreateManyWithoutUserInput>;
   rooms?: Maybe<RoomCreateManyWithoutParticipantsInput>;
   favorites?: Maybe<FavoriteCreateManyWithoutUserInput>;
+  ipdata: String;
+  latestOnline?: Maybe<DateTimeInput>;
 }
 
 export interface NotificationUpdateInput {
@@ -3343,6 +3427,8 @@ export interface UserUpdateWithoutNotificationsDataInput {
   comments?: Maybe<CommentUpdateManyWithoutUserInput>;
   rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
   favorites?: Maybe<FavoriteUpdateManyWithoutUserInput>;
+  ipdata?: Maybe<String>;
+  latestOnline?: Maybe<DateTimeInput>;
 }
 
 export interface UserUpsertWithoutNotificationsInput {
@@ -3405,6 +3491,8 @@ export interface UserUpdateInput {
   rooms?: Maybe<RoomUpdateManyWithoutParticipantsInput>;
   notifications?: Maybe<NotificationUpdateManyWithoutUserInput>;
   favorites?: Maybe<FavoriteUpdateManyWithoutUserInput>;
+  ipdata?: Maybe<String>;
+  latestOnline?: Maybe<DateTimeInput>;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -3423,6 +3511,8 @@ export interface UserUpdateManyMutationInput {
   language?: Maybe<String>;
   subscriptionEndpoint?: Maybe<String>;
   emailNotification?: Maybe<Boolean>;
+  ipdata?: Maybe<String>;
+  latestOnline?: Maybe<DateTimeInput>;
 }
 
 export interface CommentSubscriptionWhereInput {
@@ -3593,6 +3683,8 @@ export interface User {
   language: String;
   subscriptionEndpoint?: String;
   emailNotification?: Boolean;
+  ipdata: String;
+  latestOnline?: DateTimeOutput;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -3686,6 +3778,8 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  ipdata: () => Promise<String>;
+  latestOnline: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -3781,6 +3875,8 @@ export interface UserSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  ipdata: () => Promise<AsyncIterator<String>>;
+  latestOnline: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -3876,6 +3972,8 @@ export interface UserNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  ipdata: () => Promise<String>;
+  latestOnline: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -5258,6 +5356,8 @@ export interface UserPreviousValues {
   language: String;
   subscriptionEndpoint?: String;
   emailNotification?: Boolean;
+  ipdata: String;
+  latestOnline?: DateTimeOutput;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -5281,6 +5381,8 @@ export interface UserPreviousValuesPromise
   language: () => Promise<String>;
   subscriptionEndpoint: () => Promise<String>;
   emailNotification: () => Promise<Boolean>;
+  ipdata: () => Promise<String>;
+  latestOnline: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -5304,6 +5406,8 @@ export interface UserPreviousValuesSubscription
   language: () => Promise<AsyncIterator<String>>;
   subscriptionEndpoint: () => Promise<AsyncIterator<String>>;
   emailNotification: () => Promise<AsyncIterator<Boolean>>;
+  ipdata: () => Promise<AsyncIterator<String>>;
+  latestOnline: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
