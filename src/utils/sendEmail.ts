@@ -37,3 +37,15 @@ export const sendSecretMail = (address, secret) => {
   };
   return sendMail(email);
 };
+
+export const sendRecoveryPasswordEmail = (address, token) => {
+  const email = {
+    from: 'noreply@magergram.com',
+    to: address,
+    subject: '🔐 Recovering your access to account in the Magergram',
+    html: `Hello! Your recovery link for get access to account in the Magergram
+    <div style="font-size:8px;height:24px;line-height:24px">&nbsp;</div> 
+    ${process.env.CLIENT_URL}/recovery-password?token=${token}`
+  }
+  return sendMail(email);
+}

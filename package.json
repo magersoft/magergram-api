@@ -56,7 +56,7 @@
     "@babel/plugin-transform-runtime": "^7.9.0",
     "@types/bcrypt": "^3.0.0",
     "@types/cors": "^2.8.6",
-    "@types/jsonwebtoken": "^8.3.9",
+    "@types/jsonwebtoken": "^8.5.0",
     "@types/node": "^13.13.2",
     "@types/nodemailer": "^6.4.0",
     "@types/twilio": "^2.11.0",
