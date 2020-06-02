@@ -4,6 +4,8 @@ import { hashPassword } from '../../../utils/bcryptPassword';
 import is from 'is_js';
 import { isValidPhone, sendVerificationSMS } from '../../../utils/sendSMS';
 
+const USERNAME_REGEXP = /^[a-z-0-9_.]+$/;
+
 export default {
   Mutation: {
     createAccount: async (_, args) => {
@@ -39,8 +41,12 @@ export default {
           preparedPhone = phone.replace('+', '').replace('8', '7');
         }
 
-        if (!(/^[a-z-0-9]+$/.test(username))) {
+        if (!(USERNAME_REGEXP.test(username))) {
           throw new Error('Only english lower case letter and digits');
+        }
+
+        if (username.length < 3) {
+          throw new Error('Username must be more 3 symbols');
         }
 
         await prisma.createUser({
@@ -80,12 +86,19 @@ export default {
       const { username } = args;
       try {
         const user = await prisma.user({ username });
-        if (!(/^[a-z-0-9]+$/.test(username))) {
+
+        if (!(USERNAME_REGEXP.test(username))) {
           throw new Error('Only english lower case letter and digits');
         }
+
+        if (username.length < 3) {
+          throw new Error('Username must be more 3 symbols');
+        }
+
         if (user) {
           throw new Error('Username is already in use')
         }
+
         return {
           ok: true,
           error: null

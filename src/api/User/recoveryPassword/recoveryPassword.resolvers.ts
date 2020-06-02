@@ -34,7 +34,7 @@ export default {
         }
 
         if (!user.email) {
-          throw new Error('In your account does not exist email address. Contact to developer in Telegram: @magersoft')
+          throw new Error('In your account does not exist email address. Contact to developer in Telegram - magersoft')
         }
 
         const token = generateToken(user.id);
