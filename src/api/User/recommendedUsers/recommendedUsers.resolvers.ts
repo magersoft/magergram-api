@@ -15,8 +15,7 @@ export default {
         return await prisma.users({
           where: {
             id_not_in: [...following.map(user => user.id), user.id]
-          },
-          last: 10
+          }
         });
       } catch (e) {
         console.error(e.message);
