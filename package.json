@@ -40,6 +40,7 @@
     "merge-graphql-schemas": "^1.7.6",
     "morgan": "^1.9.1",
     "nodemailer": "^6.4.3",
+    "nodemailer-sendgrid": "^1.0.3",
     "nodemailer-sendgrid-transport": "^0.2.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",

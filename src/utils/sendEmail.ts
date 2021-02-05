@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-import sgTransport from 'nodemailer-sendgrid-transport';
+import nodemailerSendgrid from 'nodemailer-sendgrid';
 
 type EmailType = 'PHONE' | 'EMAIL';
 
@@ -16,12 +16,9 @@ export const generateSecret = (target: EmailType): string | void => {
 
 export const sendMail = email => {
   const options = {
-    auth: {
-      api_user: process.env.SENDGRID_USERNAME,
-      api_key: process.env.SENDGRID_PASSWORD
-    }
+    apiKey: process.env.SENDGRID_API_KEY
   };
-  const client = nodemailer.createTransport(sgTransport(options));
+  const client = nodemailer.createTransport(nodemailerSendgrid(options));
   return client.sendMail(email);
 };
 
