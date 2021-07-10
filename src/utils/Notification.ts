@@ -84,10 +84,7 @@ export default class Notification implements INotification {
   email(): void {
     if (this.user.email) {
       const options = {
-        auth: {
-          api_user: process.env.SENDGRID_USERNAME,
-          api_key: process.env.SENDGRID_PASSWORD
-        }
+        apiKey: process.env.SENDGRID_API_KEY
       };
       const client = nodemailer.createTransport(sgTransport(options));
       const email = {
